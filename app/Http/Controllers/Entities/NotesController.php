@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Entities;
 
 use App\Helpers\Converter;
+use App\Helpers\Regular;
 use App\Http\Controllers\Controller;
 use App\Models\Note;
 use App\Models\NoteFolder;
@@ -65,7 +66,7 @@ class NotesController extends Controller
             'user_id' => $user->id,
             'folder_id' => $folder ? $folder->id : null,
             'title' => $request->title,
-            'code' => str_replace(' ', '_', strtolower(Converter::transliteration($request->title)))
+            'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->title))))
                 .'_'.bin2hex(random_bytes(4)),
             'text' => $request->text,
         ]);
@@ -74,21 +75,24 @@ class NotesController extends Controller
         return redirect()->route('note_folders.notes.index');
     }
 
-    public function ajaxStore($note_code)
+    public function ajaxStore(Request $request)
     {
-        $request = new Request();
-        $request->merge(['title' => $_POST['title'],]);
-
-        $request->validate([
+        /*$request->validate([
             'title' => 'required|max:255',
         ]);
 
         $user = Auth::user();
-        $note = Note::query()->where('user_id', $user->id)->where('code', $note_code)->first();
+        $folder = DB::table('note_folders')->where('user_id', $user->id)->where('code', $request->folder_code)->first();
 
-        $note->update([
-            'text' => $_POST['text'],
+        Note::query()->insert([
+            'user_id' => $user->id,
+            'folder_id' => $folder ? $folder->id : null,
+            'title' => $request->title,
+            'code' => $code = str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->title))))
+                .'_'.bin2hex(random_bytes(4)),
         ]);
+
+        return $code;*/
     }
 
     /**
@@ -143,7 +147,7 @@ class NotesController extends Controller
         $note->update([
             'folder_id' => $folder ? $folder->id : null,
             'title' => $request->title,
-            'code' => str_replace(' ', '_', strtolower(Converter::transliteration($request->title)))
+            'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->title))))
                 .'_'.bin2hex(random_bytes(4)),
             'text' => $request->text,
         ]);

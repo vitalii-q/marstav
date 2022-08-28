@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Entities;
 
 use App\Helpers\Converter;
+use App\Helpers\Regular;
 use App\Http\Controllers\Controller;
 use App\Models\Note;
 use App\Models\NoteFolder;
@@ -51,7 +52,7 @@ class NoteFoldersController extends Controller
         NoteFolder::create([
             'user_id' => Auth::user()->id,
             'title' => $request->title,
-            'code' => str_replace(' ', '_', strtolower(Converter::transliteration($request->title)))
+            'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->title))))
                 .'_'.bin2hex(random_bytes(4)),
         ]);
 
@@ -105,7 +106,7 @@ class NoteFoldersController extends Controller
         $note_folder = NoteFolder::query()->where('user_id', $user->id)->where('code', $folder_code)->first();
         $note_folder->update([
             'title' => $request->title,
-            'code' => str_replace(' ', '_', strtolower(Converter::transliteration($request->title)))
+            'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->title))))
                 .'_'.bin2hex(random_bytes(4)),
         ]);
 

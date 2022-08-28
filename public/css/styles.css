@@ -69,6 +69,10 @@ body {
     padding-top: 8px;
 }
 
+.ws_add_note_so {
+    padding-left: 15px;
+}
+
 /* Notes */
 .note .block-content {
     padding: 10px !important;
