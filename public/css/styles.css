@@ -1,0 +1,109 @@
+body {
+    color: #171717;
+}
+
+.d-block {display: block}
+
+.pt-8 {padding-top: 8px}
+
+.m-0auto {margin: 0 auto}
+.mb-16 {margin-bottom: 16px}
+
+.folder-title {
+    color: rgba(255,255,255)!important;
+}
+.folder-text {
+    min-height: 85px;
+    border-bottom: solid 2px rgba(255,255,255,.9);
+}
+
+.underline {text-decoration: underline}
+
+.form-control {color: #171717;}
+.form-control:focus {color: #171717;}
+
+/* Work space */
+.workspace .nav-item {
+    position: relative;
+    height: 31px;
+}
+.workspace .nav-link {
+    border: unset;
+    padding-right: 38px;
+    padding-top: 2px;
+    padding-bottom: 8px;
+}
+.workspace .btn-block-option-tab {
+    position: absolute;
+    top: 6px;
+    right: 4px;
+    padding-bottom: 0px;
+    padding-top: 2px;
+}
+.workspace .nav-link {
+    cursor: pointer;
+    color: #171717;
+    height: 31px;
+}
+.nav-link_tclicker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    padding-left: 14px;
+}
+.workspace .nav-link:hover {
+    background: linear-gradient(135deg,#ef5350 0,#ffca28 100%)!important;
+    color: #ffffff;
+}
+.workspace .nav-link.active {
+    background: linear-gradient(135deg,#ef5350 0,#ffca28 100%)!important;
+    color: #ffffff!important;
+}
+
+.workspace .nav-item_block-option {
+    height: 31px;
+}
+.workspace .btn-block-option-funcs {
+    padding-top: 8px;
+}
+
+/* Notes */
+.note .block-content {
+    padding: 10px !important;
+}
+.note .block-options {
+    top: 8px;
+    right: 10px;
+    position: absolute;
+    z-index: 100;
+    cursor: pointer;
+}
+.note .block-options_icons-left {
+    right: auto;
+}
+
+.note .si-pencil {
+    padding-bottom: 8px;
+    padding-left: 0px;
+}
+.note .si-pencil:hover {
+    color: rgba(255,255,255,.8)!important;
+}
+.note .fa-times {
+    padding-bottom: 8px;
+    padding-left: 6px;
+    width: 20px;
+    font-size: 18px;
+}
+.note_folder-text {
+    border-bottom: none;
+}
+.notes .note-block_text {
+    font-size: 16px;
+    line-height: 22px;
+    overflow: hidden;
+}
+
+/* General */
