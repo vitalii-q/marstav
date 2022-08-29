@@ -1,3 +1,33 @@
+function addTabClickListener(tab) {
+    tab.addEventListener(("click"), function(e) {
+        if (e.target.classList.contains('nav-link')) {
+            let atr_tabbtnid = tab.getAttribute('data-tabbtnid');
+            let panes = document.getElementsByClassName('tab-pane');
+            panes.forEach(pane => {
+                if(pane.id === 'tab_pane_'+atr_tabbtnid) {
+                    pane.classList.add('active');
+                } else {
+                    pane.classList.remove('active');
+                }
+            });
+
+            for (let i = 0; i < tabs.length; i++) {
+                if (tabs[i] === tab) {
+                    tabs[i].classList.add('active');
+                } else {
+                    tabs[i].classList.remove('active');
+                }
+            }
+        }
+    });
+}
+
+// tabs switcher
+let tabs = document.getElementsByClassName('nav-link');
+tabs.forEach(tab => {
+    addTabClickListener(tab);
+});
+
 function workspaceNoteUpdate(e) {
     let elemid = e.getAttribute('data-elemid');
     let text = document.getElementById('text_'+elemid);
@@ -52,13 +82,11 @@ function workspaceNoteClose(tab_button_id) {
 
 function getTabBtnTemplate(note_code) {
     return '<li id="tab_button_'+note_code+'" class="nav-item">\n' +
-        '<a class="nav-link active">\n' +
-        '<div class="opacity-0">title</div>\n' +
-        '<div class="nav-link_tclicker">title</div>\n' +
+        '<div id="new_tab_btn_'+note_code+'" data-tabbtnid="'+note_code+'" class="nav-link active">'+note_code+'\n' +
         '<button data-tabbtnid="'+note_code+'" onclick="workspaceNoteClose(this)" type="button" class="btn-block-option btn-block-option-tab">\n' +
         '<i class="si si-close"></i>\n' +
         '</button>\n' +
-        '</a>\n' +
+        '</div>\n' +
         '</li>';
 }
 
@@ -240,6 +268,11 @@ function workspaceNoteAdd() {
                 console.log(elem_content);
                 //parentContent.insertBefore(elem_content, parentContent.lastElementChild);
                 parentContent.appendChild(elem_content);*/
+
+
+                // Добавляем слушатель на новый элемент
+                let new_tab = document.getElementById('new_tab_btn_'+note_code);
+                addTabClickListener(new_tab);
 
 
                 /*title_input.value = '';

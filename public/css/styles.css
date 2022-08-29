@@ -26,11 +26,14 @@ body {
 .workspace .nav-item {
     position: relative;
     height: 31px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    overflow: hidden;
 }
 .workspace .nav-link {
     border: unset;
     padding-right: 38px;
-    padding-top: 2px;
+    padding-top: 5px;
     padding-bottom: 8px;
 }
 .workspace .btn-block-option-tab {

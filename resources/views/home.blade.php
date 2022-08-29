@@ -9,24 +9,23 @@
         <div class="col-lg-12">
             <div id="workspace" class="block workspace">
                 <ul id="tabs_ul" class="nav nav-tabs nav-tabs-block align-items-center">
-                    <!--<li id="tab_button_qwer" class="nav-item">
-                        <a href="#tab_pane_qwer" class="nav-link ">
-                            <div class="opacity-0">title</div>
-                            <div class="nav-link_tclicker">title</div>
-                            <button data-tabbtnid="qwer" onclick="workspaceNoteClose(this)" type="button" class="btn-block-option btn-block-option-tab">
-                                <i class="si si-close"></i>
-                            </button>
-                        </a>
-                    </li>-->
+{{--                    <li id="tab_button_{{ $note->code }}" class="nav-item">--}}
+{{--                        <a class="nav-link @if($i==1) active @endif">--}}
+{{--                            <div class="opacity-0">{{ mb_strimwidth($note->title, 0, 14, "..") }}</div>--}}
+{{--                            <div class="nav-link_tclicker">{{ mb_strimwidth($note->title, 0, 14, "..") }}</div>--}}
+{{--                            <button data-tabbtnid="{{ $note->code }}" onclick="workspaceNoteClose(this)" type="button" class="btn-block-option btn-block-option-tab">--}}
+{{--                                <i class="si si-close"></i>--}}
+{{--                            </button>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                     @php($i=1) @foreach($notes as $note)
                     <li id="tab_button_{{ $note->code }}" class="nav-item">
-                        <a class="nav-link @if($i==1) active @endif">
-                            <div class="opacity-0">{{ mb_strimwidth($note->title, 0, 14, "..") }}</div>
-                            <div class="nav-link_tclicker">{{ mb_strimwidth($note->title, 0, 14, "..") }}</div>
+                        <div data-tabbtnid="{{ $note->code }}" class="nav-link @if($i==1) active @endif">
+                            {{ mb_strimwidth($note->title, 0, 14, "..") }}
                             <button data-tabbtnid="{{ $note->code }}" onclick="workspaceNoteClose(this)" type="button" class="btn-block-option btn-block-option-tab">
                                 <i class="si si-close"></i>
                             </button>
-                        </a>
+                        </div>
                     </li>
                     @php($i++) @endforeach
 
