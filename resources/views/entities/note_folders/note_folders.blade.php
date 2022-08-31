@@ -92,9 +92,7 @@
                 <a class="block block-rounded block-transparent bg-gd-sun" href="{{ route('entities.note.edit', ['root', $note->code]) }}">
                     <div class="block-options block-options_icons-left">
                         <div class="block-options-itemp-0">
-                            <i data-delroute="/notes/{{ $folder->code }}" data-elemid="folder_{{ $folder->code }}"
-                               class="si si-note text-white-op text-white-op-c js-swal-confirm">
-                            </i>
+                            <i class="si si-note text-white-op text-white-op-c"></i> {{-- data-delroute="/notes/{{ $folder->code }}" data-elemid="folder_{{ $folder->code }}" --}}
                         </div>
                     </div>
                     <div class="block-content block-content-full block-sticky-options">

@@ -72,7 +72,11 @@ class NotesController extends Controller
         ]);
 
         session()->flash('info', 'Заметка добавлена');
-        return redirect()->route('note_folders.notes.index');
+        if($folder) {
+            return redirect()->route('entities.note.index', [$folder_code]);
+        } else {
+            return redirect()->route('note_folders.notes.index');
+        }
     }
 
     public function ajaxStore(Request $request)

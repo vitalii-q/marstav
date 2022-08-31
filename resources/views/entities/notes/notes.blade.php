@@ -62,13 +62,13 @@
                     <div class="block-options block-options_icons-left">
                         <div class="block-options-itemp-0">
                             <i data-delroute="/notes/{{ $folder->code }}" data-elemid="folder_{{ $folder->code }}"
-                               class="si si-note text-white-op text-white-op-c js-swal-confirm">
+                               class="si si-note text-white-op text-white-op-c">
                             </i>
                         </div>
                     </div>
                     <div class="block-content block-content-full block-sticky-options">
                         <div class="folder-text note_folder-text py-20 text-center">
-                            <div class="folder-title font-w700 text-white-op note-block_text">{{ $note->title }}</div>
+                            <div class="folder-title font-w700 text-white-op note-block_text">{{ mb_strimwidth($note->title, 0, 40, "..") }}</div>
                         </div>
                     </div>
                 </a>

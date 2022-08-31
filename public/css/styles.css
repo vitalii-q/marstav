@@ -52,16 +52,18 @@ body {
  scrollbar-width: none;  Firefox
 }
 */
-.scrollbar-c::-webkit-scrollbar {
+
+*::-webkit-scrollbar {
     width: 5px;
     border-radius: 2px;
 }
-.scrollbar-c::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
     background-color: unset;
 }
-.scrollbar-c::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
     background: rgba(102, 102, 102, 0.75);
 }
+
 
 /* Work space */
 .workspace .nav-item {
