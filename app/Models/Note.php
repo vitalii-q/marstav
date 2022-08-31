@@ -14,5 +14,5 @@ class Note extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'folder_id', 'title', 'code', 'text', 'color'];
+    protected $fillable = ['user_id', 'folder_id', 'title', 'code', 'text', 'workspace', 'color'];
 }

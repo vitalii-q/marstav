@@ -32,7 +32,7 @@ class HomeController extends Controller
 
         $user = Auth::user();
 
-        $notes = Note::query()->where('user_id', $user->id)->where('workspace', 1)->get();
+        $notes = Note::query()->where('user_id', $user->id)->get();
         $folders = NoteFolder::query()->where('user_id', $user->id)->get();
 
         return view('home', compact('folders', 'notes'));

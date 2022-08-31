@@ -1,3 +1,83 @@
+let workspace = document.getElementById('workspace');
+let tabs = document.getElementsByClassName('nav-link');
+let add_note_btn = document.getElementById('modal-popin-plus-btn');
+let select_note_btn = document.getElementById('modal-popin-select-note-btn');
+let modal_close_btns = document.getElementsByClassName('modal_close_btn');
+let stub = document.getElementById('workspace_stub');
+//let add_note_btn_icon = document.getElementById('modal-popin-plus-close-icon');
+
+checkTabCount();
+
+function disableAddNoteBtn() {
+    add_note_btn.setAttribute('disabled', '');
+    select_note_btn.setAttribute('disabled', '');
+
+    /**
+     * tooltip подхватывает элемент только на моменте загрузки страницы
+     */
+    //add_note_btn_icon.setAttribute('data-toggle', 'tooltip');
+    //add_note_btn_icon.setAttribute('data-placement', 'left');
+    //add_note_btn_icon.setAttribute('data-original-title', 'Достигнут предел вкладок');
+}
+
+function enableAddNoteBtn() {
+    add_note_btn.removeAttribute('disabled');
+    select_note_btn.removeAttribute('disabled');
+
+    //add_note_btn_icon.removeAttribute('data-toggle');
+    //add_note_btn_icon.removeAttribute('data-placement');
+    //add_note_btn_icon.removeAttribute('data-original-title');
+}
+
+function switchToTab(code) {
+    for(let i = 0; i < tabs.length; i++) {
+        if(tabs[i].getAttribute('data-tabbtnid') == code) {
+            tabs[i].click();
+            break;
+        }
+    }
+}
+
+function closeNotesModal() {
+    for(let i = 0; i < modal_close_btns.length; i++) {
+        modal_close_btns[i].click();
+    }
+}
+
+function checkTabCount() {
+    tabs = document.getElementsByClassName('nav-link');
+
+    if (tabs.length > 0) {
+        stub.classList.add('d-none');
+    } else {
+        stub.classList.remove('d-none');
+    }
+
+    if (tabs.length > 7) {
+        disableAddNoteBtn();
+    } else {
+        enableAddNoteBtn();
+    }
+}
+
+function checkSelectedTab(note) {
+    for (let i = 0; i < tabs.length; i++) {
+        if (tabs[i].getAttribute('data-tabbtnid') == note.code) {
+            return tabs[i].getAttribute('data-tabbtnid');
+        }
+    }
+
+    return false;
+}
+
+function checkTabsExists() {
+    if (workspace.querySelectorAll('.nav-link').length === 0) {
+        return false
+    }
+
+    return true;
+}
+
 function addTabClickListener(tab) {
     tab.addEventListener(("click"), function(e) {
         if (e.target.classList.contains('nav-link')) {
@@ -23,23 +103,28 @@ function addTabClickListener(tab) {
 }
 
 // tabs switcher
-let tabs = document.getElementsByClassName('nav-link');
 tabs.forEach(tab => {
     addTabClickListener(tab);
 });
 
 function workspaceNoteUpdate(e) {
-    let elemid = e.getAttribute('data-elemid');
+    let elemid = e.getAttribute('data-tabbtnid');
     let text = document.getElementById('text_'+elemid);
 
     let route_ajaxUpdate = e.getAttribute('data-route');
+
+    let workspace = 1;
+    if (e.getAttribute('data-dest') === 'close') {
+        workspace = 0;
+    }
 
     $.ajax({
         url: route_ajaxUpdate,
         type: "post",
         async: false,
         data: {
-            text: text.value
+            text: text.value,
+            workspace: workspace
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -48,10 +133,17 @@ function workspaceNoteUpdate(e) {
             //console.log(data);
         }
     })
+
+    if (e.classList.contains('js-animation-object')) {
+        e.classList.add('flash');
+        setTimeout(function () {
+            e.classList.remove('flash');
+        },3000, e);
+    }
 }
 
-function workspaceNoteClose(tab_button_id) {
-    let atr_tabbtnid = tab_button_id.getAttribute('data-tabbtnid')
+function workspaceNoteClose(e) {
+    let atr_tabbtnid = e.getAttribute('data-tabbtnid')
 
     let tabbtnid = 'tab_button_'+atr_tabbtnid;
     let tabpaneid = 'tab_pane_'+atr_tabbtnid;
@@ -65,48 +157,85 @@ function workspaceNoteClose(tab_button_id) {
         nexttabpane = tab_pane.previousElementSibling;
     }
 
+    workspaceNoteUpdate(e);
+
     tab_button.remove();
     tab_pane.remove();
 
-    let workspace = document.getElementById('workspace');
     let tab_button_active = workspace.querySelector('.nav-link.active');
 
     if (tab_button_active !== null) {
         tab_button_active.classList.add('active');
-    } else {
+    } else if (checkTabsExists()) {
         let nexttablink = nexttabbtn.querySelector('.nav-link');
         nexttablink.classList.add('active');
         nexttabpane.classList.add('active');
     }
+
+    checkTabCount();
 }
 
-function getTabBtnTemplate(note_code) {
-    return '<li id="tab_button_'+note_code+'" class="nav-item">\n' +
-        '<div id="new_tab_btn_'+note_code+'" data-tabbtnid="'+note_code+'" class="nav-link active">'+note_code+'\n' +
-        '<button data-tabbtnid="'+note_code+'" onclick="workspaceNoteClose(this)" type="button" class="btn-block-option btn-block-option-tab">\n' +
+function getTabBtnTemplate(note) {
+    let note_title = note.title.slice(0, 14);
+    if(note_title.length < note.title.length) {
+        note_title = note_title+'..';
+    }
+
+    return '<li id="tab_button_'+note.code+'" class="nav-item">\n' +
+        '<div id="new_tab_btn_'+note.code+'" data-tabbtnid="'+note.code+'" class="nav-link active">'+note_title+'\n' +
+        '<button onclick="workspaceNoteClose(this)" type="button" class="btn-block-option btn-block-option-tab" data-tabbtnid="'+note.code+'"data-route="/notes/folder/'+note.code+'/update/ajax" data-dest="close">\n' +
         '<i class="si si-close"></i>\n' +
         '</button>\n' +
         '</div>\n' +
         '</li>';
 }
 
-function getTabPaneTemplate(note_code) {
-    return '<div class="tab-pane active " id="tab_pane_'+note_code+'" role="tabpanel">\n' +
+function getTabPaneTemplate(note) {
+    let note_text = '';
+    if (note.text !== null) {
+        note_text = note.text;
+    }
+
+    return '<div class="tab-pane active " id="tab_pane_'+note.code+'" role="tabpanel">\n' +
         '<div class="form-group row">\n' +
         '<div class="col-12">\n' +
         '<div class="form-material pt-0">\n' +
-        '<textarea class="form-control" id="text_'+note_code+'" name="text_'+note_code+'" rows="18" placeholder="Начните писать" maxlength="4000">'+note_code+'</textarea>\n' +
+        '<textarea class="form-control" id="text_'+note.code+'" name="text_'+note.code+'" rows="18" placeholder="Начните писать" maxlength="4000">'+note_text+'</textarea>\n' +
         '</div>\n' +
         '</div>\n' +
         '</div>\n' +
         '<div class="form-group row">\n' +
         '<div class="col-3 ml-auto">\n' +
-        '<button data-route="/notes/folder/'+note_code+'/update/ajax" data-elemid="'+note_code+'" onclick="workspaceNoteUpdate(this)" class="btn btn-block btn-alt-primary">\n' +
+        '<button data-route="/notes/folder/'+note.code+'/update/ajax" data-tabbtnid="'+note.code+'" onclick="workspaceNoteUpdate(this)" class="btn btn-block btn-alt-primary js-animation-object animated" data-animation-class="flash">\n' +
         '<i class="si si-check mr-5"></i> Сохранить\n' +
         '</button>\n' +
         '</div>\n' +
         '</div>\n' +
         '</div>';
+}
+
+function addNoteToWorkspace(note) {
+    if (checkTabsExists()) {
+        workspace.querySelector('.nav-link.active').classList.remove('active');
+        workspace.querySelector('.tab-pane.active').classList.remove('active');
+    }
+
+    let block_options = $('#block_options');
+    $(block_options).before(getTabBtnTemplate(note));
+
+    let tab_content = $('#tab_content');
+    $(tab_content).append(getTabPaneTemplate(note));
+
+    // Добавляем слушатель на новый элемент
+    let new_tab = document.getElementById('new_tab_btn_'+note.code);
+    addTabClickListener(new_tab);
+
+    closeNotesModal();
+}
+
+function addFirstNoteBtn() {
+    closeNotesModal();
+    add_note_btn.click();
 }
 
 function workspaceNoteAdd() {
@@ -135,204 +264,51 @@ function workspaceNoteAdd() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: () => {
-                //console.log(note_code);
-                let note_code = 'test'+Math.random();
+            success: (note) => {
+                addNoteToWorkspace(note);
 
-                /*let tab_btn_empty =
-                    '<li id="tab_button_'+note_code+'" class="nav-item">\n' +
-                    '<a href="#tab_pane_'+note_code+'" class="nav-link active">\n' +
-                    '<div class="opacity-0">title</div>\n' +
-                    '<div class="nav-link_tclicker">title</div>\n' +
-                    '<button data-tabbtnid="'+note_code+'" onclick="workspaceNoteClose(this)" type="button" class="btn-block-option btn-block-option-tab">\n' +
-                    '<i class="si si-close"></i>\n' +
-                    '</button>\n' +
-                    '</a>\n' +
-                    '</li>';*/
-
-                /*let tab_pane_empty =
-                    '<div class="tab-pane active" id="tab_pane_'+note_code+'" role="tabpanel">\n' +
-                    '<div class="form-group row">\n' +
-                    '<div class="col-12">\n' +
-                    '<div class="form-material pt-0">\n' +
-                    '<textarea class="form-control" id="text_'+note_code+'" name="text_'+note_code+'" rows="16" maxlength="4000" placeholder="Начните писать"></textarea>\n' +
-                    '</div>\n' +
-                    '</div>\n' +
-                    '</div>\n' +
-                    '\n' +
-                    '<div class="form-group row">\n' +
-                    '<div class="col-3 ml-auto">\n' +
-                    '<button data-route="/notes/folder/'+note_code+'/update/ajax" data-elemid="'+note_code+'" onclick="workspaceNoteUpdate(this)" class="btn btn-block btn-alt-primary">\n' +
-                    '<i class="fa fa-refresh mr-5"></i> Обновить\n' +
-                    '</button>\n' +
-                    '<button type="submit" class="btn btn-alt-primary w-100">Сохранить</button>\n' +
-                    '</div>\n' +
-                    '</div>\n' +
-                    '</div>';*/
-
-                /*let tab_btn_empty =
-                    '<li id="tab_button_'+note_code+'" class="nav-item">\n' +
-                    '<a href="#tab_pane_'+note_code+'" class="nav-link active">\n' +
-                    '<div class="opacity-0">title</div>\n' +
-                    '<div class="nav-link_tclicker">title</div>\n' +
-                    '<button data-tabbtnid="'+note_code+'" onclick="workspaceNoteClose(this)" type="button" class="btn-block-option btn-block-option-tab">\n' +
-                    '<i class="si si-close"></i>\n' +
-                    '</button>\n' +
-                    '</a>\n' +
-                    '</li>';*/
-
-                /*let tab_btn_empty =
-                    //'<a href="#tab_pane_'+note_code+'" class="nav-link active">\n' +
-                    '<div class="opacity-0">title</div>\n' +
-                    '<div class="nav-link_tclicker">title</div>\n' +
-                    '<button data-tabbtnid="'+note_code+'" onclick="workspaceNoteClose(this)" type="button" class="btn-block-option btn-block-option-tab">\n' +
-                    '<i class="si si-close"></i>\n' +
-                    '</button>';*/
-                    //'</a>';
-
-                /*let tab_pane_empty =
-                    '<div class="tab-pane active " id="tab_pane_'+note_code+'" role="tabpanel">\n' +
-                    '<div class="form-group row">\n' +
-                    '<div class="col-12">\n' +
-                    '<div class="form-material pt-0">\n' +
-                    '<textarea class="form-control" id="text_'+note_code+'" name="text_'+note_code+'" rows="18" placeholder="Начните писать" maxlength="4000">text</textarea>\n' +
-                    '</div>\n' +
-                    '</div>\n' +
-                    '</div>\n' +
-                    '<div class="form-group row">\n' +
-                    '<div class="col-3 ml-auto">\n' +
-                    '<button data-route="/notes/folder/'+note_code+'/update/ajax" data-elemid="'+note_code+'" onclick="workspaceNoteUpdate(this)" class="btn btn-block btn-alt-primary">\n' +
-                    '<i class="si si-check mr-5"></i> Сохранить\n' +
-                    '</button>\n' +
-                    '</div>\n' +
-                    '</div>\n' +
-                    '</div>';*/
-
-                /*let tab_pane_empty =
-                    '<div class="form-group row">\n' +
-                    '<div class="col-12">\n' +
-                    '<div class="form-material pt-0">\n' +
-                    '<textarea class="form-control" id="text_'+note_code+'" name="text_'+note_code+'" rows="18" placeholder="Начните писать" maxlength="4000">'+note_code+'</textarea>\n' +
-                    '</div>\n' +
-                    '</div>\n' +
-                    '</div>\n' +
-                    '\n' +
-                    '<div class="form-group row">\n' +
-                    '<div class="col-3 ml-auto">\n' +
-                    '<button data-route="/notes/folder/'+note_code+'/update/ajax" data-elemid="'+note_code+'" onclick="workspaceNoteUpdate(this)" class="btn btn-block btn-alt-primary">\n' +
-                    '<i class="si si-check mr-5"></i> Сохранить\n' +
-                    '</button>\n' +
-                    '</div>\n' +
-                    '</div>';*/
-
-                let workspace = document.getElementById('workspace');
-                workspace.querySelector('.nav-link.active').classList.remove('active');
-                workspace.querySelector('.tab-pane.active').classList.remove('active');
-
-                let block_options = $('#block_options');
-                //let block_options = document.getElementById('block_options');
-
-                $(block_options).before(getTabBtnTemplate(note_code));
-                /*let parentDiv = document.getElementById('tabs_ul');
-                let elem = document.createElement("li");
-                elem.classList.add('nav-item');
-                //elem.setAttribute('id', 'tab_button_'+note_code);
-                elem.id = 'tab_button_'+note_code;
-
-                let aq = document.createElement("a");
-                aq.classList.add('nav-link');
-                aq.classList.add('active');
-                aq.setAttribute('href', '#tab_pane_'+note_code);
-
-                aq.innerHTML = tab_btn_empty;
-                elem.appendChild(aq);
-                console.log(elem);
-
-                //console.log(elem);
-                //<a href="#tab_pane_'+note_code+'" class="nav-link active">
-                parentDiv.insertBefore(elem, parentDiv.lastElementChild);
-                //console.log(elem);*/
-
-
-                let tab_content = $('#tab_content');
-                //let tab_content = document.getElementById('tab_content');
-
-                $(tab_content).append(getTabPaneTemplate(note_code));
-                /*let parentContent = document.getElementById('tab_content');
-                let elem_content = document.createElement("div");
-                elem_content.classList.add('tab-pane');
-                elem_content.classList.add('active');
-                //elem_content.setAttribute('id', 'tab_pane_'+note_code);
-                elem_content.id = 'tab_pane_'+note_code;
-                elem_content.innerHTML = tab_pane_empty;
-                console.log(elem_content);
-                //parentContent.insertBefore(elem_content, parentContent.lastElementChild);
-                parentContent.appendChild(elem_content);*/
-
-
-                // Добавляем слушатель на новый элемент
-                let new_tab = document.getElementById('new_tab_btn_'+note_code);
-                addTabClickListener(new_tab);
-
-
-                /*title_input.value = '';
+                title_input.value = '';
                 let select_options = folder_selector.getElementsByTagName('option');
                 for (let i = 0; i < select_options.length; i++) {
                     if (select_options[i].value === 'root') select_options[i].selected = true;
-                }*/
+                }
+
+                checkTabCount();
             }
         })
     }
-
-
-
-    //console.log(title);
-
-
-    /*let tab_btn_empty =
-        '<li id="tab_button_" class="nav-item">\n' +
-        '<a href="#tab_pane_" class="nav-link active">\n' +
-        '<div class="opacity-0"></div>\n' +
-        '<div class="nav-link_tclicker"></div>\n' +
-        '<button data-tabbtnid="" onclick="workspaceNoteClose(this)" type="button" class="btn-block-option btn-block-option-tab">\n' +
-        '<i class="si si-close"></i>\n' +
-        '</button>\n' +
-        '</a>\n' +
-        '</li>';
-
-    let tab_pane_empty =
-        '<div class="tab-pane active" id="tab_pane_{{ $note->code }}" role="tabpanel">\n' +
-        '<div class="form-group row">\n' +
-        '<div class="col-12">\n' +
-        '<div class="form-material pt-0">\n' +
-        '<textarea class="form-control" id="text_{{ $note->code }}" name="text_{{ $note->code }}" rows="16" maxlength="4000" placeholder="Начните писать">{{ $note->text }}</textarea>\n' +
-        '</div>\n' +
-        '</div>\n' +
-        '</div>\n' +
-        '\n' +
-        '<div class="form-group row">\n' +
-        '<div class="col-3 ml-auto">\n' +
-        '<button data-route="/notes/folder/{{ $note->code }}/update/ajax" data-elemid="{{ $note->code }}" onclick="workspaceNoteUpdate(this)" class="btn btn-block btn-alt-primary">\n' +
-        '<i class="fa fa-refresh mr-5"></i> Обновить\n' +
-        '</button>\n' +
-        '<button type="submit" class="btn btn-alt-primary w-100">Сохранить</button>\n' +
-        '</div>\n' +
-        '</div>\n' +
-        '</div>';
-
-    let workspace = document.getElementById('workspace');
-    workspace.querySelector('.nav-link.active').classList.remove('active');
-    workspace.querySelector('.tab-pane.active').classList.remove('active');
-
-    let block_options = $('#block_options');
-    $(block_options).before(tab_btn_empty);
-
-    let tab_content = $('#tab_content');
-    $(tab_content).append(tab_pane_empty);*/
-
-
-
-
-    //console.log(tab_pane_empty);
-    //console.log(block_options);
 }
+
+function selectNote(note) {
+    note_code = note.getAttribute('data-code');
+
+    $.ajax({
+        url: '/notes/show/ajax',
+        type: "post",
+        async: false,
+        data: {
+            note_code: note_code,
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: (note) => {
+            let existingTabCode = checkSelectedTab(note);
+            if(!existingTabCode) {
+                addNoteToWorkspace(note);
+                checkTabCount();
+            } else {
+                switchToTab(existingTabCode);
+                closeNotesModal();
+            }
+        }
+    })
+}
+
+// note selector
+let notes_tree = document.getElementsByClassName('ws_tree_note');
+notes_tree.forEach(note => {
+    note.addEventListener(("click"), function() {
+        selectNote(note);
+    });
+});

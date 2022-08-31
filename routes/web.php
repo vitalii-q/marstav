@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/notes/folder/{code}/create', [App\Http\Controllers\Entities\NotesController::class, 'create'])->name('entities.note.create');
     Route::post('/notes/folder/{code}/store', [App\Http\Controllers\Entities\NotesController::class, 'store'])->name('entities.note.store');
     Route::post('/notes/store/ajax', [App\Http\Controllers\Entities\NotesController::class, 'ajaxStore'])->name('entities.note.store.ajax');
+    Route::post('/notes/show/ajax', [App\Http\Controllers\Entities\NotesController::class, 'ajaxShow'])->name('entities.note.show.ajax');
     Route::get('/notes/folder/{folder_code}/{note_code}/edit', [App\Http\Controllers\Entities\NotesController::class, 'edit'])->name('entities.note.edit');
     Route::put('/notes/folder/{folder_code}/{note_code}/update', [App\Http\Controllers\Entities\NotesController::class, 'update'])->name('entities.note.update');
     Route::post('/notes/folder/{note_code}/update/ajax', [App\Http\Controllers\Entities\NotesController::class, 'ajaxUpdate'])->name('entities.note.update.ajax');

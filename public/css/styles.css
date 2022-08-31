@@ -1,3 +1,14 @@
+/* - стили для Chrome, Safari и Opera
+.example::-webkit-scrollbar {
+ display: none;
+}
+- стили для IE, Edge и Firefox
+.example {
+ -ms-overflow-style: none;  IE и Edge
+ scrollbar-width: none;  Firefox
+}
+*/
+
 body {
     color: #171717;
 }
@@ -9,6 +20,16 @@ body {
 .m-0auto {margin: 0 auto}
 .mb-16 {margin-bottom: 16px}
 
+.w-30 {width: 30px}
+.mh-auto {min-height: auto}
+
+.tc-black {color: #171717}
+
+.underline {text-decoration: underline}
+.ta-right {text-align: right}
+.c-pointer {cursor: pointer}
+
+
 .folder-title {
     color: rgba(255,255,255)!important;
 }
@@ -17,10 +38,30 @@ body {
     border-bottom: solid 2px rgba(255,255,255,.9);
 }
 
-.underline {text-decoration: underline}
-
 .form-control {color: #171717;}
 .form-control:focus {color: #171717;}
+
+/* General */
+/* - стили для Chrome, Safari и Opera
+.example::-webkit-scrollbar {
+ display: none;
+}
+- стили для IE, Edge и Firefox
+.example {
+ -ms-overflow-style: none;  IE и Edge
+ scrollbar-width: none;  Firefox
+}
+*/
+.scrollbar-c::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 2px;
+}
+.scrollbar-c::-webkit-scrollbar-track {
+    background-color: unset;
+}
+.scrollbar-c::-webkit-scrollbar-thumb {
+    background: rgba(102, 102, 102, 0.75);
+}
 
 /* Work space */
 .workspace .nav-item {
@@ -75,6 +116,35 @@ body {
 .ws_add_note_so {
     padding-left: 15px;
 }
+.modal .ws_notes_list_note_block {
+    border-bottom: solid 20px #ffffff;
+}
+.modal .ws_notes_list_wo-folder {
+    border-top: solid 20px #ffffff;
+}
+
+.ws_arrow-right {
+    width: 20px;
+    height: 20px;
+    padding-top: 7px;
+    padding-left: 6px;
+}
+.ws_arrow-line-1 {
+    background-color: #0a0a0a;
+    width: 6px;
+    height: 2px;
+    transform: rotate(45deg);
+}
+.ws_arrow-line-2 {
+    background-color: #0a0a0a;
+    width: 6px;
+    height: 2px;
+    transform: rotate(315deg);
+    margin-top: 2px;
+}
+.js-table-sections-header.show .ws_arrow-right {
+    transform: rotate(90deg);
+}
 
 /* Notes */
 .note .block-content {
@@ -113,4 +183,3 @@ body {
     overflow: hidden;
 }
 
-/* General */

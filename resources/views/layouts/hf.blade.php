@@ -414,7 +414,7 @@
                             <!-- Logo -->
                             <div class="content-header-item">
                                 <a class="link-effect font-w700" href="" target="_blank">
-                                    <i class="si si-pencil text-primary"></i>
+                                    <i class="si si-note text-primary"></i>
                                     <span class="font-size-xl text-dual-primary-dark">mars</span>
                                     <span class="font-size-xl text-primary">tav</span>
                                 </a>

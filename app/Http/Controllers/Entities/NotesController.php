@@ -77,22 +77,25 @@ class NotesController extends Controller
 
     public function ajaxStore(Request $request)
     {
-        /*$request->validate([
+        $request->validate([
             'title' => 'required|max:255',
         ]);
 
         $user = Auth::user();
         $folder = DB::table('note_folders')->where('user_id', $user->id)->where('code', $request->folder_code)->first();
 
-        Note::query()->insert([
+        $new_note_id = Note::query()->insertGetId([
             'user_id' => $user->id,
             'folder_id' => $folder ? $folder->id : null,
             'title' => $request->title,
             'code' => $code = str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->title))))
                 .'_'.bin2hex(random_bytes(4)),
+            'workspace' => 1
         ]);
 
-        return $code;*/
+        $new_note = Note::query()->find($new_note_id);
+
+        return $new_note;
     }
 
     /**
@@ -101,9 +104,21 @@ class NotesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($note_code)
     {
         //
+    }
+
+    public function ajaxShow(Request $request)
+    {
+        $user = Auth::user();
+        $note = Note::query()->where('user_id', $user->id)->where('code', $request->note_code)->first();
+
+        $note->update([
+            'workspace' => 1
+        ]);
+
+        return $note;
     }
 
     /**
@@ -159,7 +174,9 @@ class NotesController extends Controller
     public function ajaxUpdate($note_code)
     {
         $request = new Request();
-        $request->merge(['text' => $_POST['text'],]);
+        $request->merge([
+            'text' => $_POST['text'],
+        ]);
 
         $request->validate([
             'text' => 'max:4000',
@@ -170,6 +187,7 @@ class NotesController extends Controller
 
         $note->update([
             'text' => $_POST['text'],
+            'workspace' => $_POST['workspace']
         ]);
     }
 
