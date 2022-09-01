@@ -1,8 +1,9 @@
 @extends('layouts.hf')
 
-@section('title', 'Добавление папки')
+@section('title', 'Редактирование папки: '.$note_folder->title)
 
 @section('content')
+    <div class="content">
     <div class="content-heading pt-8">
         <a href="{{ route('note_folders.notes.index') }}">Заметки</a>
         <small class="d-none d-sm-inline"> / {{ mb_strimwidth($note_folder->title, 0, 40, "..") }}</small>
@@ -49,5 +50,6 @@
             </div>
             <!-- END Default Elements -->
         </div>
+    </div>
     </div>
 @endsection

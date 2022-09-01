@@ -64,10 +64,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        list($user, $uniqid) = $this->makeUniqueUserCode();
+
+        while ($user) {
+            list($user, $uniqid) = $this->makeUniqueUserCode();
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'code' => $uniqid
         ]);
+    }
+
+    protected function makeUniqueUserCode()
+    {
+        $uniqid = bin2hex(random_bytes(16));
+        return [User::query()->where('code', $uniqid)->first(), $uniqid];
     }
 }

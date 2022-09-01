@@ -12,6 +12,9 @@
 body {
     color: #171717;
 }
+a.block {
+    color: #171717;
+}
 
 .d-block {display: block}
 
@@ -185,3 +188,7 @@ body {
     overflow: hidden;
 }
 
+/* Company */
+.company .text-position {
+    min-height: 20px;
+}

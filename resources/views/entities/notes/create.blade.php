@@ -3,6 +3,7 @@
 @section('title', 'Добавление заметки')
 
 @section('content')
+    <div class="content">
     <div class="content-heading pt-8">
         <a href="{{ route('note_folders.notes.index') }}">Заметки</a>
         @if($folder)
@@ -67,5 +68,6 @@
             </div>
             <!-- END Default Elements -->
         </div>
+    </div>
     </div>
 @endsection

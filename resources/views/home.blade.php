@@ -1,5 +1,7 @@
 @extends('layouts.hf')
 
+@section('title', 'Рабочий стол')
+
 @section('js')
     <script src="{{ URL::asset('js/pages/workspace.js') }}"></script>
 
@@ -13,6 +15,7 @@
 @endsection
 
 @section('content')
+    <div class="content">
     <div class="row">
         <div class="col-lg-12">
             <div id="workspace" class="block workspace">
@@ -160,7 +163,7 @@
                 </div>
             </div>
 
-            <div class="scrollbar-c modal fade" id="modal-popin-notebook" tabindex="-1" role="dialog" aria-labelledby="modal-popin" aria-hidden="true">
+            <div class="modal fade" id="modal-popin-notebook" tabindex="-1" role="dialog" aria-labelledby="modal-popin" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-popin" role="document">
                     <div class="modal-content">
                         <div class="block block-themed block-transparent mb-0">
@@ -252,5 +255,6 @@
             <!-- END Pop In Modals -->
 
         </div>
+    </div>
     </div>
 @endsection

@@ -472,7 +472,7 @@
                                 <a href="/"><i class="si si-cup"></i><span class="sidebar-mini-hide">Рабочий стол</span></a>
                             </li>
                             <li>
-                                <a href="be_pages_dashboard.html"><i class="si si-users"></i><span class="sidebar-mini-hide">Команда</span></a>
+                                <a href="{{ route('company.index') }}"><i class="si si-users"></i><span class="sidebar-mini-hide">Компания</span></a>
                             </li>
                             <li>
                                 <a href="be_pages_dashboard.html"><i class="si si-bubbles"></i><span class="sidebar-mini-hide">Чат</span></a>
@@ -573,7 +573,7 @@
                             </li>
                             <li class="nav-main-heading"><span class="sidebar-mini-visible">BD</span><span class="sidebar-mini-hidden">Настройки</span></li>
                             <li>
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-moustache"></i><span class="sidebar-mini-hide">Аккаунт</span></a>
+                                <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-moustache"></i><span class="sidebar-mini-hide">Профайл</span></a>
                                 <ul>
                                     <li>
                                         <a class="nav-submenu" data-toggle="nav-submenu" href="#">General</a>
@@ -959,9 +959,7 @@
             <!-- END Header -->
 
             <main id="main-container">
-                <div class="content">
-                    @yield('content')
-                </div>
+                @yield('content')
             </main>
 
             <!-- Footer -->

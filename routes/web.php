@@ -30,6 +30,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/notes/folder/{folder_code}/{note_code}/update', [App\Http\Controllers\Entities\NotesController::class, 'update'])->name('entities.note.update');
     Route::post('/notes/folder/{note_code}/update/ajax', [App\Http\Controllers\Entities\NotesController::class, 'ajaxUpdate'])->name('entities.note.update.ajax');
     Route::delete('/notes/folder/{code}', [App\Http\Controllers\Entities\NotesController::class, 'destroy'])->name('entities.note.destroy');
+
+    Route::resource('/company', App\Http\Controllers\Entities\CompaniesController::class);
+
+    Route::resource('/profile', App\Http\Controllers\Entities\CompaniesController::class);
 });
 
 

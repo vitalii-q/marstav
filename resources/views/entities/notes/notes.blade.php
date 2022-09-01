@@ -1,5 +1,7 @@
 @extends('layouts.hf')
 
+@section('title', 'Заметки')
+
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('js/plugins/sweetalert2/sweetalert2.min.css') }}">
 @endsection
@@ -13,6 +15,7 @@
 @endsection
 
 @section('content')
+    <div class="content">
     @if(session()->has('info')) <!-- если уведовление или ошибка -->
     <p class="alert alert-info">{{ session()->get('info') }}</p> <!-- выводим сообщение -->
     @endif
@@ -75,6 +78,7 @@
             </div>
         @endforeach
 
+    </div>
     </div>
 
 @endsection
