@@ -112,4 +112,9 @@ class CompaniesController extends Controller
     {
         //
     }
+
+    public function addEmployeeAjax(Request $request)
+    {
+        return 1;
+    }
 }

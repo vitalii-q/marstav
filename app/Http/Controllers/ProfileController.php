@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\File;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -94,38 +95,21 @@ class ProfileController extends Controller
             'patronymic' => 'max:40',
             // проверка на уникальность всех email пользователей кроме своего
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
+            'photo' => 'max:2000'
         ]);
         if ($request->phone !== null) {
             $request->validate([
-                'phone' => 'min:11|numeric'
+                'phone' => 'min:11|numeric',
             ]);
         }
 
         if($request->delete_photo == 'yes') {
-            if (file_exists($user->photo)) {
-                unlink($user->photo);
-            }
-
+            File::delete($user->photo);
             $user->update(["photo" => null]);
         } elseif (isset($request->photo)) {
-            $unique_code = bin2hex(random_bytes(4));
-            $photo_name = explode('.', $request->photo->getClientOriginalName())[0];
-            $photo_extension = $request->photo->extension();
-
-            if (file_exists($user->photo)) {
-                unlink($user->photo);
-            }
-
-            $company = Company::query()->find($user->company_id);
-            if ($company) {
-                $path = 'companies/'.$company->code.'/avatars/'.$photo_name.'_'.$unique_code.'.'.$photo_extension;
-                Storage::disk('public')->put($path, file_get_contents($request->photo));
-            } else {
-                $path = 'users/'.$user->code.'/'.$photo_name.'_'.$unique_code.'.'.$photo_extension;
-                Storage::disk('public')->put($path, file_get_contents($request->photo));
-            }
-
-            $user->update(["photo" => 'storage/'.$path]);
+            File::delete($user->photo);
+            $path = File::save($request->photo, 'avatar', true);
+            $user->update(["photo" => $path]);
         }
 
         $user->update([

@@ -18,6 +18,10 @@ a.block {
 
 .d-block {display: block}
 
+.py-60 {
+    padding-top: 60px!important;
+    padding-bottom: 60px!important;
+}
 .pt-8 {padding-top: 8px}
 
 .m-0auto {margin: 0 auto}
@@ -45,6 +49,12 @@ a.block {
 .form-control:focus {color: #171717;}
 
 /* General */
+
+.stub .stub-text {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 /* - стили для Chrome, Safari и Opera
 .example::-webkit-scrollbar {
  display: none;
@@ -192,6 +202,10 @@ a.block {
 .company .text-position {
     min-height: 20px;
 }
+.block-content .modal_add_employee_p_title {
+    font-weight: 600;
+    margin-bottom: 0px;
+}
 
 /* Profile */
 .profile .photo {
@@ -218,6 +232,8 @@ a.block {
 }
 
 .profile-photo {
+    min-height: 80px;
     width: 100%;
     max-height: 600px;
 }
+
