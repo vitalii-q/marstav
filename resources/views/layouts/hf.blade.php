@@ -472,9 +472,6 @@
                                 <a href="/"><i class="si si-cup"></i><span class="sidebar-mini-hide">Рабочий стол</span></a>
                             </li>
                             <li>
-                                <a href="{{ route('company.index') }}"><i class="si si-users"></i><span class="sidebar-mini-hide">Компания</span></a>
-                            </li>
-                            <li>
                                 <a href="be_pages_dashboard.html"><i class="si si-bubbles"></i><span class="sidebar-mini-hide">Чат</span></a>
                             </li>
                             <!--<li>
@@ -525,7 +522,6 @@
                                     </li>
                                 </ul>
                             </li>-->
-                            <li class="nav-main-heading"><span class="sidebar-mini-visible">UI</span><span class="sidebar-mini-hidden">Интерфейс</span></li>
                             <li>
                                 <a href="{{ route('note_folders.notes.index') }}"><i class="si si-book-open"></i><span class="sidebar-mini-hide">Заметки</span></a>
                             </li>
@@ -571,28 +567,12 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-main-heading"><span class="sidebar-mini-visible">BD</span><span class="sidebar-mini-hidden">Настройки</span></li>
+                            <li class="mb-20"></li>
                             <li>
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-moustache"></i><span class="sidebar-mini-hide">Профайл</span></a>
-                                <ul>
-                                    <li>
-                                        <a class="nav-submenu" data-toggle="nav-submenu" href="#">General</a>
-                                        <ul>
-                                            <li>
-                                                <a href="be_layout_default.html">Default</a>
-                                            </li>
-                                            <li>
-                                                <a href="be_layout_flipped.html">Flipped</a>
-                                            </li>
-                                            <li>
-                                                <a href="be_layout_native_scrolling.html">Native Scrolling</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="be_layout_api.html">API</a>
-                                    </li>
-                                </ul>
+                                <a href="{{ route('company.index') }}"><i class="si si-users"></i><span class="sidebar-mini-hide">Компания</span></a>
+                            </li>
+                            <li>
+                                <a href="{{ route('profile.show', [\Illuminate\Support\Facades\Auth::user()->code]) }}"><i class="si si-moustache"></i><span class="sidebar-mini-hide">Профайл</span></a>
                             </li>
                             <li>
                                 <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-settings"></i><span class="sidebar-mini-hide">Конфигурации</span></a>

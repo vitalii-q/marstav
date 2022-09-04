@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Entities;
+namespace App\Http\Controllers;
 
 use App\Helpers\Converter;
 use App\Helpers\Regular;
-use App\Http\Controllers\Controller;
 use App\Models\Company;
-use App\Models\Mediators\UserCompany;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class CompaniesController extends Controller
 {
@@ -24,12 +21,12 @@ class CompaniesController extends Controller
         $user = Auth::user();
         $company = Company::query()->find($user->company_id);
         if (!$company) {
-            return view('entities.company.index', compact('company'));
+            return view('company.company', compact('company'));
         }
 
         $employees = User::query()->where('company_id', $company->id)->get();
 
-        return view('entities.company.index', compact('company', 'employees'));
+        return view('company.company', compact('company', 'employees'));
     }
 
     /**
@@ -60,7 +57,7 @@ class CompaniesController extends Controller
             'creator_id' => $user->id,
             'title' => $request->title,
             'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->title))))
-                .'_'.bin2hex(random_bytes(14)),
+                .'_'.bin2hex(random_bytes(6)),
             'description' => $request->description,
         ]);
 

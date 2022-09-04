@@ -18,6 +18,11 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/profile', App\Http\Controllers\ProfileController::class);
+    Route::put('/profile', [App\Http\Controllers\ProfileController::class, 'changePassword'])->name('profile_change_password');
+
+    Route::resource('/company', App\Http\Controllers\CompaniesController::class);
+
     // Entities
     Route::resource('/notes', App\Http\Controllers\Entities\NoteFoldersController::class, ['as' => 'note_folders']);
 
@@ -31,9 +36,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/notes/folder/{note_code}/update/ajax', [App\Http\Controllers\Entities\NotesController::class, 'ajaxUpdate'])->name('entities.note.update.ajax');
     Route::delete('/notes/folder/{code}', [App\Http\Controllers\Entities\NotesController::class, 'destroy'])->name('entities.note.destroy');
 
-    Route::resource('/company', App\Http\Controllers\Entities\CompaniesController::class);
-
-    Route::resource('/profile', App\Http\Controllers\Entities\CompaniesController::class);
 });
 
 
