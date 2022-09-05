@@ -13,7 +13,7 @@
             <div class="bg-primary-dark-op py-30">
                 <div class="content content-full text-center">
                     <h1 class="h3 text-white font-w700 mb-10">
-                        {{ $company->title }}
+                        {{ $company->name }}
                     </h1>
 
                     <h2 class="h5 text-white-op">
@@ -35,6 +35,10 @@
                 </div>
             </div>
         </div>
+
+        @if(session()->has('info'))
+            <p class="alert alert-info">{{ session()->get('info') }}</p>
+        @endif
 
         <div class="content company">
 
@@ -112,6 +116,7 @@
                                                 Введите ID сотрудника которого хотите добавить. Узнать ID можно в разделе: Профайл -> ID
                                             </p>
                                             <input type="text" class="form-control" id="modal_add_employee_id" name="id" placeholder="Введите ID" maxlength="255">
+                                            <input type="text" class="form-control" id="modal_add_company_id" name="company_id" placeholder="Введите ID" maxlength="255" hidden>
                                         </div>
 
                                         <div id="ws_add_note_title_error" class="alert alert-danger mt-15 mb-0 d-none"></div>
@@ -133,3 +138,5 @@
     </div>
 
 @endsection
+
+

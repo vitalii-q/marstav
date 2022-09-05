@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Converter;
 use App\Helpers\Regular;
 use App\Models\Company;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,7 +58,7 @@ class CompaniesController extends Controller
             'creator_id' => $user->id,
             'title' => $request->title,
             'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->title))))
-                .'_'.bin2hex(random_bytes(6)),
+                .'_'.bin2hex(random_bytes(14)),
             'description' => $request->description,
         ]);
 
@@ -115,6 +116,27 @@ class CompaniesController extends Controller
 
     public function addEmployeeAjax(Request $request)
     {
-        return 1;
+        $user = Auth::user();
+        $employee = User::query()->where('code', $request->employee_id)->first();
+
+        if (!$employee) {
+            session()->flash('error', 'Пользователя с ID: '.$request->employee_id.' не существует.');
+            return false;
+        }
+
+        $company = Company::query()->where('id', $user->company_id)->first();
+        if(!Notification::query()->where('user_id', $employee->id)->where('type', 'info')
+            ->where('anchor', $company->code)->first()) {
+            Notification::query()->insert([
+                'user_id' => $employee->id,
+                'type' => 'info',
+                'text' => 'Вас приглашают в компанию '.$company->name,
+                'anchor' => $company->code,
+                'code' => bin2hex(random_bytes(16))
+            ]);
+        }
+
+        session()->flash('info', 'Пользователю направлено уведомление с подтверждением.');
+        return true;
     }
 }

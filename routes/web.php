@@ -22,7 +22,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/profile', [App\Http\Controllers\ProfileController::class, 'changePassword'])->name('profile_change_password');
 
     Route::resource('/company', App\Http\Controllers\CompaniesController::class);
-    Route::put('/company', [App\Http\Controllers\ProfileController::class, 'addEmployeeAjax'])->name('add_employee_ajax');
+    Route::post('/company', [App\Http\Controllers\CompaniesController::class, 'addEmployeeAjax'])->name('add_employee_ajax');
+
+    Route::post('/notification/company_invitation_success', [App\Http\Controllers\NotificationsController::class, 'companyInvitationSuccess']);
+    Route::post('/notification/company_invitation_cancel', [App\Http\Controllers\NotificationsController::class, 'companyInvitationCancel']);
 
     // Entities
     Route::resource('/notes', App\Http\Controllers\Entities\NoteFoldersController::class, ['as' => 'note_folders']);
