@@ -4,6 +4,9 @@
 
 @section('js')
     <script src="{{ URL::asset('js/pages/profile.js') }}"></script>
+
+    <!-- Page JS Plugins -->
+    <script src="{{ URL::asset('js/plugins/sweetalert2/sweetalert2.all.js') }}"></script>
 @endsection
 
 @section('content')
@@ -130,6 +133,35 @@
                 </form>
             </div>
         </div>
+
+        @if($profile->company_id)
+        <div class="block">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">
+                    <i class="si si-users mr-5 text-muted"></i> Компания: {{ App\Models\Company::query()->where('id', $profile->company_id)->first()->name }}
+                </h3>
+            </div>
+
+            <div class="block-content">
+                <div class="row items-push">
+                    <div class="col-lg-3">
+                        <p class="text-muted">
+                            Если вы выйдете из компании, вы утратите доступ к задачам и перепискам компании.
+                        </p>
+                    </div>
+
+                    <div class="col-lg-7 offset-lg-1">
+
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-alt-danger js-swal-confirm">Выйти из компании</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
 
         <div class="block">
             <div class="block-header block-header-default">

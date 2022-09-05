@@ -20,6 +20,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/profile', App\Http\Controllers\ProfileController::class);
     Route::put('/profile', [App\Http\Controllers\ProfileController::class, 'changePassword'])->name('profile_change_password');
+    Route::post('/profile/leave_сompany', [App\Http\Controllers\ProfileController::class, 'leaveCompany']);
 
     Route::resource('/company', App\Http\Controllers\CompaniesController::class);
     Route::post('/company', [App\Http\Controllers\CompaniesController::class, 'addEmployeeAjax'])->name('add_employee_ajax');

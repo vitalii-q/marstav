@@ -16,7 +16,7 @@ function addEmployee() {
         success: (data) => {
             //console.log(data);
 
-            //window.reload;
+            location.reload();
         }
     })
 }

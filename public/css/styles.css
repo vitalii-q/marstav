@@ -207,6 +207,11 @@ a.block {
     margin-bottom: 0px;
 }
 
+.company .employee_avatar {
+    background-position: center;
+    background-size: cover;
+}
+
 /* Profile */
 .profile .photo {
     width: 200px;
@@ -241,8 +246,8 @@ a.block {
 .notifications {
     position: fixed;
     width: 320px;
-    bottom: 15px;
     right: 15px;
+    bottom: 0px;
 }
 .notification {
     width: 100%;
@@ -250,6 +255,7 @@ a.block {
     border-radius: 5px;
     background: #fff;
     border: solid 1px #777777;
+    margin-bottom: 15px;
 }
 .notification_top {
     position: relative;
@@ -304,4 +310,5 @@ a.block {
 .notification_success {
     width: 150px;
 }
+
 

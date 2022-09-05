@@ -117,7 +117,7 @@ class ProfileController extends Controller
             "surname" => $request->surname,
             "patronymic" => $request->patronymic,
             "email" => $request->email,
-            "phone" => $request->phone,
+            "phone" => $request->phone
         ]);
 
         session()->flash('info', 'Профайл обновлен');
@@ -149,14 +149,12 @@ class ProfileController extends Controller
         return redirect()->route('profile.show', [$user->code]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function leaveCompany()
     {
-        //
+        $user = Auth::user();
+        $user->update([
+            'company_id' => null
+        ]);
+        return 1;
     }
 }

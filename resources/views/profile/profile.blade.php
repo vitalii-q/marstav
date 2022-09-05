@@ -72,6 +72,16 @@
                             </div>
                         </div>
 
+                        @if($user->company_id)
+                        <div class="form-group row mb-50">
+                            <div class="col-12">
+                                <p class="title">Компания:</p>
+                                <p class="text">{{ \App\Models\Company::query()->where('id', $user->company_id)->first()->name }}</p>
+                                <div class="profile-group"></div>
+                            </div>
+                        </div>
+                        @endif
+
                         <div class="form-group row">
                             <div class="col-12">
                                 <p class="title">ID:</p>

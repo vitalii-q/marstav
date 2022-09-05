@@ -5,7 +5,7 @@ $notifications = App\Models\Notification::query()->where('user_id', Illuminate\S
 <div class="notifications">
 @foreach($notifications as $notification)
     @if($notification->type == 'info')
-        <div class="notification">
+        <div id="notification_{{ $notification->code }}" class="notification">
             <div class="notification_top">
                 <div class="notification_icon_wrapper">
                     <div class="notification_icon_circle">

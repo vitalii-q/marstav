@@ -86,7 +86,7 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($code)
     {
         //
     }
@@ -116,17 +116,21 @@ class CompaniesController extends Controller
 
     public function addEmployeeAjax(Request $request)
     {
-        $user = Auth::user();
         $employee = User::query()->where('code', $request->employee_id)->first();
 
         if (!$employee) {
-            session()->flash('error', 'Пользователя с ID: '.$request->employee_id.' не существует.');
+            session()->flash('error', 'Неверный ID');
             return false;
         }
 
+        /**
+         * event
+         */
+        $user = Auth::user();
         $company = Company::query()->where('id', $user->company_id)->first();
         if(!Notification::query()->where('user_id', $employee->id)->where('type', 'info')
-            ->where('anchor', $company->code)->first()) {
+            ->where('anchor', $company->code)->first()
+            and !User::query()->where('code', $request->employee_id)->where('company_id', $company->id)->first()) {
             Notification::query()->insert([
                 'user_id' => $employee->id,
                 'type' => 'info',
@@ -137,6 +141,6 @@ class CompaniesController extends Controller
         }
 
         session()->flash('info', 'Пользователю направлено уведомление с подтверждением.');
-        return true;
+        return 1;
     }
 }

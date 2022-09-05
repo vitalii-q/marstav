@@ -37,7 +37,23 @@
         </div>
 
         @if(session()->has('info'))
-            <p class="alert alert-info">{{ session()->get('info') }}</p>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="alert alert-info">{{ session()->get('info') }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        @if(session()->has('error'))
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="alert alert-danger">{{ session()->get('error') }}</p>
+                    </div>
+                </div>
+            </div>
         @endif
 
         <div class="content company">
@@ -59,11 +75,15 @@
                 <div class="col-md-6 col-xl-3">
                     <a class="block block-link-pop text-center" href="javascript:void(0)">
                         <div class="block-content block-content-full">
+                            @if($employee->photo)
+                            <div class="img-avatar employee_avatar" style="background-image: url({{ $employee->photo }})"></div>
+                            @else
                             <img class="img-avatar" src="{{ URL::asset('media/avatars/avatar2.jpg') }}" alt="">
+                            @endif
                         </div>
 
                         <div class="block-content block-content-full bg-body-light">
-                            <div class="font-w600 mb-5">{{ $employee->name }}</div>
+                            <div class="font-w600 mb-5">{{ $employee->surname }} {{ $employee->name }}</div>
                             <div class="font-size-sm text-muted text-position">
                                 {{ $employee->position }}
                             </div>
