@@ -78,6 +78,13 @@ a.block {
 }
 
 
+/* Header footer */
+.user_avatar {
+    background-position: center;
+    background-size: cover;
+}
+
+
 /* Work space */
 .workspace .nav-item {
     position: relative;
@@ -207,10 +214,14 @@ a.block {
     margin-bottom: 0px;
 }
 
+.company .employee_link {
+    border: solid 1px #999999;
+}
 .company .employee_avatar {
     background-position: center;
     background-size: cover;
 }
+
 
 /* Profile */
 .profile .photo {

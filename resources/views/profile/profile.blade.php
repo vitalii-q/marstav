@@ -1,9 +1,12 @@
 @extends('layouts.hf')
 
-@section('title', $user->name . $user->surname)
+@section('title', $user->name . ' ' . $user->surname)
 
 @section('js')
     <script src="{{ URL::asset('js/pages/profile.js') }}"></script>
+
+    <!-- Page JS Plugins -->
+    <script src="{{ URL::asset('js/plugins/sweetalert2/sweetalert2.all.js') }}"></script>
 @endsection
 
 @section('content')
@@ -64,13 +67,23 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-50">
+                        @if(\Illuminate\Support\Facades\Auth::user()->company_id == $user->company_id)
+                        <div class="form-group row">
                             <div class="col-12">
                                 <p class="title">Электронная почта:</p>
                                 <p class="text">{{ $user->email }}</p>
                                 <div class="profile-group"></div>
                             </div>
                         </div>
+
+                        <div class="form-group row mb-50">
+                            <div class="col-12">
+                                <p class="title">Телефон:</p>
+                                <p class="text">{{ $user->phone }}</p>
+                                <div class="profile-group"></div>
+                            </div>
+                        </div>
+                        @endif
 
                         @if($user->company_id)
                         <div class="form-group row mb-50">

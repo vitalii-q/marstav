@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Note;
-use App\Models\NoteFolder;
-use Illuminate\Http\Request;
+use App\Models\Entities\Note;
+use App\Models\Entities\NoteFolder;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller

@@ -7,10 +7,8 @@
 @endsection
 
 @section('js')
-    <!-- Page JS Plugins -->
     <script src="{{ URL::asset('js/plugins/sweetalert2/sweetalert2.all.js') }}"></script>
 
-    <!-- Page JS Code -->
     <script src="{{ URL::asset('_es6/special/be_ui_activity.js') }}"></script>
 @endsection
 

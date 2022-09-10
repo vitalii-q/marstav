@@ -5,8 +5,10 @@
 @section('js')
     <script src="{{ URL::asset('js/pages/profile.js') }}"></script>
 
-    <!-- Page JS Plugins -->
     <script src="{{ URL::asset('js/plugins/sweetalert2/sweetalert2.all.js') }}"></script>
+    <script src="{{ URL::asset('js/plugins/masked-inputs/jquery.maskedinput.min.js') }}"></script>
+
+    <script>jQuery(function(){ Codebase.helpers(['masked-inputs']); });</script>
 @endsection
 
 @section('content')
@@ -115,7 +117,7 @@
                             <div class="form-group row">
                                 <div class="col-12">
                                     <label for="phone">Номер телефона</label>
-                                    <input type="tel" class="form-control form-control-lg" id="phone" name="phone" placeholder="Введите номер телефона.." value="{{ $profile->phone }}">
+                                    <input type="tel" class="form-control form-control-lg js-masked-phone" id="phone" name="phone" placeholder="(999) 999-9999" value="{{ $profile->phone }}">
                                 </div>
                             </div>
                             @error('phone')

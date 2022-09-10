@@ -95,11 +95,11 @@ class ProfileController extends Controller
             'patronymic' => 'max:40',
             // проверка на уникальность всех email пользователей кроме своего
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
-            'photo' => 'max:2000'
+            'photo' => 'nullable|max:20000000'
         ]);
         if ($request->phone !== null) {
             $request->validate([
-                'phone' => 'min:11|numeric',
+                'phone' => 'min:11',
             ]);
         }
 
@@ -153,7 +153,8 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $user->update([
-            'company_id' => null
+            'company_id' => null,
+            'company_added' => null
         ]);
         return 1;
     }

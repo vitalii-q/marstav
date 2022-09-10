@@ -31,7 +31,7 @@ class Storage
             \Illuminate\Support\Facades\Storage::disk('public')->put($path, file_get_contents($file));
         }
 
-        return 'storage/'.$path;
+        return '/storage/'.$path;
     }
 
     public function delete($file)
@@ -48,7 +48,6 @@ class Storage
                 session()->flash('error', 'Максимальный размер загружаемых файлов '.mb_substr($this->maxSize, 0, 2).' магабайт');
                 header('Location: '.back()->getTargetUrl().' ');
             }
-
             return false;
         }
 
@@ -65,5 +64,16 @@ class Storage
         if (file_exists($file)) {
             return date('F d Y h:i A', filectime($file));
         }
+    }
+
+    /**
+     * Check user or company storage limit and delete files
+     *
+     * @return void
+     */
+    public function checkStorage() {
+        /**
+         * TODO: Проверка занятого простанства доступного пользователю / компании
+         */
     }
 }

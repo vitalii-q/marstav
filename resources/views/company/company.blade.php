@@ -28,7 +28,7 @@
                         <i class="fa fa-envelope-o mr-5"></i> Объявление
                     </button>-->
 
-                    <a class="btn btn-rounded btn-hero btn-sm btn-alt-secondary mb-5 px-20" href="be_pages_generic_profile_edit.html">
+                    <a class="btn btn-rounded btn-hero btn-sm btn-alt-secondary mb-5 px-20" href="{{ route('company.edit', [$company->code]) }}">
                         <i class="fa fa-pencil"></i>
                     </a>
                     @endif
@@ -73,7 +73,7 @@
             <div class="row">
                 @foreach($employees as $employee)
                 <div class="col-md-6 col-xl-3">
-                    <a class="block block-link-pop text-center" href="javascript:void(0)">
+                    <a class="block block-link-pop text-center employee_link" href="/profile/{{ $employee->code }}">
                         <div class="block-content block-content-full">
                             @if($employee->photo)
                             <div class="img-avatar employee_avatar" style="background-image: url({{ $employee->photo }})"></div>

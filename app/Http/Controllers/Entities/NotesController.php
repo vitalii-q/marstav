@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Entities;
 use App\Helpers\Converter;
 use App\Helpers\Regular;
 use App\Http\Controllers\Controller;
-use App\Models\Note;
-use App\Models\NoteFolder;
+use App\Models\Entities\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -57,6 +56,7 @@ class NotesController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
+            'text' => 'max:4000|nullable'
         ]);
 
         $user = Auth::user();
@@ -83,6 +83,7 @@ class NotesController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
+            'text' => 'max:4000|nullable'
         ]);
 
         $user = Auth::user();
@@ -155,7 +156,7 @@ class NotesController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
-            'text' => 'max:4000',
+            'text' => 'max:4000|nullable',
         ]);
 
         $user = Auth::user();
@@ -183,7 +184,7 @@ class NotesController extends Controller
         ]);
 
         $request->validate([
-            'text' => 'max:4000',
+            'text' => 'max:4000|nullable',
         ]);
 
         $user = Auth::user();

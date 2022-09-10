@@ -3,7 +3,7 @@ function addEmployee() {
     let company_id = document.getElementById('modal_add_company_id').value;
 
     $.ajax({
-        url: '/company',
+        url: '/company/add_employee',
         type: "post",
         async: false,
         data: {

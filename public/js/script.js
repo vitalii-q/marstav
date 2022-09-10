@@ -18,6 +18,7 @@ function companyInvitationSuccess(e) {
     })
 
     closeNotification(code);
+    location.reload();
 }
 
 function companyInvitationCancel(e) {

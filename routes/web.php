@@ -23,12 +23,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/profile/leave_сompany', [App\Http\Controllers\ProfileController::class, 'leaveCompany']);
 
     Route::resource('/company', App\Http\Controllers\CompaniesController::class);
-    Route::post('/company', [App\Http\Controllers\CompaniesController::class, 'addEmployeeAjax'])->name('add_employee_ajax');
+    Route::post('/company/add_employee', [App\Http\Controllers\CompaniesController::class, 'addEmployeeAjax'])->name('add_employee_ajax');
 
     Route::post('/notification/company_invitation_success', [App\Http\Controllers\NotificationsController::class, 'companyInvitationSuccess']);
     Route::post('/notification/company_invitation_cancel', [App\Http\Controllers\NotificationsController::class, 'companyInvitationCancel']);
 
     // Entities
+    Route::resource('/tasks', App\Http\Controllers\Entities\TasksController::class);
+    Route::post('/tasks/{code}/comment', [App\Http\Controllers\Entities\TasksController::class, 'comment'])->name('task.comment');
+
     Route::resource('/notes', App\Http\Controllers\Entities\NoteFoldersController::class, ['as' => 'note_folders']);
 
     Route::get('/notes/folder/{code}', [App\Http\Controllers\Entities\NotesController::class, 'index'])->name('entities.note.index');

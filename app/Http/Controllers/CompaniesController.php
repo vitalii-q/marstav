@@ -25,7 +25,7 @@ class CompaniesController extends Controller
             return view('company.company', compact('company'));
         }
 
-        $employees = User::query()->where('company_id', $company->id)->get();
+        $employees = User::query()->where('company_id', $company->id)->orderBy('company_added', 'desc')->get();
 
         return view('company.company', compact('company', 'employees'));
     }
@@ -37,7 +37,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        return view('entities.company.create');
+        return view('company.create');
     }
 
     /**
@@ -49,14 +49,15 @@ class CompaniesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|max:255',
+            'name' => 'required|max:255',
+            'description' => 'max:4000|nullable'
         ]);
 
         $user = Auth::user();
 
         $company_id = Company::query()->insertGetId([
             'creator_id' => $user->id,
-            'title' => $request->title,
+            'name' => $request->name,
             'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->title))))
                 .'_'.bin2hex(random_bytes(14)),
             'description' => $request->description,
@@ -88,7 +89,10 @@ class CompaniesController extends Controller
      */
     public function edit($code)
     {
-        //
+        $user = Auth::user();
+        $company = Company::query()->where('id', $user->company_id)->where('code', $code)->first();
+
+        return view('company.edit', compact('company'));
     }
 
     /**
@@ -98,9 +102,24 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $code)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'max:4000|nullable'
+        ]);
+
+        $user = Auth::user();
+        $company = Company::query()->where('id', $user->company_id)->where('code', $code)->first();
+
+        $company->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'board' => $request->board
+        ]);
+
+        session()->flash('info', 'Информация о компании обновлена');
+        return redirect()->route('company.index', [$code]);
     }
 
     /**
@@ -124,13 +143,16 @@ class CompaniesController extends Controller
         }
 
         /**
-         * event
+         * TODO: event
          */
         $user = Auth::user();
         $company = Company::query()->where('id', $user->company_id)->first();
-        if(!Notification::query()->where('user_id', $employee->id)->where('type', 'info')
-            ->where('anchor', $company->code)->first()
-            and !User::query()->where('code', $request->employee_id)->where('company_id', $company->id)->first()) {
+        if(User::query()->where('code', $request->employee_id)->where('company_id', '!=', null)->first()) {
+            session()->flash('error', 'Пользователь уже состоит в компании.');
+            return 1;
+        }
+
+        if(!Notification::query()->where('user_id', $employee->id)->where('type', 'info')->where('anchor', $company->code)->first()) {
             Notification::query()->insert([
                 'user_id' => $employee->id,
                 'type' => 'info',

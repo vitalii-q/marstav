@@ -25,10 +25,10 @@
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <div class="form-material floating pt-20">
-                                    <input type="text" class="form-control" id="material-text2" name="title"  maxlength="255">
+                                    <input type="text" class="form-control" id="material-text2" name="name"  maxlength="255">
                                     <label for="material-text2">Название</label>
                                 </div>
-                                @error('title')
+                                @error('name')
                                 <div class="alert alert-danger mt-15 mb-0">{{ $message }}</div>
                                 @enderror
                             </div>

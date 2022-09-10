@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Entities;
 use App\Helpers\Converter;
 use App\Helpers\Regular;
 use App\Http\Controllers\Controller;
-use App\Models\Note;
-use App\Models\NoteFolder;
-use App\Models\User;
+use App\Models\Entities\Note;
+use App\Models\Entities\NoteFolder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +46,7 @@ class NoteFoldersController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
+            'description' => 'max:255'
         ]);
 
         NoteFolder::create([
@@ -100,6 +100,7 @@ class NoteFoldersController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
+            'description' => 'max:255'
         ]);
 
         $user = Auth::user();

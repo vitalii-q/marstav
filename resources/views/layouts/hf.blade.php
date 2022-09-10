@@ -33,50 +33,6 @@
     </head>
     <body>
 
-        <!-- Page Container -->
-        <!--
-            Available classes for #page-container:
-
-        GENERIC
-
-            'enable-cookies'                            Remembers active color theme between pages (when set through color theme helper Template._uiHandleTheme())
-
-        SIDEBAR & SIDE OVERLAY
-
-            'sidebar-r'                                 Right Sidebar and left Side Overlay (default is left Sidebar and right Side Overlay)
-            'sidebar-mini'                              Mini hoverable Sidebar (screen width > 991px)
-            'sidebar-o'                                 Visible Sidebar by default (screen width > 991px)
-            'sidebar-o-xs'                              Visible Sidebar by default (screen width < 992px)
-            'sidebar-inverse'                           Dark themed sidebar
-
-            'side-overlay-hover'                        Hoverable Side Overlay (screen width > 991px)
-            'side-overlay-o'                            Visible Side Overlay by default
-
-            'enable-page-overlay'                       Enables a visible clickable Page Overlay (closes Side Overlay on click) when Side Overlay opens
-
-            'side-scroll'                               Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (screen width > 991px)
-
-        HEADER
-
-            ''                                          Static Header if no class is added
-            'page-header-fixed'                         Fixed Header
-
-        HEADER STYLE
-
-            ''                                          Classic Header style if no class is added
-            'page-header-modern'                        Modern Header style
-            'page-header-inverse'                       Dark themed Header (works only with classic Header style)
-            'page-header-glass'                         Light themed Header with transparency by default
-                                                        (absolute position, perfect for light images underneath - solid light background on scroll if the Header is also set as fixed)
-            'page-header-glass page-header-inverse'     Dark themed Header with transparency by default
-                                                        (absolute position, perfect for dark images underneath - solid dark background on scroll if the Header is also set as fixed)
-
-        MAIN CONTENT LAYOUT
-
-            ''                                          Full width Main Content if no class is added
-            'main-content-boxed'                        Full width Main Content with a specific maximum width (screen width > 1200px)
-            'main-content-narrow'                       Full width Main Content with a percentage width (screen width > 1200px)
-        -->
         <div id="page-container" class="sidebar-o sidebar-inverse enable-page-overlay side-scroll page-header-fixed main-content-boxed">
             <!-- Side Overlay-->
             <aside id="side-overlay">
@@ -429,14 +385,22 @@
                     <div class="content-side content-side-full content-side-user px-10 align-parent">
                         <!-- Visible only in mini mode -->
                         <div class="sidebar-mini-visible-b align-v animated fadeIn">
-                            <img class="img-avatar img-avatar32" src="{{ URL::asset('media/avatars/avatar15.jpg') }}" alt="">
+                            @if($user->photo)
+                                <div class="img-avatar user_avatar" style="background-image: url({{ $user->photo }})"></div>
+                            @else
+                                <img class="img-avatar" src="{{ URL::asset('media/avatars/avatar2.jpg') }}" alt="">
+                            @endif
                         </div>
                         <!-- END Visible only in mini mode -->
 
                         <!-- Visible only in normal mode -->
                         <div class="sidebar-mini-hidden-b text-center">
                             <a class="img-link" href="">
-                                <img class="img-avatar" src="{{ URL::asset('media/avatars/avatar15.jpg') }}" alt="">
+                                @if($user->photo)
+                                    <div class="img-avatar user_avatar" style="background-image: url({{ $user->photo }})"></div>
+                                @else
+                                    <img class="img-avatar" src="{{ URL::asset('media/avatars/avatar2.jpg') }}" alt="">
+                                @endif
                             </a>
                             <ul class="list-inline mt-10">
                                 <li class="list-inline-item">
@@ -526,18 +490,7 @@
                                 <a href="{{ route('note_folders.notes.index') }}"><i class="si si-book-open"></i><span class="sidebar-mini-hide">Заметки</span></a>
                             </li>
                             <li>
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-paper-clip"></i><span class="sidebar-mini-hide">Задачи</span></a>
-                                <ul>
-                                    <li>
-                                        <a href="be_blocks.html">Styles</a>
-                                    </li>
-                                    <li>
-                                        <a href="be_blocks_draggable.html">Draggable</a>
-                                    </li>
-                                    <li>
-                                        <a href="be_blocks_api.html">API</a>
-                                    </li>
-                                </ul>
+                                <a href="{{ route('tasks.index') }}"><i class="si si-paper-clip"></i><span class="sidebar-mini-hide">Задачи</span></a>
                             </li>
                             <li>
                                 <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-layers"></i><span class="sidebar-mini-hide">Сделки</span></a>
