@@ -435,7 +435,7 @@
                                 <a href="/"><i class="si si-cup"></i><span class="sidebar-mini-hide">Рабочий стол</span></a>
                             </li>
                             <li>
-                                <a href="be_pages_dashboard.html"><i class="si si-bubbles"></i><span class="sidebar-mini-hide">Чат</span></a>
+                                <a href="{{ route('chat') }}"><i class="si si-bubbles"></i><span class="sidebar-mini-hide">Чат</span></a>
                             </li>
                             <!--<li>
                                 <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Page Kits</span></a>

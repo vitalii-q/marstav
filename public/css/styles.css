@@ -347,3 +347,12 @@ a.block {
     margin-bottom: 0;
     max-width: 228px;
 }
+
+/* Chat */
+.chat {
+    overflow: hidden;
+}
+.chat_dialogs {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
