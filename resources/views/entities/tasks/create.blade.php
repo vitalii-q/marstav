@@ -76,7 +76,7 @@
                                         @endforeach
                                     </select>
                                     @error('performer')
-                                    <div class="alert alert-danger mt-15 mb-0">{{ $message }}</div>
+                                    <div class="alert alert-danger mt-15">{{ $message }}</div>
                                     @enderror
 
                                     <label class="" for="priority">Приоритет *</label>
@@ -87,7 +87,7 @@
                                         <option value="4">Очень срочно</option>
                                     </select>
                                     @error('priority')
-                                    <div class="alert alert-danger mt-15 mb-0">{{ $message }}</div>
+                                    <div class="alert alert-danger mt-15">{{ $message }}</div>
                                     @enderror
                                 </div>
 
@@ -114,10 +114,10 @@
                                         @endforeach
                                     </select>
                                     @error('observers')
-                                    <div class="alert alert-danger mt-15 mb-0">{{ $message }}</div>
+                                    <div class="alert alert-danger mt-15">{{ $message }}</div>
                                     @enderror
                                     @error('observers.*')
-                                    <div class="alert alert-danger mt-15 mb-0">{{ $message }}</div>
+                                    <div class="alert alert-danger mt-15">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>

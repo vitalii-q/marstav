@@ -54,76 +54,84 @@
 
     <div class="row gutters-tiny notes">
 
-        @foreach($folders as $folder)
-            <div id="folder_{{ $folder->code }}" class="note col-md-6 col-xl-3">
-                <div class="block-options">
-                    <div class="block-options-itemp-0">
-                        <a href="/notes/{{ $folder->code }}/edit" data-delroute="entities/note_folders/{{ $folder->code }}" data-elemid="folder_{{ $folder->code }}" data-toggle="tooltip" data-placement="left" title="Редактировать"
-                           class="si si-pencil text-white-op text-white-op-c">
-                        </a>
-                        <i data-delroute="/notes/{{ $folder->code }}" data-elemid="folder_{{ $folder->code }}" data-toggle="tooltip" data-placement="left" title="Удалить"
-                           class="fa fa-times text-white-op text-white-op-c js-swal-confirm">
-                        </i>
-                    </div>
-                </div>
-                <a class="block block-rounded block-transparent bg-gd-sea" href="/notes/folder/{{ $folder->code }}">
-                    <div class="block-options block-options_icons-left">
+        @if(count($folders) or count($notes))
+
+            @foreach($folders as $folder)
+                <div id="folder_{{ $folder->code }}" class="note col-md-6 col-xl-3">
+                    <div class="block-options">
                         <div class="block-options-itemp-0">
-                            <i data-delroute="/notes/{{ $folder->code }}" data-elemid="folder_{{ $folder->code }}"
-                               class="si si-folder-alt text-white-op text-white-op-c js-swal-confirm">
+                            <a href="/notes/{{ $folder->code }}/edit" data-delroute="entities/note_folders/{{ $folder->code }}" data-elemid="folder_{{ $folder->code }}" data-toggle="tooltip" data-placement="left" title="Редактировать"
+                               class="si si-pencil text-white-op text-white-op-c">
+                            </a>
+                            <i data-delroute="/notes/{{ $folder->code }}" data-elemid="folder_{{ $folder->code }}" data-toggle="tooltip" data-placement="left" title="Удалить"
+                               class="fa fa-times text-white-op text-white-op-c js-swal-confirm">
                             </i>
                         </div>
                     </div>
-                    <div class="block-content block-content-full block-sticky-options">
-                        <div class="folder-text py-20 text-center">
-                            <div class="folder-title font-w700 text-white-op note-block_text">{{ mb_strimwidth($folder->title, 0, 40, "..") }}</div>
+
+                    <a class="block block-rounded block-transparent bg-gd-sea" href="/notes/folder/{{ $folder->code }}">
+                        <div class="block-options block-options_icons-left">
+                            <div class="block-options-itemp-0">
+                                <i data-delroute="/notes/{{ $folder->code }}" data-elemid="folder_{{ $folder->code }}"
+                                   class="si si-folder-alt text-white-op text-white-op-c js-swal-confirm">
+                                </i>
+                            </div>
+                        </div>
+                        <div class="block-content block-content-full block-sticky-options">
+                            <div class="folder-text py-20 text-center">
+                                <div class="folder-title font-w700 text-white-op note-block_text">{{ mb_strimwidth($folder->title, 0, 40, "..") }}</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+
+            @foreach($notes as $note)
+                <div id="folder_{{ $note->code }}" class="col-md-6 col-xl-3 note">
+                    <div class="block-options">
+                        <div class="block-options-item p-0">
+                            <a href="{{ route('entities.note.edit', ['root', $note->code]) }}" data-toggle="tooltip" data-placement="left" title="Редактировать"
+                               class="si si-pencil text-white-op text-white-op-c">
+                            </a>
+                            <i data-delroute="/notes/folder/{{ $note->code }}" data-elemid="folder_{{ $note->code }}" data-toggle="tooltip" data-placement="left" title="Удалить"
+                               class="fa fa-times text-white-op text-white-op-c js-swal-confirm">
+                            </i>
                         </div>
                     </div>
-                </a>
-            </div>
-        @endforeach
 
-        @foreach($notes as $note)
-            <div id="folder_{{ $note->code }}" class="col-md-6 col-xl-3 note">
-                <div class="block-options">
-                    <div class="block-options-item p-0">
-                        <a href="{{ route('entities.note.edit', ['root', $note->code]) }}" data-toggle="tooltip" data-placement="left" title="Редактировать"
-                           class="si si-pencil text-white-op text-white-op-c">
-                        </a>
-                        <i data-delroute="/notes/folder/{{ $note->code }}" data-elemid="folder_{{ $note->code }}" data-toggle="tooltip" data-placement="left" title="Удалить"
-                           class="fa fa-times text-white-op text-white-op-c js-swal-confirm">
-                        </i>
+                    <a class="block block-rounded block-transparent bg-gd-sun" href="{{ route('entities.note.edit', ['root', $note->code]) }}">
+                        <div class="block-options block-options_icons-left">
+                            <div class="block-options-itemp-0">
+                                <i class="si si-note text-white-op text-white-op-c"></i> {{-- data-delroute="/notes/{{ $folder->code }}" data-elemid="folder_{{ $folder->code }}" --}}
+                            </div>
+                        </div>
+                        <div class="block-content block-content-full block-sticky-options">
+                            <div class="folder-text note_folder-text py-20 text-center">
+                                <div class="folder-title font-w700 text-white-op note-block_text">{{ mb_strimwidth($note->title, 0, 40, "..") }}</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+
+        @else
+
+            <div id="notes_stub" class="hero bg-white bg-pattern stub h-auto minh-auto" style="background-image: url({{ URL::asset('media/various/bg-pattern-inverse.png') }});">
+                <div class="hero-inner">
+                    <div class="content content-full">
+                        <div class="py-50 text-center">
+                            <i class="si si-note text-warning display-3"></i>
+                            <h1 class="h2 font-w700 mt-30 mb-10">Добавьте заметку</h1>
+                            <h2 class="h3 font-w400 text-muted stub-text mb-50">Здесь вы можете управлять заметками</h2>
+                            <a class="btn btn-hero btn-noborder btn-rounded btn-warning">
+                                <i class="si si-pencil mr-10"></i> Добавить заметку
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <a class="block block-rounded block-transparent bg-gd-sun" href="{{ route('entities.note.edit', ['root', $note->code]) }}">
-                    <div class="block-options block-options_icons-left">
-                        <div class="block-options-itemp-0">
-                            <i class="si si-note text-white-op text-white-op-c"></i> {{-- data-delroute="/notes/{{ $folder->code }}" data-elemid="folder_{{ $folder->code }}" --}}
-                        </div>
-                    </div>
-                    <div class="block-content block-content-full block-sticky-options">
-                        <div class="folder-text note_folder-text py-20 text-center">
-                            <div class="folder-title font-w700 text-white-op note-block_text">{{ mb_strimwidth($note->title, 0, 40, "..") }}</div>
-                        </div>
-                    </div>
-                </a>
             </div>
-        @endforeach
 
-        <div id="notes_stub" class="hero bg-white bg-pattern stub h-auto mh-auto" style="background-image: url({{ URL::asset('media/various/bg-pattern-inverse.png') }});">
-            <div class="hero-inner">
-                <div class="content content-full">
-                    <div class="py-50 text-center">
-                        <i class="si si-note text-warning display-3"></i>
-                        <h1 class="h2 font-w700 mt-30 mb-10">Добавьте заметку</h1>
-                        <h2 class="h3 font-w400 text-muted stub-text mb-50">Здесь вы можете управлять заметками</h2>
-                        <a class="btn btn-hero btn-noborder btn-rounded btn-warning">
-                            <i class="si si-pencil mr-10"></i> Добавить заметку
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endif
 
     </div>
     </div>

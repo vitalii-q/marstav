@@ -76,7 +76,7 @@
                     <a class="block block-link-pop text-center employee_link" href="/profile/{{ $employee->code }}">
                         <div class="block-content block-content-full">
                             @if($employee->photo)
-                            <div class="img-avatar employee_avatar" style="background-image: url({{ $employee->photo }})"></div>
+                            <div class="img-avatar avatar" style="background-image: url({{ $employee->photo }})"></div>
                             @else
                             <img class="img-avatar" src="{{ URL::asset('media/avatars/avatar2.jpg') }}" alt="">
                             @endif
@@ -95,7 +95,7 @@
 
         </div>
     @else
-        <div id="workspace_stub" class="hero bg-pattern stub h-auto mh-auto" data-toggle="modal" data-target="#modal-popin-plus" style="background-image: url({{ URL::asset('media/various/bg-pattern-inverse.png') }});">
+        <div id="workspace_stub" class="hero bg-pattern stub h-auto minh-auto" data-toggle="modal" data-target="#modal-popin-plus" style="background-image: url({{ URL::asset('media/various/bg-pattern-inverse.png') }});">
             <div class="hero-inner">
                 <div class="content content-full">
                     <div class="py-60 text-center">

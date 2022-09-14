@@ -12,9 +12,14 @@
 body {
     color: #171717;
 }
+.table {color: #171717}
+small {color: #171717}
 a.block {
     color: #171717;
 }
+
+.text-darkgray {color: #646464;}
+.text-bold {font-weight: 900;}
 
 .d-block {display: block}
 
@@ -25,17 +30,17 @@ a.block {
 .pt-8 {padding-top: 8px}
 
 .m-0auto {margin: 0 auto}
+.mt--10 {margin-top: -10px}
 .mb-16 {margin-bottom: 16px}
 
 .w-30 {width: 30px}
-.mh-auto {min-height: auto}
+.minh-auto {min-height: auto}
 
 .tc-black {color: #171717}
 
 .underline {text-decoration: underline}
 .ta-right {text-align: right}
 .c-pointer {cursor: pointer}
-
 
 .folder-title {
     color: rgba(255,255,255)!important;
@@ -49,10 +54,13 @@ a.block {
 .form-control:focus {color: #171717;}
 
 /* General */
-
 .stub .stub-text {
     max-width: 800px;
     margin: 0 auto;
+}
+.avatar {
+    background-position: center;
+    background-size: cover;
 }
 
 /* - стили для Chrome, Safari и Opera
@@ -217,10 +225,6 @@ a.block {
 .company .employee_link {
     border: solid 1px #999999;
 }
-.company .employee_avatar {
-    background-position: center;
-    background-size: cover;
-}
 
 
 /* Profile */
@@ -322,4 +326,24 @@ a.block {
     width: 150px;
 }
 
-
+/* Tasks */
+.comment-left {
+    max-width: 36px;
+}
+.tasks .files {
+    margin-bottom: 25px;
+}
+.tasks .file {
+    margin: 0px 5px;
+}
+.tasks .file_icon {
+    color: #171717!important;
+}
+.tasks .attach_file {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: calc(1.428572em + 0.857143rem + 2px);
+    margin-bottom: 0;
+    max-width: 228px;
+}

@@ -31,6 +31,10 @@ Route::group(['middleware' => 'auth'], function () {
     // Entities
     Route::resource('/tasks', App\Http\Controllers\Entities\TasksController::class);
     Route::post('/tasks/{code}/comment', [App\Http\Controllers\Entities\TasksController::class, 'comment'])->name('task.comment');
+    Route::get('/tasks/{code}/work', [App\Http\Controllers\Entities\TasksController::class, 'work'])->name('task.work');
+    Route::post('/tasks/{code}/transmit', [App\Http\Controllers\Entities\TasksController::class, 'transmit'])->name('task.transmit');
+    Route::post('/tasks/{code}/add_member', [App\Http\Controllers\Entities\TasksController::class, 'add_member'])->name('task.add_member');
+    Route::get('/tasks/{code}/finish', [App\Http\Controllers\Entities\TasksController::class, 'finish'])->name('task.finish');
 
     Route::resource('/notes', App\Http\Controllers\Entities\NoteFoldersController::class, ['as' => 'note_folders']);
 
@@ -43,7 +47,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/notes/folder/{folder_code}/{note_code}/update', [App\Http\Controllers\Entities\NotesController::class, 'update'])->name('entities.note.update');
     Route::post('/notes/folder/{note_code}/update/ajax', [App\Http\Controllers\Entities\NotesController::class, 'ajaxUpdate'])->name('entities.note.update.ajax');
     Route::delete('/notes/folder/{code}', [App\Http\Controllers\Entities\NotesController::class, 'destroy'])->name('entities.note.destroy');
-
 });
 
 

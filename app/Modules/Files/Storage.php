@@ -36,6 +36,7 @@ class Storage
 
     public function delete($file)
     {
+        $file = mb_substr($file, 1); // обрезаем символ /
         if (file_exists($file)) {
             unlink($file);
         }
@@ -75,5 +76,9 @@ class Storage
         /**
          * TODO: Проверка занятого простанства доступного пользователю / компании
          */
+    }
+
+    public function limitDeleteFiles() {
+        // TODO: удаление старых файлов по превышению лимита
     }
 }

@@ -1,5 +1,4 @@
 @php($user = \Illuminate\Support\Facades\Auth::user())
-
 <!doctype html>
 <html lang="en" class="no-focus">
     <head>
@@ -525,7 +524,7 @@
                                 <a href="{{ route('company.index') }}"><i class="si si-users"></i><span class="sidebar-mini-hide">Компания</span></a>
                             </li>
                             <li>
-                                <a href="{{ route('profile.show', [\Illuminate\Support\Facades\Auth::user()->code]) }}"><i class="si si-moustache"></i><span class="sidebar-mini-hide">Профайл</span></a>
+                                <a href="{{ route('profile.show', [$user->code]) }}"><i class="si si-moustache"></i><span class="sidebar-mini-hide">Профайл</span></a>
                             </li>
                             <li>
                                 <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-settings"></i><span class="sidebar-mini-hide">Конфигурации</span></a>

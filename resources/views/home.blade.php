@@ -48,10 +48,13 @@
                             <button id="modal-popin-plus-btn" class="btn-block-option" type="button" data-toggle="modal" data-target="#modal-popin-plus">
                                 <i id="modal-popin-plus-close-icon" class="si si-plus"></i>
                             </button>
+
                             <button id="modal-popin-select-note-btn" type="button" class="btn-block-option" data-toggle="modal" data-target="#modal-popin-notebook">
                                 <i class="si si-notebook"></i>
                             </button>
+
                             <button type="button" class="btn-block-option btn-block-option-funcs" data-toggle="block-option" data-action="fullscreen_toggle"></button>
+
                             <!--<button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle" data-action-mode="demo">
                                 <i class="si si-refresh"></i>
                             </button>
@@ -90,7 +93,7 @@
                     @endforeach
 
                     @if($i = 1)
-                        <div id="workspace_stub" class="hero bg-white bg-pattern stub h-auto mh-auto" data-toggle="modal" data-target="#modal-popin-plus" style="background-image: url({{ URL::asset('media/various/bg-pattern-inverse.png') }});">
+                        <div id="workspace_stub" class="hero bg-white bg-pattern stub h-auto minh-auto" data-toggle="modal" data-target="#modal-popin-plus" style="background-image: url({{ URL::asset('media/various/bg-pattern-inverse.png') }});">
                             <div class="hero-inner">
                                 <div class="content content-full">
                                     <div class="py-60 text-center">
@@ -229,7 +232,7 @@
                             </table>
 
                             @if(!count($notes))
-                            <div id="workspace_stub" class="hero bg-white bg-pattern h-auto mh-auto" style="background-image: url({{ URL::asset('media/various/bg-pattern-inverse.png') }});">
+                            <div id="workspace_stub" class="hero bg-white bg-pattern h-auto minh-auto" style="background-image: url({{ URL::asset('media/various/bg-pattern-inverse.png') }});">
                                 <div class="hero-inner">
                                     <div class="content content-full">
                                         <div class="py-30 text-center">
@@ -246,6 +249,7 @@
                             @endif
 
                         </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-alt-secondary" data-dismiss="modal">Close</button>
                         </div>
