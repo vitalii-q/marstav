@@ -30,6 +30,7 @@ a.block {
 .pt-8 {padding-top: 8px}
 
 .m-0auto {margin: 0 auto}
+.mt--2 {margin-top: -2px}
 .mt--10 {margin-top: -10px}
 .mb-16 {margin-bottom: 16px}
 
@@ -61,6 +62,18 @@ a.block {
 .avatar {
     background-position: center;
     background-size: cover;
+}
+.avatar32 {
+    background-position: center;
+    background-size: cover;
+    width: 32px;
+    height: 32px;
+}
+.avatar48 {
+    background-position: center;
+    background-size: cover;
+    width: 48px;
+    height: 48px;
 }
 
 /* - стили для Chrome, Safari и Opera

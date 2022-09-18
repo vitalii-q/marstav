@@ -97,14 +97,7 @@ class TasksController extends Controller
         ]);
 
         if (isset($request->all()['files'])) {
-            foreach ($request->all()['files'] as $file) {
-                $path = File::save($file, 'file', true);
-                \App\Models\File::query()->insert([
-                    'task_id' => $task_id,
-                    'name' => $file->getClientOriginalName(),
-                    'src' => $path
-                ]);
-            }
+            File::loader($request->all()['files'], 'task', $task_id);
         }
 
         $performer = User::query()->where('code', $request->performer)->first();
@@ -233,14 +226,7 @@ class TasksController extends Controller
         ]);
 
         if (isset($request->all()['files'])) {
-            foreach ($request->all()['files'] as $file) {
-                $path = File::save($file, 'file', true);
-                \App\Models\File::query()->insert([
-                    'comment_id' => $comment_id,
-                    'name' => $file->getClientOriginalName(),
-                    'src' => $path
-                ]);
-            }
+            File::loader($request->all()['files'], 'comment', $comment_id);
         }
 
         session()->flash('info', 'Комментарий добавлен');

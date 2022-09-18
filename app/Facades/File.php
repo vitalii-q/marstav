@@ -16,6 +16,21 @@ class File
         }
     }
 
+    public static function loader($files, $entity, $id)
+    {
+        $file_ids = [];
+        foreach ($files as $file) {
+            $path = File::save($file, 'file', true);
+            $file_id = \App\Models\File::query()->insertGetId([
+                $entity.'_id' => $id,
+                'name' => $file->getClientOriginalName(),
+                'src' => $path
+            ]);
+            array_push($file_ids, $file_id);
+        }
+        return $file_ids;
+    }
+
     public static function delete($file)
     {
         $storage = new Storage();

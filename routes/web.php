@@ -26,9 +26,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/company/add_employee', [App\Http\Controllers\CompaniesController::class, 'addEmployeeAjax'])->name('add_employee_ajax');
 
     Route::get('/chat', [\App\Http\Controllers\ChatController::class, 'index'])->name('chat');
+    Route::post('/chat/{code}/message', [\App\Http\Controllers\ChatController::class, 'message'])->name('message');
+    Route::post('/chat/{code}/dialog', [\App\Http\Controllers\ChatController::class, 'getDialog'])->name('dialog');
+    Route::post('/chat/{code}/more_messages', [\App\Http\Controllers\ChatController::class, 'moreMessages'])->name('more_messages');
 
     Route::post('/notification/company_invitation_success', [App\Http\Controllers\NotificationsController::class, 'companyInvitationSuccess']);
     Route::post('/notification/company_invitation_cancel', [App\Http\Controllers\NotificationsController::class, 'companyInvitationCancel']);
+
+    Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
 
     // Entities
     Route::resource('/tasks', App\Http\Controllers\Entities\TasksController::class);
