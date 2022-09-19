@@ -22,13 +22,12 @@ class ChatController
     {
         $user = Auth::user();
         $employee = User::employee($user->company_id, $code);
-        $messages = Message::query()->where('from_id', $user->id)->where('to_id', $employee->id)
+        $messages = Message::query()->select('messages.*')
+            ->where('from_id', $user->id)->where('to_id', $employee->id)
             ->orWhere('from_id', $employee->id)->where('to_id', $user->id)
-            ->orderBy('created_at', 'desc')->limit(10)->get();
+            ->groupBy('messages.id')->orderBy('created_at', 'desc')->limit(10)->get();
 
-        foreach ($messages as $message) {
-            $message->time = date('n-j H:i', strtotime($message->created_at));
-        }
+        $this->getMessagesFiles($messages);
 
         // TODO: очередь
         $new_mess = Message::query()->where('from_id', $employee->id)->where('to_id', $user->id)->where('view', null)->get();
@@ -53,9 +52,7 @@ class ChatController
             ->orWhere('from_id', $employee->id)->where('to_id', $user->id)
             ->offset($request->messages_shown)->limit(10)->get();
 
-        foreach ($messages as $message) {
-            $message->time = date('n-j H:i', strtotime($message->created_at));
-        }
+        $this->getMessagesFiles($messages);
 
         return [
             'user' => $user,
@@ -83,6 +80,7 @@ class ChatController
             'text' => $request->text
         ]);
 
+
         if (isset($request->all()['files'])) {
             $file_ids = File::loader($request->all()['files'], 'message', $message_id);
             $files = \App\Models\File::query()->select('message_id', 'name', 'src')->whereIn('id', $file_ids)->get();
@@ -97,5 +95,25 @@ class ChatController
             'files' => isset($files) ? $files : null,
             'server_time' => date('n-j H:i', strtotime(\Carbon\Carbon::now()))
         ];
+    }
+
+    protected function getMessagesFiles($messages) {
+        $message_ids = [];
+        foreach ($messages as $message) { array_push($message_ids, $message->id); }
+        $files = \App\Models\File::query()->whereIn('message_id', $message_ids)->get();
+
+        foreach ($messages as $message) {
+            $message->time = date('n-j H:i', strtotime($message->created_at));
+
+            $array = [];
+            foreach ($files as $file) {
+                if ($file->message_id == $message->id) {
+                    array_push($array, $file);
+                }
+            }
+            $message->files = $array;
+        }
+
+        return $messages;
     }
 }

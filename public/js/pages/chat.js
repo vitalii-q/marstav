@@ -24,14 +24,34 @@ let send_button = document.getElementById('send_button');
 
 let messages_shown = 10;
 
+function getFilesTemplate(files) {
+    if(files) {
+        let template_files = '<div class="files d-flex flex-wrap">';
+
+        for (let i = 0; i < files.length; i++) {
+            template_files = template_files.concat('<a href="'+files[i].src+'" download="">\n' +
+                '<div class="file">\n' +
+                '<i class="si si-doc file_icon"></i>'+files[i].name+'</div>\n' +
+                '</a>');
+        }
+        template_files = template_files.concat("</div>");
+        return template_files;
+    } else {
+        return '';
+    }
+}
+
 function getMessageSeriesTemplate(photo, message, time, files, self = false) {
     let classes = ''; let reverse = '';
     if (self) {
-        classes = 'bg-body-dark text-dark rounded px-15 py-10 mb-5';
+        classes = 'bg-body-dark text-dark rounded px-15 py-10 mb-5 ml-auto';
         reverse = 'flex-row-reverse';
     } else {
-        classes = 'bg-primary-lighter text-primary-darker rounded px-15 py-10 mb-5 d-inline-block';
+        classes = 'bg-primary-lighter text-primary-darker rounded px-15 py-10 mb-5'; // d-inline-block
     }
+
+    let template_files = getFilesTemplate(files);
+    message = message ? message : '';
 
     return '<div class="d-flex messages_series '+reverse+' mb-20">\n' +
         '<div>\n' +
@@ -40,8 +60,8 @@ function getMessageSeriesTemplate(photo, message, time, files, self = false) {
         '</a>\n' +
         '</div>\n' +
         '<div class="mx-10 text-right messages_group">\n' +
-        '<div class="messages_item">\n' +
-        '<p class="'+classes+'">'+message+'</p>\n' +
+        '<div class="messages_item '+classes+'">\n' +
+        '<p class="mb-5">'+message+'</p>' + template_files +
         '</div>\n' +
         '<div class="text-right text-muted font-size-xs font-italic time">'+time+'</div>\n' +
         '</div>\n' +
@@ -51,13 +71,16 @@ function getMessageSeriesTemplate(photo, message, time, files, self = false) {
 function getMessageTemplate(message, time, files, self = false) {
     let classes = '';
     if (self) {
-        classes = 'bg-body-dark text-dark rounded px-15 py-10 mb-5';
+        classes = 'bg-body-dark text-dark rounded px-15 py-10 mb-5 ml-auto';
     } else {
-        classes = 'bg-primary-lighter text-primary-darker rounded px-15 py-10 mb-5 d-inline-block';
+        classes = 'bg-primary-lighter text-primary-darker rounded px-15 py-10 mb-5'; // d-inline-block
     }
 
-    return '<div class="messages_item">\n' +
-        '<p class="'+classes+'">'+message+'</p>\n' +
+    let template_files = getFilesTemplate(files);
+    message = message ? message : '';
+
+    return '<div class="messages_item '+classes+'">\n' +
+        '<p class="mb-5">'+message+'</p>\n' + template_files +
         '</div>';
 }
 
@@ -70,6 +93,7 @@ function showMessage(photo, text, time, files = [], self = false, continuing = f
         let last_time_elem = selected_dialog.children().last().find('.time')[0];
 
         let have_reverse = selected_dialog.children().last().hasClass('flex-row-reverse');
+
         if((!have_reverse && !self && !show_time && last_time_elem) || (have_reverse && self && !show_time)) {
             $(last_time_elem).before(getMessageTemplate(text, time, files, self));
         } else {
@@ -97,7 +121,7 @@ function checkDateTime(previous_full_time, full_time) {
         let l_time = previous_full_time[2].split(':');
         let n_time = full_time[2].split(':');
 
-        if (Number((l_time[0]+''+l_time[1])) < (Number(n_time[0]+''+n_time[1]))+2) {
+        if (Number((l_time[0]+''+l_time[1]))+2 > (Number(n_time[0]+''+n_time[1]))) {
             return false;
         }
     }
@@ -141,9 +165,9 @@ function proxyShowMessage(data, continuing) {
     for (let i = 0; i < data.message.length; i++) {
         let time = getTimeValue(data.server_time, data.message[i].time);
         if (data.user.id == data.message[i].from_id) {
-            showMessage(data.user.photo, data.message[i].text, time, [],true, continuing);
+            showMessage(data.user.photo, data.message[i].text, time, data.message[i].files,true, continuing);
         } else {
-            showMessage(data.employee.photo, data.message[i].text, time, [], false, continuing);
+            showMessage(data.employee.photo, data.message[i].text, time, data.message[i].files, false, continuing);
         }
     }
 }
@@ -285,6 +309,7 @@ function sendMessage(code) {
             success: (data) => {
                 error.classList.add('d-none');
                 notification.classList.add('d-none');
+                files.value = '';
 
                 let time = getTimeValue(data.server_time, data.message.time);
                 showMessage(data.photo, data.message.text, time, data.files, true);

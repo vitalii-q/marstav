@@ -30,9 +30,7 @@ class TasksController extends Controller
             ->join('task_user', 'task_user.task_id', '=', 'tasks.id')
             ->where('task_user.user_id', '=', $user->id)
             ->where('tasks.status', '!=', 'closed')
-            ->orWhere('tasks.creator_id', '=', $user->id)
-            ->where('tasks.status', '!=', 'closed')
-            ->groupBy('tasks.id')->orderBy('task_user.id', 'desc')->paginate(10);
+            ->groupBy('tasks.id')->orderBy('tasks.created_at', 'desc')->paginate(10);
 
         return view('entities.tasks.tasks', compact('tasks'));
     }

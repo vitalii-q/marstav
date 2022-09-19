@@ -369,3 +369,13 @@ a.block {
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+.chat .file {
+    margin: 0 5px;
+}
+.chat .file_icon {
+    margin-right: 2px;
+}
+.messages_item {
+    width: min-content;
+}
