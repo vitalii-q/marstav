@@ -22,6 +22,7 @@ a.block {
 .text-bold {font-weight: 900;}
 
 .d-block {display: block}
+.jc-c {justify-content: center;}
 
 .py-60 {
     padding-top: 60px!important;
@@ -379,3 +380,14 @@ a.block {
 .messages_item {
     width: min-content;
 }
+
+/* Contacts */
+.contacts {
+    overflow: hidden;
+}
+.contacts_list {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+

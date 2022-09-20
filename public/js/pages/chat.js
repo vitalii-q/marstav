@@ -4,7 +4,7 @@ let stub = document.getElementById('chat_stub');
 chat.style.height = sidebar.getBoundingClientRect().height -110 + 'px';
 
 let chat_dialogs = document.getElementById('chat_dialogs');
-chat_dialogs.style.height = sidebar.getBoundingClientRect().height -110 -45 -39 -40 + 'px';
+chat_dialogs.style.height = sidebar.getBoundingClientRect().height -110 -45 -39 -53 + 'px';
 
 let chat_right = document.getElementById('chat_right');
 chat_right.style.height = sidebar.getBoundingClientRect().height -134 + 'px';
@@ -232,6 +232,7 @@ function openDialog(code) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: (data) => {
+            //console.log();
 
             dialog.innerHTML = '';
             new_mess_count.classList.add('d-none');
@@ -307,6 +308,8 @@ function sendMessage(code) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: (data) => {
+                //console.log(data);
+
                 error.classList.add('d-none');
                 notification.classList.add('d-none');
                 files.value = '';

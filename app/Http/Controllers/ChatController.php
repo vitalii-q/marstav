@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Facades\File;
+use App\Models\Dialog;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ChatController
 {
     public function index()
     {
         $user = Auth::user();
-        $employees = User::query()->where('company_id', $user->company_id)->where('id', '!=', $user->id)->get();
+
+        $dialogs = Dialog::query()->where('user1_id', $user->id)->orWhere('user2_id', $user->id)->orderBy('updated_at', 'desc')->get();
+        if(count($dialogs)) {
+            $employees = Dialog::getEmployeesSortedByDialogs($user, $dialogs);
+        } else {
+            $employees = User::query()->where('users.company_id', $user->company_id)->where('users.id', '!=', $user->id)->orderBy('name')->get();
+        }
 
         return view('chat', compact('user', 'employees'));
     }
@@ -27,7 +35,7 @@ class ChatController
             ->orWhere('from_id', $employee->id)->where('to_id', $user->id)
             ->groupBy('messages.id')->orderBy('created_at', 'desc')->limit(10)->get();
 
-        $this->getMessagesFiles($messages);
+        Message::attachFiles($messages);
 
         // TODO: очередь
         $new_mess = Message::query()->where('from_id', $employee->id)->where('to_id', $user->id)->where('view', null)->get();
@@ -52,7 +60,7 @@ class ChatController
             ->orWhere('from_id', $employee->id)->where('to_id', $user->id)
             ->offset($request->messages_shown)->limit(10)->get();
 
-        $this->getMessagesFiles($messages);
+        Message::attachFiles($messages);
 
         return [
             'user' => $user,
@@ -72,6 +80,9 @@ class ChatController
 
         $user = Auth::user();
         $employee = User::employee($user->company_id, $code);
+
+        // TODO: очередь
+        Dialog::timeUpdate($user->id, $employee->id);
 
         $message_id = Message::query()->insertGetId([
             'company_id' => $user->company_id,
@@ -95,25 +106,5 @@ class ChatController
             'files' => isset($files) ? $files : null,
             'server_time' => date('n-j H:i', strtotime(\Carbon\Carbon::now()))
         ];
-    }
-
-    protected function getMessagesFiles($messages) {
-        $message_ids = [];
-        foreach ($messages as $message) { array_push($message_ids, $message->id); }
-        $files = \App\Models\File::query()->whereIn('message_id', $message_ids)->get();
-
-        foreach ($messages as $message) {
-            $message->time = date('n-j H:i', strtotime($message->created_at));
-
-            $array = [];
-            foreach ($files as $file) {
-                if ($file->message_id == $message->id) {
-                    array_push($array, $file);
-                }
-            }
-            $message->files = $array;
-        }
-
-        return $messages;
     }
 }

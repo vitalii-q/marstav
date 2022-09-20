@@ -220,18 +220,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-users"></i><span class="sidebar-mini-hide">Контакты</span></a>
-                                <ul>
-                                    <li>
-                                        <a href="be_blocks.html">Styles</a>
-                                    </li>
-                                    <li>
-                                        <a href="be_blocks_draggable.html">Draggable</a>
-                                    </li>
-                                    <li>
-                                        <a href="be_blocks_api.html">API</a>
-                                    </li>
-                                </ul>
+                                <a href="{{ route('contacts.index') }}"><i class="si si-users"></i><span class="sidebar-mini-hide">Контакты</span></a>
                             </li>
                             <li class="mb-20"></li>
                             <li>
@@ -454,7 +443,7 @@
                                 <i class="fa fa-angle-down ml-5"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right min-width-200" aria-labelledby="page-header-user-dropdown">
-                                <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase">User</h5>
+                                <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase">{{ $user->name }}</h5>
                                 <a class="dropdown-item" href="{{ route('profile.show', [$user->code]) }}">
                                     <i class="si si-user mr-5"></i> Профайл
                                 </a>

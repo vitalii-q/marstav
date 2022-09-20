@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/tasks/{code}/add_member', [App\Http\Controllers\Entities\TasksController::class, 'add_member'])->name('task.add_member');
     Route::get('/tasks/{code}/finish', [App\Http\Controllers\Entities\TasksController::class, 'finish'])->name('task.finish');
 
+    Route::resource('/contacts', App\Http\Controllers\Entities\ContactsController::class);
+
     Route::resource('/notes', App\Http\Controllers\Entities\NoteFoldersController::class, ['as' => 'note_folders']);
 
     Route::get('/notes/folder/{code}', [App\Http\Controllers\Entities\NotesController::class, 'index'])->name('entities.note.index');
