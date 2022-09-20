@@ -14,7 +14,7 @@
 
             <div class="js-chat-logged-user m-15 d-flex align-items-center justify-content-between rounded ">
 
-                <button type="button" class="btn btn-primary w-100">Добавить контакт</button>
+                <a href="{{ route('contacts.create') }}" type="button" class="btn btn-primary w-100">Добавить контакт</a>
 
             </div>
 

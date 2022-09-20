@@ -24,7 +24,7 @@ class ContactsController extends Controller
      */
     public function create()
     {
-        //
+        return view('entities.contacts.create');
     }
 
     /**
