@@ -44,6 +44,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/tasks/{code}/finish', [App\Http\Controllers\Entities\TasksController::class, 'finish'])->name('task.finish');
 
     Route::resource('/contacts', App\Http\Controllers\Entities\ContactsController::class);
+    Route::get('/contacts/{code}/show_contact', [App\Http\Controllers\Entities\ContactsController::class, 'showContact'])->name('contacts.show_contact');
+
+    Route::get('/deals/settings', [App\Http\Controllers\Entities\DealsController::class, 'settings'])->name('deals.settings');
+    Route::get('/deals/add_stage', [App\Http\Controllers\Entities\DealsController::class, 'addStage'])->name('deals.add_stage');
+    Route::post('/deals/save_stages', [App\Http\Controllers\Entities\DealsController::class, 'saveStages'])->name('deals.save_stages');
+    Route::resource('/deals', App\Http\Controllers\Entities\DealsController::class);
 
     Route::resource('/notes', App\Http\Controllers\Entities\NoteFoldersController::class, ['as' => 'note_folders']);
 

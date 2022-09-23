@@ -206,18 +206,7 @@
                                 <a href="{{ route('tasks.index') }}"><i class="si si-paper-clip"></i><span class="sidebar-mini-hide">Задачи</span></a>
                             </li>
                             <li>
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-layers"></i><span class="sidebar-mini-hide">Сделки</span></a>
-                                <ul>
-                                    <li>
-                                        <a href="be_blocks.html">Styles</a>
-                                    </li>
-                                    <li>
-                                        <a href="be_blocks_draggable.html">Draggable</a>
-                                    </li>
-                                    <li>
-                                        <a href="be_blocks_api.html">API</a>
-                                    </li>
-                                </ul>
+                                <a href="{{ route('deals.index') }}"><i class="si si-layers"></i><span class="sidebar-mini-hide">Сделки</span></a>
                             </li>
                             <li>
                                 <a href="{{ route('contacts.index') }}"><i class="si si-users"></i><span class="sidebar-mini-hide">Контакты</span></a>

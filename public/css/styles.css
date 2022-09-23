@@ -20,20 +20,26 @@ a.block {
 
 .text-darkgray {color: #646464;}
 .text-bold {font-weight: 900;}
+.fs-14 {font-size: 14px}
+
+.bg-none {background: none;}
+.bs-none {box-shadow: none;}
 
 .d-block {display: block}
 .jc-c {justify-content: center;}
 
+.pt-8 {padding-top: 8px}
 .py-60 {
     padding-top: 60px!important;
     padding-bottom: 60px!important;
 }
-.pt-8 {padding-top: 8px}
 
 .m-0auto {margin: 0 auto}
 .mt--2 {margin-top: -2px}
 .mt--10 {margin-top: -10px}
+.mt-32 {margin-top: 32px}
 .mb-16 {margin-bottom: 16px}
+.mb-32px {margin-bottom: 32px}
 
 .w-30 {width: 30px}
 .minh-auto {min-height: auto}
@@ -389,5 +395,151 @@ a.block {
     overflow-x: hidden;
     overflow-y: auto;
 }
+.contacts_position {
+    min-height: 18px;
+}
+.contacts_tabs {
+    position: relative;
+    z-index: 100;
+}
+
+.contact_info {
+    padding-top: 16px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.contacts .edit_hr {
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+/* Deals */
+.deals {
+    overflow: hidden;
+    overflow-x: auto;
+}
+.stage_title {
+    width: max-content;
+    border: 1px solid transparent;
+    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 200px;
+    margin-bottom: 20px;
+    margin-right: 5px;
+}
+.stage_type_1 {
+    color: #212529;
+    background-color: #e3f4fc;
+    border: 1px solid transparent;
+    border-color: #15707b;
+    font-weight: 600;
+}
+.stage_type_2 {
+    color: #212529;
+    background-color: #fcf7e6;
+    border: 1px solid transparent;
+    border-color: #b78a00;
+    font-weight: 600;
+}
+.stage_type_3 {
+    color: #212529;
+    background-color: #d3e9b8;
+    border-color: #7eb73d;
+    font-weight: 600;
+}
+.stage_type_4 {
+    color: #212529;
+    border: 1px solid transparent;
+    border-color: #697d9b;
+    background-color: #fae9e8;
+    font-weight: 600;
+}
+.stage_type_5 {
+    color: #212529;
+    background-color: #f0f2f5;
+    border-color: #cbd2dd;
+    font-weight: 600;
+}
+.stage_type_6 {
+    color: #212529;
+    background-color: #c8e2f8;
+    border-color: #197ed1;
+    font-weight: 600;
+}
+
+.stage_deals {}
+.stage_deal {
+    background-color: #ffffff;
+    margin-bottom: 15px;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.deal_stages .stage {
+    width: 240px;
+    height: 258px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: solid 1px #333333;
+    margin: 0 3px;
+    margin-bottom: 6px;
+}
+
+.stage_more {
+    width: 240px;
+    height: 258px;
+    padding: 10px;
+    border: dashed 1px #2e383c;
+    margin: 0 3px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.stage_more_inner {
+    height: 126px;
+}
+.stage_more_title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #171717;
+}
+.stage_more_box {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    padding-top: 34px;
+    overflow: hidden;
+}
+.stage_more_line1 {
+    background-color: #2e383c;
+    width: 80px;
+    max-width: 80px;
+    height: 4px;
+    border-radius: 3px;
+}
+.stage_more_line2 {
+    background-color: #2e383c;
+    width: 80px;
+    max-width: 78px;
+    height: 4px;
+    border-radius: 3px;
+    transform: rotate(90deg);
+}
+
+.stages_icon_close {
+    display: block;
+    margin-left: auto;
+    width: 14px;
+    font-size: 16px;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
 
 
