@@ -49,7 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/deals/settings', [App\Http\Controllers\Entities\DealsController::class, 'settings'])->name('deals.settings');
     Route::get('/deals/add_stage', [App\Http\Controllers\Entities\DealsController::class, 'addStage'])->name('deals.add_stage');
     Route::post('/deals/save_stages', [App\Http\Controllers\Entities\DealsController::class, 'saveStages'])->name('deals.save_stages');
+    Route::delete('/deals/stage/{code}', [App\Http\Controllers\Entities\DealsController::class, 'deleteStage'])->name('deals.stage.destroy');
     Route::resource('/deals', App\Http\Controllers\Entities\DealsController::class);
+    Route::post('/deals/{code}/update', [App\Http\Controllers\Entities\DealsController::class, 'update'])->name('deals_update');
 
     Route::resource('/notes', App\Http\Controllers\Entities\NoteFoldersController::class, ['as' => 'note_folders']);
 

@@ -429,7 +429,7 @@
                             <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user d-sm-none"></i>
                                 <span class="d-none d-sm-inline-block">{{ $user->name }}</span>
-                                <i class="fa fa-angle-down ml-5"></i>
+                                <i class="si si-arrow-down ml-5 fs-12"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right min-width-200" aria-labelledby="page-header-user-dropdown">
                                 <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase">{{ $user->name }}</h5>
@@ -512,7 +512,7 @@
             @include('parts.notifications')
 
             <!-- Footer -->
-            <footer id="page-footer" class="opacity-0">
+            <footer id="page-footer" class="page-footer opacity-0">
                 <div class="content py-20 font-size-sm clearfix">
                     <!--<div class="float-right">
                         Crafted with <i class="fa fa-heart text-pulse"></i> by <a class="font-w600" href="https://github.com/VitalyWeb" target="_blank">VitalyWeb</a>

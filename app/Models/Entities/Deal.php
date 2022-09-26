@@ -14,5 +14,7 @@ class Deal extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'description', 'priority', 'status', 'deadline', 'code', 'deleted_at'];
+    protected $fillable = [
+        'user_id', 'stage_id', 'status', 'name', 'phone', 'email', 'position', 'company', 'product', 'price', 'deadline', 'note', 'code'
+    ];
 }

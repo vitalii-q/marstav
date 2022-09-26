@@ -1,8 +1,12 @@
 <?php
 namespace App\Http\Controllers\Entities;
 
+use App\Helpers\Converter;
+use App\Helpers\Regular;
 use App\Http\Controllers\Controller;
 use App\Models\DealStage;
+use App\Models\Entities\Deal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,8 +20,10 @@ class DealsController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $stages = DealStage::query()->where('user_id', $user->id)->where('title', '!=', null)
+            ->where('color', '!=', null)->where('position', '!=', null)->orderBy('position')->get();
 
-        return view('entities.deals.deals');
+        return view('entities.deals.deals', compact('user', 'stages'));
     }
 
     /**
@@ -27,7 +33,7 @@ class DealsController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -38,7 +44,40 @@ class DealsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $request->validate([
+            'name' => 'max:255',
+            'phone' => 'max:255',
+            'email' => 'max:255',
+            'position' => 'max:255',
+            'company' => 'max:255',
+            'product' => 'max:255',
+            'price' => 'max:255',
+            'deadline' => 'date_format:Y-m-d H:i|after:'.date('Y-m-d H:i', strtotime(Carbon::yesterday())).'|nullable',
+            'note' => 'max:3000'
+        ]);
+
+        $stages = DealStage::query()->where('user_id', $user->id)->where('title', '!=', null)
+            ->where('color', '!=', null)->where('position', '!=', null)->orderBy('position')->get();
+
+        $deal_id = Deal::query()->insert([
+            'user_id' => $user->id,
+            'stage_id' => $stages[0]->id,
+            'status' => $request->status,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'position' => $request->position,
+            'company' => $request->company,
+            'product' => $request->product,
+            'price' => $request->price,
+            'deadline' => $request->deadline,
+            'note' => $request->note,
+            'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols(mb_strimwidth($request->name, 0, 40, "..")))))
+                .'_'.bin2hex(random_bytes(12))
+        ]);
+
+        return 1;
     }
 
     /**
@@ -70,9 +109,54 @@ class DealsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $code)
     {
-        //
+        $user = Auth::user();
+        $request->validate([
+            'name' => 'max:255',
+            'phone' => 'max:255',
+            'email' => 'max:255',
+            'position' => 'max:255',
+            'company' => 'max:255',
+            'product' => 'max:255',
+            'price' => 'max:255',
+            'deadline' => 'date_format:Y-m-d H:i|after:'.date('Y-m-d H:i', strtotime(Carbon::yesterday())).'|nullable',
+            'note' => 'max:3000'
+        ]);
+
+        if($request->next == 'true') {
+            $next_stage = $this->getNextStage($user, $code);
+        }
+
+        $deal = Deal::query()->where('user_id', $user->id)->where('code', $code)->first();
+        $deal->update([
+            'stage_id' => isset($next_stage)?$next_stage->id:$deal->stage_id,
+            'status' => $request->status,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'position' => $request->position,
+            'company' => $request->company,
+            'product' => $request->product,
+            'price' => $request->price,
+            'deadline' => $request->deadline,
+            'note' => $request->note
+        ]);
+
+        return 1;
+    }
+
+    protected function getNextStage($user, $code)
+    {
+        $deal = Deal::query()->where('user_id', $user->id)->where('code', $code)->first();
+        $stages = DealStage::query()->where('user_id', $user->id)->where('position', '!=', null)
+            ->orderBy('position')->get();
+
+        for ($i=0; $i < count($stages); $i++) {
+            if($stages[$i]->id == $deal->stage_id) {
+                return $stages[$i+1];
+            }
+        }
     }
 
     /**
@@ -81,15 +165,21 @@ class DealsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($code)
     {
-        //
+        $user = Auth::user();
+        Deal::query()->where('user_id', $user->id)->where('code', $code)->first()->delete();
+
+        return 1;
     }
 
     public function settings()
     {
         $user = Auth::user();
-        $stages = DealStage::query()->where('user_id', $user->id)->orderBy('position')->get();
+        $stages = DealStage::query()->where('user_id', $user->id)->where('position', '!=', null)
+            ->orderBy('position')->get();
+        $stages_no_position = DealStage::query()->where('user_id', $user->id)->where('position', null)->get();
+        $stages = $stages->merge($stages_no_position);
 
         return view('entities.deals.settings', compact('stages'));
     }
@@ -109,7 +199,6 @@ class DealsController extends Controller
     public function saveStages(Request $request)
     {
         $user = Auth::user();
-        $stages = [];
         foreach ($request->stages as $stage) {
             $stage_obj = new Request();
             $stage_obj->merge([
@@ -124,18 +213,22 @@ class DealsController extends Controller
                 'position' => 'required|max:4'
             ]);
 
-            $stage = [
-                'user_id' => $user->id,
+            DealStage::query()->where('user_id', $user->id)->where('code', $stage[0])->first()->update([
                 'title' => $stage_obj->title,
                 'color' => $stage_obj->color,
                 'position' => $stage_obj->position
-            ];
-            array_push($stages, $stage);
+            ]);
         }
 
-        DealStage::query()->where('user_id', $user->id)->delete();
-        DealStage::query()->insert($stages);
+        session()->flash('info', 'Настройки этапов сделки сохранены');
+        return 1;
+    }
 
-        return $stages;
+    public function deleteStage($code)
+    {
+        // TODO: удалить все сделки этапа
+        $user = Auth::user();
+        DealStage::query()->where('user_id', $user->id)->where('code', $code)->delete();
+        return 1;
     }
 }

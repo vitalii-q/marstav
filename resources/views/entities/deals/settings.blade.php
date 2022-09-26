@@ -22,10 +22,6 @@
 @section('content')
 
     <div class="content">
-        @if(session()->has('info'))
-            <p class="alert alert-info">{{ session()->get('info') }}</p>
-        @endif
-
         <div class="content-heading pt-8">
             <a href="{{ route('deals.index') }}">Сделки</a>
             <small class="d-none d-sm-inline"> / Настройки</small>
@@ -35,17 +31,22 @@
             </div>
         </div>
 
+        @if(session()->has('info'))
+            <p class="alert alert-info">{{ session()->get('info') }}</p>
+        @endif
+        <p id="settings_error" class="alert alert-danger d-none"></p>
+
         <div class="block deal_stages bs-none bg-none">
 
             <div class="row gutters-tiny p-0 d-flex">
 
                 @foreach($stages as $stage)
-                <div class="js-validation-bootstrap stage" data-code="{{ $stage->code }}">
+                <div id="stage_{{ $stage->code }}" class="js-validation-bootstrap stage" data-code="{{ $stage->code }}">
 
                     <div class="form-group row">
                         <label class="col-8" for="title_{{ $stage->code }}">Название <span class="text-danger">*</span></label>
                         <div class="col-4">
-                            <i onclick="deleteStage({{ $stage->code }})" class="si si-close js-swal-confirm stages_icon_close" data-toggle="tooltip" data-placement="left" title="Удалить"></i>
+                            <i onclick="deleteStage('{{ $stage->code }}')" class="si si-close js-swal-confirm stages_icon_close" data-toggle="tooltip" data-placement="left" title="Удалить"></i>
                         </div>
                         <div class="col-md-12">
                             <input type="text" class="form-control" id="title_{{ $stage->code }}" name="title_{{ $stage->code }}" placeholder="Название.." value="{{ $stage->title }}">
