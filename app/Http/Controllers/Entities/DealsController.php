@@ -226,9 +226,11 @@ class DealsController extends Controller
 
     public function deleteStage($code)
     {
-        // TODO: удалить все сделки этапа
         $user = Auth::user();
-        DealStage::query()->where('user_id', $user->id)->where('code', $code)->delete();
+        $stage = DealStage::query()->where('user_id', $user->id)->where('code', $code)->first();
+        Deal::query()->where('user_id', $user->id)->where('stage_id', $stage->id)->delete();
+        $stage->delete();
+
         return 1;
     }
 }

@@ -34,7 +34,9 @@
         <div class="deals_wrapper">
 
             <div class="arrow_wrapper">
-                <div class="arrow_left_block"></div>
+                <div id="arrow_left_block" class="arrow_block arrow_left_block">
+                    <i class="arrow_left_icon si si-arrow-left ml-5 fs-12"></i>
+                </div>
             </div>
 
             <div id="deals" class="block deals bs-none bg-none">
@@ -108,12 +110,20 @@
 
                     </div>
 
+                    <div id="arrow_bottom_wrapper" class="arrow_bottom_wrapper">
+                        <div id="arrow_bottom_block" class="arrow_block arrow_bottom_block">
+                            <i class="arrow_bottom_icon si si-arrow-down ml-5 fs-12"></i>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
 
             <div class="arrow_wrapper arrow_wrapper_right">
-                <div class="arrow_right_block"></div>
+                <div id="arrow_right_block" class="arrow_block arrow_right_block">
+                    <i class="arrow_right_icon si si-arrow-right ml-5 fs-12"></i>
+                </div>
             </div>
 
         </div>

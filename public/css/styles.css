@@ -479,6 +479,7 @@ a.block {
     height: 126px;
 }
 .stage_more_title {
+    text-align: center;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 12px;
@@ -565,26 +566,74 @@ a.block {
 }
 .arrow_left_block {
     background-color: #2e383c;
-    width: 100px;
-    height: 120px;
-    border-radius: 50px;
-    opacity: 0.7;
+    width: 60px;
+    height: 100px;
+    border-radius: 30px;
+    opacity: 0.3;
     position: absolute;
-    margin-left: -50px;
+    margin-left: -30px;
     cursor: pointer;
     z-index: 100;
+    transition: 0.3s;
+}
+.arrow_left_icon {
+    margin-left: 23px !important;
+    font-size: 44px;
+    color: #ffffff;
+    margin-top: 30px!important;
+    top: 24px;
+    display: block;
 }
 .arrow_right_block {
     background-color: #2e383c;
-    width: 100px;
-    height: 120px;
-    border-radius: 50px;
-    opacity: 0.5;
+    width: 60px;
+    height: 100px;
+    border-radius: 30px;
+    opacity: 0.3;
     position: absolute;
-    margin-left: -50px;
+    margin-left: -30px;
     cursor: pointer;
     z-index: 100;
+    transition: 0.3s;
 }
+.arrow_right_icon {
+    margin-left: -6px!important;
+    font-size: 44px;
+    color: #ffffff;
+    margin-top: 30px!important;
+    top: 24px;
+    display: block;
+}
+.arrow_block:hover {
+    opacity: 0.5;
+}
+.arrow_bottom_wrapper {
+    width: 100%;
+    position: absolute;
+    margin-top: -15px;
+}
+.arrow_bottom_block {
+    background-color: #2e383c;
+    width: 80px;
+    height: 15px;
+    border-radius: 20px 20px 0px 0px;
+    opacity: 0.3;
+    cursor: pointer;
+    z-index: 100;
+    transition: 0.3s;
+    margin: 0 auto;
+}
+.arrow_bottom_icon {
+    margin-left: 30px!important;
+    margin-top: -1px;
+    color: #ffffff;
+    width: 20px;
+    height: 10px;
+    display: block;
+    position: absolute;
+    font-size: 17px;
+}
+
 .deals_scroll_wrapper {
     top: 0;
     right: 0;
