@@ -22,8 +22,10 @@ class DealsController extends Controller
         $user = Auth::user();
         $stages = DealStage::query()->where('user_id', $user->id)->where('title', '!=', null)
             ->where('color', '!=', null)->where('position', '!=', null)->orderBy('position')->get();
+        $deals = Deal::query()->where('user_id', $user->id)->get();
+        $deals_count = count($deals);
 
-        return view('entities.deals.deals', compact('user', 'stages'));
+        return view('entities.deals.deals', compact('user', 'stages', 'deals_count'));
     }
 
     /**

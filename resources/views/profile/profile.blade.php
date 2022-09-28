@@ -25,7 +25,7 @@
 
             <div class="block-header block-header-default">
                 <h3 class="block-title">
-                    <i class="fa fa-user-circle mr-5 text-muted"></i> Профайл пользователя
+                    <i class="si si-user mr-5 text-muted"></i> Профайл пользователя
                 </h3>
 
                 @if($user->id == \Illuminate\Support\Facades\Auth::user()->id)
@@ -107,6 +107,7 @@
                 </div>
 
             </div>
+
         </div>
 
     </div>

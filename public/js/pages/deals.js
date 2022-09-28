@@ -9,145 +9,164 @@ let close_deal_btn = document.getElementById('close_deal_btn');
 
 let sidebar = document.getElementById('sidebar');
 let deals_list = document.getElementById('deals_list');
-deals_list.style.height = sidebar.getBoundingClientRect().height -265 + 'px';
+if (deals_list) {
+    deals_list.style.height = sidebar.getBoundingClientRect().height -240 + 'px';
 
-// arrow buttons
-let stages_list = document.getElementById('stages_list');
-let arrow_wrappers = document.getElementsByClassName('arrow_wrapper');
-for (let i = 0; i < arrow_wrappers.length; i++) {
-    arrow_wrappers[i].style.height = deals_list.style.height;
-    arrow_wrappers[i].style.marginTop = stages_list.getBoundingClientRect().height + 'px';
-}
+    // arrow buttons
+    let stages_list = document.getElementById('stages_list');
+    let arrow_wrappers = document.getElementsByClassName('arrow_wrapper');
+    for (let i = 0; i < arrow_wrappers.length; i++) {
+        arrow_wrappers[i].style.height = deals_list.style.height;
+        arrow_wrappers[i].style.marginTop = stages_list.getBoundingClientRect().height + 'px';
+    }
 
-// scroll x
-let deals_canvas_width = 0;
-let stage_deals = document.getElementsByClassName('stage_deals');
-for (let i = 0; i < stage_deals.length; i++) {
-    deals_canvas_width = Number(deals_canvas_width) + Number(stage_deals[0].getBoundingClientRect().width);
-}
+    // scroll x
+    let deals_canvas_width = 0;
+    let stage_deals = document.getElementsByClassName('stage_deals');
+    for (let i = 0; i < stage_deals.length; i++) {
+        deals_canvas_width = Number(deals_canvas_width) + Number(stage_deals[0].getBoundingClientRect().width);
+    }
 
-let arrow_left_block = document.getElementById('arrow_left_block');
-let arrow_right_block = document.getElementById('arrow_right_block');
-if(Number(deals.scrollLeft) === 0) {
-    arrow_left_block.classList.add('d-none');
-}
-
-let deals_scroll_wrapper = document.getElementById('deals_scroll_wrapper');
-if (deals_canvas_width < deals.getBoundingClientRect().width) {
-    stages_list.style.width = deals.getBoundingClientRect().width;
-    deals_list.style.width = deals.getBoundingClientRect().width;
-    deals_scroll_wrapper.classList.add('d-none');
-    arrow_right_block.classList.add('d-none');
-} else {
-    deals_list.style.width = deals_canvas_width + 'px';
-    stages_list.style.width = deals_canvas_width + 'px';
-}
-
-let arrow_bottom_wrapper = document.getElementById('arrow_bottom_wrapper');
-deals_scroll_wrapper.style.height = deals_list.style.height;
-deals.addEventListener('scroll', function() {
-    arrow_bottom_wrapper.style.marginLeft = Number(deals.scrollLeft) + 'px';
-
-    if(Number(deals.scrollLeft) === 0) {
-        arrow_left_block.classList.add('d-none');
-    } else {
+    let arrow_left_block = document.getElementById('arrow_left_block');
+    let arrow_right_block = document.getElementById('arrow_right_block');
+    if(Number(deals.scrollLeft) !== 0) {
         arrow_left_block.classList.remove('d-none');
     }
 
-    deals_scroll_wrapper.style.right = '-' + deals.scrollLeft + 'px';
+    let deals_scroll_wrapper = document.getElementById('deals_scroll_wrapper');
+    if (deals_canvas_width < deals.getBoundingClientRect().width) {
+        stages_list.style.width = deals.getBoundingClientRect().width;
+        deals_list.style.width = deals.getBoundingClientRect().width;
 
-    if(Number(deals.getBoundingClientRect().width) + Number(deals.scrollLeft) >= (Number(deals_canvas_width))) {
         deals_scroll_wrapper.classList.add('d-none');
-        arrow_right_block.classList.add('d-none');
     } else {
-        deals_scroll_wrapper.classList.remove('d-none');
+        deals_list.style.width = deals_canvas_width + 'px';
+        stages_list.style.width = deals_canvas_width + 'px';
+
         arrow_right_block.classList.remove('d-none');
     }
-})
 
-arrow_left_block.addEventListener('click', function () {
-    let needed_scroll = Math.ceil(deals.getBoundingClientRect().width / 1.7);
-    if((deals.scrollLeft - needed_scroll / 1.7) <= 0) {
-        let time = 0; let step = deals.scrollLeft / 40;
-        let animation_scroll = setInterval(function() { // плавное изменение скролла
-            if (time <= 40) {
-                deals.scrollLeft = deals.scrollLeft - Math.ceil(step);
-                time++;
-            } else {
-                clearInterval(animation_scroll);
-            }
-        }, 4);
-    } else {
-        let time = 0; let step = needed_scroll / 40;
-        let animation_scroll = setInterval(function() { // плавное изменение скролла
-            if (time <= 40) {
-                deals.scrollLeft = deals.scrollLeft - Math.ceil(step);
-                time++;
-            } else {
-                clearInterval(animation_scroll);
-            }
-        }, 4);
-    }
-});
+    let arrow_bottom_wrapper = document.getElementById('arrow_bottom_wrapper');
+    deals_scroll_wrapper.style.height = deals_list.style.height;
+    deals.addEventListener('scroll', function() {
+        arrow_bottom_wrapper.style.marginLeft = Number(deals.scrollLeft) + 'px';
 
-arrow_right_block.addEventListener('click', function () {
-    let needed_scroll = Math.ceil(deals.getBoundingClientRect().width / 1.7);
-    if(deals.getBoundingClientRect().width >= deals_list.getBoundingClientRect().width - (deals.scrollLeft + deals.getBoundingClientRect().width)) {
-        needed_scroll = deals_list.getBoundingClientRect().width - (deals.scrollLeft + deals.getBoundingClientRect().width);
-        let time = 0; let step = needed_scroll / 40;
-        let animation_scroll = setInterval(function() { // анимация скролла
-            if (time <= 40) {
-                deals.scrollLeft = deals.scrollLeft + Math.ceil(step);
-                time++;
-            } else {
-                clearInterval(animation_scroll);
-            }
-        }, 4);
-    } else {
-        let time = 0; let step = needed_scroll / 40;
-        let animation_scroll = setInterval(function() { // анимация скролла
-            if (time <= 40) {
-                deals.scrollLeft = deals.scrollLeft + Math.ceil(step);
-                time++;
-            } else {
-                clearInterval(animation_scroll);
-            }
-        }, 4);
-    }
-});
-
-// scroll y
-let scroll = document.getElementById('scroll');
-let view_one_percent = Math.ceil(Number(deals_list.getBoundingClientRect().height) / 100);
-let canvas_one_percent = Math.ceil(deals_list.scrollHeight / 100);
-let canvas_percents_view = Math.ceil(Number(deals_list.getBoundingClientRect().height) / canvas_one_percent);
-let scroll_line_height = view_one_percent * canvas_percents_view;
-scroll.style.height = scroll_line_height + 'px';
-deals_list.addEventListener('scroll', function() {
-    let scrolled_top_percent = Math.ceil(deals_list.scrollTop / canvas_one_percent);
-    scroll.style.marginTop = view_one_percent * scrolled_top_percent + 'px';
-    showHideArrowBottom();
-})
-
-let arrow_bottom_block = document.getElementById('arrow_bottom_block');
-let scroll_height = view_one_percent * 60;
-arrow_bottom_block.addEventListener('click', function () {
-    let time = 0; let step = scroll_height / 20;
-    let animation_scroll = setInterval(function() { // анимация скролла
-        if (time <= 40) {
-            deals_list.scrollTop = deals_list.scrollTop + Math.ceil(step);
-            showHideArrowBottom(); time++;
+        if(Number(deals.scrollLeft) === 0) {
+            arrow_left_block.classList.add('d-none');
         } else {
-            clearInterval(animation_scroll);
+            arrow_left_block.classList.remove('d-none');
         }
-    }, 8);
-});
-function showHideArrowBottom() {
-    if (Number(deals_list.scrollTop+4 + Number(deals_list.getBoundingClientRect().height)) >= deals_list.scrollHeight) {
-        arrow_bottom_block.classList.add('d-none');
-    } else {
-        arrow_bottom_block.classList.remove('d-none');
+
+        deals_scroll_wrapper.style.right = '-' + deals.scrollLeft + 'px';
+
+        if(Number(deals.getBoundingClientRect().width) + Number(deals.scrollLeft) >= (Number(deals_canvas_width))) {
+            deals_scroll_wrapper.classList.add('d-none');
+            arrow_right_block.classList.add('d-none');
+        } else {
+            deals_scroll_wrapper.classList.remove('d-none');
+            arrow_right_block.classList.remove('d-none');
+        }
+    })
+
+    arrow_left_block.addEventListener('click', function () {
+        let needed_scroll = Math.ceil(deals.getBoundingClientRect().width / 1.7);
+        if((deals.scrollLeft - needed_scroll / 1.7) <= 0) {
+            let time = 0; let step = deals.scrollLeft / 40;
+            let animation_scroll = setInterval(function() { // плавное изменение скролла
+                if (time <= 40) {
+                    deals.scrollLeft = deals.scrollLeft - Math.ceil(step);
+                    time++;
+                } else {
+                    clearInterval(animation_scroll);
+                }
+            }, 4);
+        } else {
+            let time = 0; let step = needed_scroll / 40;
+            let animation_scroll = setInterval(function() { // плавное изменение скролла
+                if (time <= 40) {
+                    deals.scrollLeft = deals.scrollLeft - Math.ceil(step);
+                    time++;
+                } else {
+                    clearInterval(animation_scroll);
+                }
+            }, 4);
+        }
+    });
+
+    arrow_right_block.addEventListener('click', function () {
+        let needed_scroll = Math.ceil(deals.getBoundingClientRect().width / 1.7);
+        if(deals.getBoundingClientRect().width >= deals_list.getBoundingClientRect().width - (deals.scrollLeft + deals.getBoundingClientRect().width)) {
+            needed_scroll = deals_list.getBoundingClientRect().width - (deals.scrollLeft + deals.getBoundingClientRect().width);
+            let time = 0; let step = needed_scroll / 40;
+            let animation_scroll = setInterval(function() { // анимация скролла
+                if (time <= 40) {
+                    deals.scrollLeft = deals.scrollLeft + Math.ceil(step);
+                    time++;
+                } else {
+                    clearInterval(animation_scroll);
+                }
+            }, 4);
+        } else {
+            let time = 0; let step = needed_scroll / 40;
+            let animation_scroll = setInterval(function() { // анимация скролла
+                if (time <= 40) {
+                    deals.scrollLeft = deals.scrollLeft + Math.ceil(step);
+                    time++;
+                } else {
+                    clearInterval(animation_scroll);
+                }
+            }, 4);
+        }
+    });
+
+    // scroll y
+    let scroll = document.getElementById('scroll');
+    let view_one_percent = Number(deals_list.getBoundingClientRect().height) / 100;
+    let canvas_one_percent = deals_list.scrollHeight / 100;
+    let canvas_percents_view = Number(deals_list.getBoundingClientRect().height) / canvas_one_percent;
+    let scroll_line_height = view_one_percent * canvas_percents_view;
+    scroll.style.height = scroll_line_height + 'px';
+    deals_list.addEventListener('scroll', function() {
+        let scrolled_top_percent = deals_list.scrollTop / canvas_one_percent;
+        scroll.style.marginTop = view_one_percent * scrolled_top_percent + 'px';
+        console.log(view_one_percent * scrolled_top_percent);
+        showHideArrowBottom();
+    })
+
+    let arrow_bottom_block = document.getElementById('arrow_bottom_block');
+    let max_stage_deal_height = 0; // узнаем высоту самого высокого блока с классом stage_deals
+    for (let i = 0; i < stage_deals.length; i++) {
+        if (stage_deals[i].getBoundingClientRect().height > max_stage_deal_height) {
+            max_stage_deal_height = Math.ceil(stage_deals[i].getBoundingClientRect().height);
+        }
     }
+    if(max_stage_deal_height > deals_list.getBoundingClientRect().height) {
+        arrow_bottom_block.classList.remove('d-none');
+        scroll.classList.remove('d-none');
+    }
+
+    let scroll_height = view_one_percent * 60;
+    arrow_bottom_block.addEventListener('click', function () {
+        let time = 0; let step = scroll_height / 40;
+        let animation_scroll = setInterval(function() { // анимация скролла
+            if (time <= 40) {
+                deals_list.scrollTop = deals_list.scrollTop + Math.ceil(step);
+                showHideArrowBottom(); time++;
+            } else {
+                clearInterval(animation_scroll);
+            }
+        }, 4);
+    });
+    function showHideArrowBottom() {
+        if (Number(deals_list.scrollTop+4 + Number(deals_list.getBoundingClientRect().height)) >= deals_list.scrollHeight) {
+            arrow_bottom_block.classList.add('d-none');
+        } else {
+            arrow_bottom_block.classList.remove('d-none');
+        }
+    }
+
+    // datepicker
+    // TODO: добавить возможность убирать дедлайн если уже выбран
 }
 
 // functions

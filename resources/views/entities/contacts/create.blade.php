@@ -29,7 +29,7 @@
 
             <div class="block-header block-header-default">
                 <h3 class="block-title">
-                    <i class="fa fa-user-circle mr-5 text-muted"></i> Добавление контакта
+                    <i class="si si-user mr-5 text-muted"></i> Добавление контакта
                 </h3>
             </div>
 

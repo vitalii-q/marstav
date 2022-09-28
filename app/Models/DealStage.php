@@ -15,4 +15,9 @@ class DealStage extends Model
      * @var array
      */
     protected $fillable = ['title', 'position', 'color'];
+
+    public function addStartStages()
+    {
+        return 1;
+    }
 }

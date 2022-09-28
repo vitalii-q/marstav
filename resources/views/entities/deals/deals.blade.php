@@ -25,106 +25,155 @@
 
         <div class="content-heading pt-8">
             <div class="dropdown float-right">
-                <a type="button" class="btn btn-square btn-primary min-width-125 text-white" data-toggle="modal" data-target="#modal_add_deal">Добавить сделку</a>
-                <a href="{{ route('deals.settings') }}" type="button" class="btn text-white btn-square btn-primary min-width-125">Настройки</a>
+                <a id="add_deal_btn" type="button" class="btn btn-square btn-primary min-width-125 text-white" data-toggle="modal" data-target="#modal_add_deal">Добавить сделку</a>
+                <a id="settings" href="{{ route('deals.settings') }}" type="button" class="btn text-white btn-square btn-primary min-width-125">Настройки</a>
             </div>
             Сделки
         </div>
 
         <div class="deals_wrapper">
 
-            <div class="arrow_wrapper">
-                <div id="arrow_left_block" class="arrow_block arrow_left_block">
-                    <i class="arrow_left_icon si si-arrow-left ml-5 fs-12"></i>
-                </div>
-            </div>
-
-            <div id="deals" class="block deals bs-none bg-none">
-
-                <div class="block-content block-content-full p-0">
-
-                    <div id="stages_list" class="stages_list d-flex">
-
-                        @foreach($stages as $stage)
-                            <div class="stage_title" style="background-color: {{ $stage->color }}">{{ $stage->title }}</div>
-                        @endforeach
-
+            @if(count($stages))
+                @if($deals_count)
+                    <div class="arrow_wrapper">
+                        <div id="arrow_left_block" class="arrow_block arrow_left_block d-none">
+                            <i class="arrow_left_icon si si-arrow-left ml-5 fs-12"></i>
+                        </div>
                     </div>
+                @endif
 
-                    <div id="deals_list" class="deals_list d-flex">
+                <div id="deals" class="deals bs-none bg-none">
 
-                        @php($i=1) @foreach($stages as $stage)
-                        <div class="stage_deals">
-                            <?php
-                            $deals = \App\Models\Entities\Deal::query()
-                                ->select('id', 'status', 'name', 'phone', 'email', 'position', 'company', 'product', 'price', 'deadline', 'note', 'code')
-                                ->where('user_id', $user->id)->where('stage_id', $stage->id)->where('deadline', '!=', null)->orderBy('deadline')
-                                ->get();
-                            $deals_null_deadline = \App\Models\Entities\Deal::query()
-                                ->select('id', 'status', 'name', 'phone', 'email', 'position', 'company', 'product', 'price', 'deadline', 'note', 'code')
-                                ->where('user_id', $user->id)->where('stage_id', $stage->id)->where('deadline', null)->orderBy('updated_at', 'desc')
-                                ->get();
-                            $deals = $deals->merge($deals_null_deadline);
+                    <div class="block-content block-content-full p-0 mb-15">
 
-                            if (count($stages) == $i) {$last = 'true'; } else { $last = 'false'; }
-                            ?>
-                            @foreach($deals as $deal)
-                                <?php unset($deal->id);
-                                if($deal->deadline) {
-                                    $deadline = str_replace([' ', '-', ':'], '', date('Y-m-d', strtotime($deal->deadline)));
-                                    $today = str_replace([' ', '-', ':'], '', date('Y-m-d', strtotime(\Carbon\Carbon::today())));
+                        <div id="stages_list" class="stages_list d-flex">
 
-                                    if ($deadline < $today) { $border = 'border-left: solid 3px #FF0A1C'; }
-                                    elseif ($deadline == $today) { $border = 'border-left: solid 3px #F2F800'; }
-                                    elseif ($deadline > $today) { $border = 'border-left: solid 3px #38F02A'; }
-                                } else { $border = 'border-left: solid 3px #ffffff'; }
-                                ?>
-                                <div class="stage_deal" style="{{ $border }}">
-                                    <p class="stage_deal_name mb-2">{{ mb_strimwidth($deal->name, 0, 40, "..") }}</p>
-                                    <p class="mb-5">{{ mb_strimwidth($deal->status, 0, 30, "..") }}</p>
-                                    <p class="mb-10">{{ mb_strimwidth($deal->note, 0, 80, "..") }}</p>
+                            @php($i=1) @foreach($stages as $stage)
+                                <div class="stage_title" style="background-color: {{ $stage->color }}">{{ $stage->title }}
+                                    @if(count($stages) == $i)
+                                    <div class="stage_title_form_square" style="background-color: {{ $stage->color }}"></div>
+                                    @else
+                                    <div class="stage_title_form_arrow" style="background-color: {{ $stage->color }}"></div>
+                                    @endif
+                                </div>
+                            @php($i++) @endforeach
 
-                                    <div class="d-flex">
-                                        <?php
-                                        if ($deal->deadline) {
-                                            $deadline_exp = explode('-', date('m-d H:i', strtotime($deal->deadline)));
-                                            $deadline_exp_2 = explode(' ', $deadline_exp[1]);
-                                            //dump($deadline_exp_2);
+                        </div>
 
-                                            $date = \App\Helpers\Date::getDay($deadline_exp_2[0]).' '.\App\Helpers\Date::getMonth($deadline_exp[0]).' '.$deadline_exp_2[1];
-                                        }
-                                        ?>
-                                        <p class="stage_deal_date text-darkgray mb-0">{{ $deal->deadline?$date:'' }}</p>
-
-                                        <button onclick="openDeal({{ $deal }}, {{ $last }})" class="btn btn-sm btn-primary stage_deal_btn" data-toggle="modal" data-target="#modal_change_deal">Открыть</button>
+                        @if(!$deals_count)
+                            <div onclick="document.getElementById('add_deal_btn').click()" id="deals_stub" class="hero bg-white bg-pattern stub h-auto minh-auto" style="background-image: url({{ URL::asset('media/various/bg-pattern-inverse.png') }});">
+                                <div class="hero-inner">
+                                    <div class="content content-full">
+                                        <div class="py-50 text-center">
+                                            <i class="si si-handbag text-primary display-3"></i>
+                                            <h1 class="h2 font-w700 mt-30 mb-10">Нет сделок</h1>
+                                            <h2 class="h3 font-w400 text-muted stub-text mb-50">Здесь вы можете управлять сделками</h2>
+                                            <a class="btn btn-hero btn-noborder btn-rounded btn-primary text-white">
+                                                <i class="si si-check mr-10"></i> Добавить сделку
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
+                        @else
 
-                        </div>
-                        @php($i++) @endforeach
+                            <div id="deals_list" class="deals_list d-flex">
 
-                        <div id="deals_scroll_wrapper" class="deals_scroll_wrapper">
-                            <div id="scroll" class="deals_scroll"></div>
-                        </div>
+                                @php($i=1) @foreach($stages as $stage)
+                                <div class="stage_deals">
+                                    <?php
+                                    $deals = \App\Models\Entities\Deal::query()
+                                        ->select('id', 'status', 'name', 'phone', 'email', 'position', 'company', 'product', 'price', 'deadline', 'note', 'code')
+                                        ->where('user_id', $user->id)->where('stage_id', $stage->id)->where('deadline', '!=', null)->orderBy('deadline')
+                                        ->get();
+                                    $deals_null_deadline = \App\Models\Entities\Deal::query()
+                                        ->select('id', 'status', 'name', 'phone', 'email', 'position', 'company', 'product', 'price', 'deadline', 'note', 'code')
+                                        ->where('user_id', $user->id)->where('stage_id', $stage->id)->where('deadline', null)->orderBy('updated_at', 'desc')
+                                        ->get();
+                                    $deals = $deals->merge($deals_null_deadline);
 
-                    </div>
+                                    if (count($stages) == $i) {$last = 'true'; } else { $last = 'false'; }
+                                    ?>
 
-                    <div id="arrow_bottom_wrapper" class="arrow_bottom_wrapper">
-                        <div id="arrow_bottom_block" class="arrow_block arrow_bottom_block">
-                            <i class="arrow_bottom_icon si si-arrow-down ml-5 fs-12"></i>
-                        </div>
+                                    @foreach($deals as $deal)
+                                        <?php unset($deal->id);
+                                        if($deal->deadline) {
+                                            $deadline = str_replace([' ', '-', ':'], '', date('Y-m-d', strtotime($deal->deadline)));
+                                            $today = str_replace([' ', '-', ':'], '', date('Y-m-d', strtotime(\Carbon\Carbon::today())));
+
+                                            if ($deadline < $today) { $border = 'border-left: solid 3px #FF0A1C'; }
+                                            elseif ($deadline == $today) { $border = 'border-left: solid 3px #F2F800'; }
+                                            elseif ($deadline > $today) { $border = 'border-left: solid 3px #38F02A'; }
+                                        } else { $border = 'border-left: solid 3px #ffffff'; }
+                                        ?>
+                                        <div class="stage_deal" style="{{ $border }}">
+                                            <p class="stage_deal_name mb-2">{{ mb_strimwidth($deal->name, 0, 40, "..") }}</p>
+                                            <p class="mb-5">{{ mb_strimwidth($deal->status, 0, 30, "..") }}</p>
+                                            <p class="mb-10">{{ mb_strimwidth($deal->note, 0, 80, "..") }}</p>
+
+                                            <div class="d-flex">
+                                                <?php
+                                                if ($deal->deadline) {
+                                                    $deadline_exp = explode('-', date('m-d H:i', strtotime($deal->deadline)));
+                                                    $deadline_exp_2 = explode(' ', $deadline_exp[1]);
+                                                    //dump($deadline_exp_2);
+
+                                                    $date = \App\Helpers\Date::getDay($deadline_exp_2[0]).' '.\App\Helpers\Date::getMonth($deadline_exp[0]).' '.$deadline_exp_2[1];
+                                                }
+                                                ?>
+                                                <p class="stage_deal_date text-darkgray mb-0">{{ $deal->deadline?$date:'' }}</p>
+
+                                                <button onclick="openDeal({{ $deal }}, {{ $last }})" class="btn btn-sm btn-primary stage_deal_btn" data-toggle="modal" data-target="#modal_change_deal">Открыть</button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+
+                                </div>
+                                @php($i++) @endforeach
+
+                                <div id="deals_scroll_wrapper" class="deals_scroll_wrapper">
+                                    <div id="scroll" class="deals_scroll d-none"></div>
+                                </div>
+
+                            </div>
+                        @endif
+
+                        @if($deals_count)
+                            <div id="arrow_bottom_wrapper" class="arrow_bottom_wrapper">
+                                <div id="arrow_bottom_block" class="arrow_block arrow_bottom_block d-none">
+                                    <i class="arrow_bottom_icon si si-arrow-down ml-5 fs-12"></i>
+                                </div>
+                            </div>
+                        @endif
+
                     </div>
 
                 </div>
 
-            </div>
+                @if($deals_count)
+                    <div class="arrow_wrapper arrow_wrapper_right">
+                        <div id="arrow_right_block" class="arrow_block arrow_right_block d-none">
+                            <i class="arrow_right_icon si si-arrow-right ml-5 fs-12"></i>
+                        </div>
+                    </div>
+                @endif
 
-            <div class="arrow_wrapper arrow_wrapper_right">
-                <div id="arrow_right_block" class="arrow_block arrow_right_block">
-                    <i class="arrow_right_icon si si-arrow-right ml-5 fs-12"></i>
+            @else
+                <div onclick="document.getElementById('settings').click()" id="stages_stub" class="hero bg-white bg-pattern stub h-auto minh-auto" style="background-image: url({{ URL::asset('media/various/bg-pattern-inverse.png') }});">
+                    <div class="hero-inner">
+                        <div class="content content-full">
+                            <div class="py-50 text-center">
+                                <i class="si si-layers text-primary display-3"></i>
+                                <h1 class="h2 font-w700 mt-30 mb-10">Этапы сделок</h1>
+                                <h2 class="h3 font-w400 text-muted stub-text mb-50">Здесь вы можете управлять сделками</h2>
+                                <a class="btn btn-hero btn-noborder btn-rounded btn-primary text-white">
+                                    <i class="si si-settings mr-10"></i> Настроить этапы
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            @endif
 
         </div>
 
@@ -194,7 +243,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-lg-12">
                                         <div class="form-material">
-                                            <input type="text" class="js-flatpickr form-control add_deal_deadline" id="datetime" name="deadline" placeholder="Введите дату.." data-allow-input="true" data-enable-time="true" data-time_24hr="true">
+                                            <input type="text" class="datepicker js-flatpickr form-control add_deal_deadline" id="datetime" name="deadline" placeholder="Введите дату.." data-allow-input="true" data-enable-time="true" data-time_24hr="true">
                                             <label for="datetime">Дедлайн</label>
                                         </div>
                                     </div>
@@ -242,7 +291,7 @@
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <div class="form-material">
-                                            <textarea class="form-control add_deal_note" id="note" name="note" rows="6" placeholder="Начните писать.."></textarea>
+                                            <textarea class="form-control add_deal_note" id="note" name="note" rows="8" placeholder="Начните писать.."></textarea>
                                             <label for="note">Заметки</label>
                                         </div>
                                     </div>
@@ -331,7 +380,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-lg-12">
                                             <div class="form-material">
-                                                <input type="text" class="js-flatpickr form-control change_deal_deadline" id="datetime" name="deadline" placeholder="Введите дату.." maxlength="16" data-allow-input="true" data-enable-time="true" data-time_24hr="true">
+                                                <input type="text" class="datepicker js-flatpickr form-control change_deal_deadline" id="datetime" name="deadline" placeholder="Введите дату.." maxlength="16" data-allow-input="true" data-enable-time="true" data-time_24hr="true">
                                                 <label for="datetime">Дедлайн</label>
                                             </div>
                                         </div>
@@ -379,7 +428,7 @@
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <div class="form-material">
-                                                <textarea class="form-control change_deal_note" id="note" name="note" rows="6" placeholder="Начните писать.."></textarea>
+                                                <textarea class="form-control change_deal_note" id="note" name="note" rows="8" placeholder="Начните писать.."></textarea>
                                                 <label for="note">Заметки</label>
                                             </div>
                                         </div>

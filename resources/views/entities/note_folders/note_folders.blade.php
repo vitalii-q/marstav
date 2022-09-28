@@ -25,29 +25,8 @@
 
     <div class="content-heading pt-8">
         <div class="dropdown float-right">
-            <a id="add_note_btn" href="{{ route('entities.note.create', 'root') }}" type="button" class="btn btn-warning min-width-125">Добавить заметку</a>
+            <a id="add_note_btn" href="{{ route('entities.note.create', 'root') }}" type="button" class="btn btn-primary min-width-125">Добавить заметку</a>
             <a href="{{ route('note_folders.notes.create') }}" type="button" class="btn btn-primary min-width-125">Добавить папку</a>
-            <!--<button type="button" class="btn btn-secondary dropdown-toggle" id="ecom-dashboard-stats-drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Today
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="ecom-dashboard-stats-drop">
-                <a class="dropdown-item active" href="javascript:void(0)">
-                    <i class="fa fa-fw fa-calendar mr-5"></i>Today
-                </a>
-                <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="fa fa-fw fa-calendar mr-5"></i>This Week
-                </a>
-                <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="fa fa-fw fa-calendar mr-5"></i>This Month
-                </a>
-                <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="fa fa-fw fa-calendar mr-5"></i>This Year
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="fa fa-fw fa-circle-o mr-5"></i>All Time
-                </a>
-            </div>-->
         </div>
         Заметки <!--<small class="d-none d-sm-inline">Awesome!</small>-->
     </div>

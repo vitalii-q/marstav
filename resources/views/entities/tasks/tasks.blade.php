@@ -20,7 +20,7 @@
             Задачи
 
             <div class="dropdown float-right">
-                <a id="add_task_btn" href="{{ route('tasks.create') }}" type="button" class="btn btn-success min-width-125">Добавить задачу</a>
+                <a id="add_task_btn" href="{{ route('tasks.create') }}" type="button" class="btn btn-square btn-success min-width-125">Добавить задачу</a>
             </div>
         </div>
 
