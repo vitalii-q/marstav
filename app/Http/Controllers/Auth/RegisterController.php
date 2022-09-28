@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Converter;
+use App\Helpers\Regular;
 use App\Http\Controllers\Controller;
+use App\Models\DealStage;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -70,12 +73,18 @@ class RegisterController extends Controller
             list($user, $uniqid) = $this->makeUniqueUserCode();
         }
 
-        return User::create([
+        $user_id = User::query()->insertGetId([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'code' => $uniqid
         ]);
+
+        $user = User::query()->find($user_id);
+
+        DealStage::addStarterStages($user);
+
+        return $user;
     }
 
     protected function makeUniqueUserCode()
