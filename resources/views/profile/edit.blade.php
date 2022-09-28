@@ -5,7 +5,7 @@
 @section('js')
     <script src="{{ URL::asset('js/pages/profile.js') }}"></script>
 
-{{--    <script src="{{ URL::asset('js/plugins/sweetalert2/sweetalert2.all.js') }}"></script>--}}
+    <script src="{{ URL::asset('js/plugins/sweetalert2/sweetalert2.all.js') }}"></script>
     <script src="{{ URL::asset('js/plugins/masked-inputs/jquery.maskedinput.min.js') }}"></script>
 
     <script>jQuery(function(){ Codebase.helpers(['masked-inputs']); });</script>
@@ -157,7 +157,7 @@
 
                         <div class="form-group row">
                             <div class="col-12">
-                                <button type="submit" class="btn btn-alt-danger js-swal-confirm">Выйти из компании</button>
+                                <button id="expel_an_employee" data-code="{{ $profile->code }}" class="btn btn-alt-danger js-swal-confirm">Выйти из компании</button>
                             </div>
                         </div>
                     </div>

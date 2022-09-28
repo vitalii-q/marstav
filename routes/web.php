@@ -33,8 +33,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/notification/company_invitation_success', [App\Http\Controllers\NotificationsController::class, 'companyInvitationSuccess']);
     Route::post('/notification/company_invitation_cancel', [App\Http\Controllers\NotificationsController::class, 'companyInvitationCancel']);
 
-    Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
-
     // Entities
     Route::resource('/tasks', App\Http\Controllers\Entities\TasksController::class);
     Route::post('/tasks/{code}/comment', [App\Http\Controllers\Entities\TasksController::class, 'comment'])->name('task.comment');
@@ -64,6 +62,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/notes/folder/{folder_code}/{note_code}/update', [App\Http\Controllers\Entities\NotesController::class, 'update'])->name('entities.note.update');
     Route::post('/notes/folder/{note_code}/update/ajax', [App\Http\Controllers\Entities\NotesController::class, 'ajaxUpdate'])->name('entities.note.update.ajax');
     Route::delete('/notes/folder/{code}', [App\Http\Controllers\Entities\NotesController::class, 'destroy'])->name('entities.note.destroy');
+
+    // settings
+    Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
+    Route::post('/settings/change_theme', [App\Http\Controllers\SettingsController::class, 'changeTheme']);
+    Route::post('/settings/change_header_style', [App\Http\Controllers\SettingsController::class, 'changeHeaderStyle']);
+    Route::post('/settings/change_header_mode', [App\Http\Controllers\SettingsController::class, 'changeHeaderMode']);
+    Route::post('/settings/change_sidebar_style', [App\Http\Controllers\SettingsController::class, 'changeSidebarStyle']);
 });
 
 

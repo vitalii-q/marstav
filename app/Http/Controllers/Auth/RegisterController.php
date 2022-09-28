@@ -6,6 +6,7 @@ use App\Helpers\Converter;
 use App\Helpers\Regular;
 use App\Http\Controllers\Controller;
 use App\Models\DealStage;
+use App\Models\Setting;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -82,7 +83,8 @@ class RegisterController extends Controller
 
         $user = User::query()->find($user_id);
 
-        DealStage::addStarterStages($user);
+        Setting::starterSettings($user->id);
+        DealStage::starterStages($user);
 
         return $user;
     }

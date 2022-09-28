@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Facades\File;
 use App\Models\Company;
+use App\Models\Dialog;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,9 +55,11 @@ class ProfileController extends Controller
      */
     public function show($code)
     {
-        $user = User::query()->where('code', $code)->first();
+        $user = Auth::user();
+        $profile = User::query()->where('code', $code)->first();
+        $company = Company::query()->find($user->company_id);
 
-        return view('profile.profile', compact('user'));
+        return view('profile.profile', compact('user', 'profile', 'company'));
     }
 
     /**
@@ -149,9 +153,12 @@ class ProfileController extends Controller
         return redirect()->route('profile.show', [$user->code]);
     }
 
-    public function leaveCompany()
+    public function leaveCompany(Request $request)
     {
-        $user = Auth::user();
+        $user = User::query()->where('code', $request->code)->first();
+        Message::query()->where('from_id', $user->id)->orWhere('to_id', $user->id)->delete();
+        Dialog::query()->where('user1_id', $user->id)->orWhere('user2_id', $user->id)->delete();
+
         $user->update([
             'company_id' => null,
             'company_added' => null

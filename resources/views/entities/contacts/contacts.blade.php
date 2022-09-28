@@ -19,7 +19,7 @@
             @endif
 
             <div class="js-chat-logged-user m-15 d-flex align-items-center justify-content-between rounded">
-                <a href="{{ route('contacts.create') }}" type="button" class="btn btn-primary w-100">Добавить контакт</a>
+                <a href="{{ route('contacts.create') }}" type="button" class="btn btn-success w-100">Добавить контакт</a>
             </div>
 
             <!-- Search -->

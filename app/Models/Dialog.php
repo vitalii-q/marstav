@@ -50,9 +50,11 @@ class Dialog extends Model
             $i++;
         }
 
-        $employees = User::query()->where('users.company_id', $user->company_id)->where('users.id', '!=', $user->id)
+        $employees = User::query()->where('users.company_id', $user->company_id)
+            ->where('company_id', '!=', null)->where('users.id', '!=', $user->id)
             ->whereIn('id', $dialog_emp_ids)->orderBy(DB::raw('FIELD(id, '.$ids_str.')'))->get();
-        $employees_without_dialogs = User::query()->where('users.company_id', $user->company_id)->where('users.id', '!=', $user->id)
+        $employees_without_dialogs = User::query()->where('users.company_id', $user->company_id)
+            ->where('company_id', '!=', null)->where('users.id', '!=', $user->id)
             ->whereNotIn('id', $dialog_emp_ids)->orderBy('name')->get();
         return $employees->merge($employees_without_dialogs);
     }

@@ -18,7 +18,7 @@ class DealStage extends Model
      */
     protected $fillable = ['title', 'position', 'color'];
 
-    public static function addStarterStages($user)
+    public static function starterStages($user)
     {
         DealStage::query()->insert([
             [
@@ -26,21 +26,21 @@ class DealStage extends Model
                 'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols(mb_strimwidth(($user->surname?$user->surname:$user->name), 0, 40, "..")))))
                     .'_'.bin2hex(random_bytes(8)),
                 'title' => 'Заявка',
-                'color' => '#197ed1',
+                'color' => '#78C0FC',
                 'position' => 1,
             ], [
                 'user_id' => $user->id,
                 'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols(mb_strimwidth(($user->surname?$user->surname:$user->name), 0, 40, "..")))))
                     .'_'.bin2hex(random_bytes(8)),
                 'title' => 'Звонок',
-                'color' => '#197ed1',
+                'color' => '#78C0FC',
                 'position' => 2,
             ], [
                 'user_id' => $user->id,
                 'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols(mb_strimwidth(($user->surname?$user->surname:$user->name), 0, 40, "..")))))
                     .'_'.bin2hex(random_bytes(8)),
                 'title' => 'Отправка',
-                'color' => '#197ed1',
+                'color' => '#78C0FC',
                 'position' => 3,
             ]
         ]);

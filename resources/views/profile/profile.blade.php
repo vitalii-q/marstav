@@ -1,6 +1,6 @@
 @extends('layouts.hf')
 
-@section('title', $user->name . ' ' . $user->surname)
+@section('title', $profile->name . ' ' . $profile->surname)
 
 @section('js')
     <script src="{{ URL::asset('js/pages/profile.js') }}"></script>
@@ -17,8 +17,8 @@
         @endif
 
         <div class="content-heading pt-8">
-            <a href="{{ route('profile.show', $user->code) }}">Профайл</a>
-            <small class="d-none d-sm-inline"> / {{ mb_strimwidth($user->name, 0, 40, "..") }}</small>
+            <a href="{{ route('profile.show', $profile->code) }}">Профайл</a>
+            <small class="d-none d-sm-inline"> / {{ mb_strimwidth($profile->name, 0, 40, "..") }}</small>
         </div>
 
         <div class="block">
@@ -28,8 +28,11 @@
                     <i class="si si-user mr-5 text-muted"></i> Профайл пользователя
                 </h3>
 
-                @if($user->id == \Illuminate\Support\Facades\Auth::user()->id)
-                <a href="{{ route('profile.edit', $user->code) }}" class="btn btn-alt-primary mr-auto">Редактировать</a>
+                @if($profile->id == \Illuminate\Support\Facades\Auth::user()->id)
+                <a href="{{ route('profile.edit', $profile->code) }}" class="btn btn-alt-primary mr-auto">Редактировать</a>
+                @endif
+                @if(isset($company) and $user->id == $company->creator_id and $user->company_id == $profile->company_id)
+                    <button id="expel_an_employee" data-code="{{ $profile->code }}" class="btn btn-alt-danger mr-auto js-swal-confirm">Исключить</button>
                 @endif
             </div>
 
@@ -38,7 +41,7 @@
                 <div class="row items-push">
 
                     <div class="col-lg-3">
-                        <div class="photo" style="background-image: url(@if($user->photo) {{ URL::asset($user->photo) }} @else {{ URL::asset('media/avatars/avatar15.jpg') }} @endif )"></div>
+                        <div class="photo" style="background-image: url(@if($profile->photo) {{ URL::asset($profile->photo) }} @else {{ URL::asset('media/avatars/avatar15.jpg') }} @endif )"></div>
                     </div>
 
                     <div class="col-lg-7 offset-lg-1">
@@ -46,7 +49,7 @@
                         <div class="form-group row">
                             <div class="col-12">
                                 <p class="title">Имя:</p>
-                                <p class="text">{{ $user->name }}</p>
+                                <p class="text">{{ $profile->name }}</p>
                                 <div class="profile-group"></div>
                             </div>
                         </div>
@@ -54,7 +57,7 @@
                         <div class="form-group row">
                             <div class="col-12">
                                 <p class="title">Фамилия:</p>
-                                <p class="text">{{ $user->surname }}</p>
+                                <p class="text">{{ $profile->surname }}</p>
                                 <div class="profile-group"></div>
                             </div>
                         </div>
@@ -62,16 +65,16 @@
                         <div class="form-group row">
                             <div class="col-12">
                                 <p class="title">Отчество:</p>
-                                <p class="text">{{ $user->patronymic }}</p>
+                                <p class="text">{{ $profile->patronymic }}</p>
                                 <div class="profile-group"></div>
                             </div>
                         </div>
 
-                        @if(\Illuminate\Support\Facades\Auth::user()->company_id == $user->company_id)
+                        @if(\Illuminate\Support\Facades\Auth::user()->company_id == $profile->company_id)
                         <div class="form-group row">
                             <div class="col-12">
                                 <p class="title">Электронная почта:</p>
-                                <p class="text">{{ $user->email }}</p>
+                                <p class="text">{{ $profile->email }}</p>
                                 <div class="profile-group"></div>
                             </div>
                         </div>
@@ -79,17 +82,17 @@
                         <div class="form-group row mb-50">
                             <div class="col-12">
                                 <p class="title">Телефон:</p>
-                                <p class="text">{{ $user->phone }}</p>
+                                <p class="text">{{ $profile->phone }}</p>
                                 <div class="profile-group"></div>
                             </div>
                         </div>
                         @endif
 
-                        @if($user->company_id)
+                        @if($profile->company_id)
                         <div class="form-group row mb-50">
                             <div class="col-12">
                                 <p class="title">Компания:</p>
-                                <p class="text">{{ \App\Models\Company::query()->where('id', $user->company_id)->first()->name }}</p>
+                                <p class="text">{{ \App\Models\Company::query()->where('id', $profile->company_id)->first()->name }}</p>
                                 <div class="profile-group"></div>
                             </div>
                         </div>
@@ -98,7 +101,7 @@
                         <div class="form-group row">
                             <div class="col-12">
                                 <p class="title">ID:</p>
-                                <p class="text">{{ $user->code }}</p>
+                                <p class="text">{{ $profile->code }}</p>
                             </div>
                         </div>
 

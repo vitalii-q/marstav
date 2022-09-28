@@ -20,7 +20,8 @@ class ChatController
         if(count($dialogs)) {
             $employees = Dialog::getEmployeesSortedByDialogs($user, $dialogs);
         } else {
-            $employees = User::query()->where('users.company_id', $user->company_id)->where('users.id', '!=', $user->id)->orderBy('name')->get();
+            $employees = User::query()->where('company_id', $user->company_id)->where('company_id', '!=', null)
+                ->where('id', '!=', $user->id)->orderBy('name')->get();
         }
 
         return view('chat', compact('user', 'employees'));

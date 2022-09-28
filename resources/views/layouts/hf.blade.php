@@ -1,4 +1,7 @@
-@php($user = \Illuminate\Support\Facades\Auth::user())
+<?php
+$user = \Illuminate\Support\Facades\Auth::user();
+$settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
+?>
 <!doctype html>
 <html lang="en" class="no-focus">
     <head>
@@ -22,7 +25,9 @@
         <link rel="stylesheet" id="css-main" href="{{ URL::asset('css/codebase.min.css') }}">
 
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-        <!-- <link rel="stylesheet" id="css-theme" href="{{ URL::asset('css/themes/flat.min.css') }}"> -->
+        @if($settings->theme != 'default')
+        <link rel="stylesheet" id="css-theme" href="{{ $settings->theme }}">
+        @endif
         <!-- END Stylesheets -->
 
         <!-- Styles custom -->
@@ -32,7 +37,11 @@
     </head>
     <body>
 
-        <div id="page-container" class="sidebar-o sidebar-inverse enable-page-overlay side-scroll page-header-fixed main-content-boxed">
+        <div id="page-container" class="sidebar-o
+        @if($settings->header_style == 'modern') page-header-modern @endif
+        @if($settings->header_mode == 'fixed') page-header-fixed @endif
+        @if($settings->sidebar_style == 'dark') sidebar-inverse @endif
+         enable-page-overlay side-scroll main-content-boxed ">
 
             <!-- Sidebar -->
             <!--
