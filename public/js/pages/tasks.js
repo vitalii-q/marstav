@@ -95,7 +95,9 @@ function taskAddMembers() {
 
         let options = [];
         for(let i=0; i < employee_input.options.length; i++) {
-            options.push(employee_input.options[i].value);
+            if (employee_input.options[i].selected) {
+                options.push(employee_input.options[i].value);
+            }
         }
 
         $.ajax({

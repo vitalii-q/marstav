@@ -95,7 +95,7 @@
                     <div class="content content-full">
                         <div class="py-50 text-center">
                             <i class="si si-list text-success display-3"></i>
-                            <h1 class="h2 font-w700 mt-30 mb-10">Добавьте задачу</h1>
+                            <h1 class="h2 font-w700 mt-30 mb-10">Задачи</h1>
                             <h2 class="h3 font-w400 text-muted stub-text mb-50">Здесь вы можете управлять задачами</h2>
                             <a class="btn btn-hero btn-noborder btn-rounded btn-success">
                                 <i class="si si-pencil mr-10"></i> Добавить задачу

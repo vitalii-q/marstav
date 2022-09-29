@@ -2,7 +2,7 @@
 
 namespace App\Facades;
 
-use App\Modules\Files\Storage;
+use App\Modules\Storage\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class File

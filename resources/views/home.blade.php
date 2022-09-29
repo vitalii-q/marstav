@@ -98,7 +98,7 @@
                                 <div class="content content-full">
                                     <div class="py-60 text-center">
                                         <i class="si si-note text-warning display-3"></i>
-                                        <h1 class="h2 font-w700 mt-30 mb-10">Добавьте заметку</h1>
+                                        <h1 class="h2 font-w700 mt-30 mb-10">Заметки</h1>
                                         <h2 class="h3 font-w400 text-muted stub-text mb-50">Здесь вы можете управлять заметками</h2>
                                         <a class="btn btn-hero btn-noborder btn-rounded btn-warning">
                                             <i class="si si-pencil mr-10"></i> Добавить заметку

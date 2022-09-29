@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Files;
+namespace App\Modules\Storage;
 
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;

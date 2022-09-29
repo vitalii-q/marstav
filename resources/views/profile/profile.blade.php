@@ -17,7 +17,7 @@
         @endif
 
         <div class="content-heading pt-8">
-            <a href="{{ route('profile.show', $profile->code) }}">Профайл</a>
+            <a href="{{ route('profile.show', $user->code) }}">Профайл</a>
             <small class="d-none d-sm-inline"> / {{ mb_strimwidth($profile->name, 0, 40, "..") }}</small>
         </div>
 
@@ -31,7 +31,7 @@
                 @if($profile->id == \Illuminate\Support\Facades\Auth::user()->id)
                 <a href="{{ route('profile.edit', $profile->code) }}" class="btn btn-alt-primary mr-auto">Редактировать</a>
                 @endif
-                @if(isset($company) and $user->id == $company->creator_id and $user->company_id == $profile->company_id)
+                @if(isset($company) and $user->id == $company->creator_id and $user->company_id == $profile->company_id and $user->id != $profile->id)
                     <button id="expel_an_employee" data-code="{{ $profile->code }}" class="btn btn-alt-danger mr-auto js-swal-confirm">Исключить</button>
                 @endif
             </div>

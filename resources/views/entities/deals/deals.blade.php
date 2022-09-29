@@ -66,7 +66,7 @@
                                     <div class="content content-full">
                                         <div class="py-50 text-center">
                                             <i class="si si-handbag text-primary display-3"></i>
-                                            <h1 class="h2 font-w700 mt-30 mb-10">Нет сделок</h1>
+                                            <h1 class="h2 font-w700 mt-30 mb-10">Сделки</h1>
                                             <h2 class="h3 font-w400 text-muted stub-text mb-50">Здесь вы можете управлять сделками</h2>
                                             <a class="btn btn-hero btn-noborder btn-rounded btn-primary text-white">
                                                 <i class="si si-check mr-10"></i> Добавить сделку
@@ -123,7 +123,7 @@
                                                 ?>
                                                 <p class="stage_deal_date text-darkgray mb-0">{{ $deal->deadline?$date:'' }}</p>
 
-                                                <button onclick="openDeal({{ $deal }}, {{ $last }})" class="btn btn-sm btn-primary stage_deal_btn" data-toggle="modal" data-target="#modal_change_deal">Открыть</button>
+                                                <button onclick="openDeal({{ $deal }}, {{ $last }})" class="btn btn-sm btn-square btn-primary stage_deal_btn" data-toggle="modal" data-target="#modal_change_deal">Открыть</button>
                                             </div>
                                         </div>
                                     @endforeach

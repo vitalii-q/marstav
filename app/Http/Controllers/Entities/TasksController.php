@@ -44,7 +44,11 @@ class TasksController extends Controller
     {
         $user = Auth::user();
         $company = Company::query()->find($user->company_id);
-        $employees = User::query()->where('company_id', $company->id)->orderBy('surname')->get();
+        if ($company) {
+            $employees = User::query()->where('company_id', $company->id)->orderBy('surname')->get();
+        } else {
+            $employees = User::query()->where('id', $user->id)->get();
+        }
 
         return view('entities.tasks.create', compact('employees'));
     }
@@ -88,7 +92,7 @@ class TasksController extends Controller
             'priority' => $request->priority,
             'status' => 'new',
             'deadline' => $request->deadline,
-            'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols(mb_strimwidth($company->name, 0, 30)))))
+            'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols(mb_strimwidth($company?$company->name:$user->name, 0, 30)))))
                 .'_'.str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols(mb_strimwidth($request->title, 0, 20)))))
                 .'_'.bin2hex(random_bytes(10)),
             'creator_id' => $user->id
@@ -132,6 +136,10 @@ class TasksController extends Controller
     {
         $user = Auth::user();
         $task = Task::get($user->id, $code);
+        if (!$task) {
+            return view('oops');
+        }
+
         $files = \App\Models\File::query()->where('task_id', $task->id)->get();
         $comments = TaskComment::query()
             ->select('task_comments.*', 'users.name', 'users.surname', 'users.name', 'users.code')
@@ -150,7 +158,10 @@ class TasksController extends Controller
     {
         $user = Auth::user();
         $task = Task::get($user->id, $task_code);
-        $employee = User::query()->where('code', $request->employee)->first();
+        $employee = User::query()->where('company_id', $user->company_id)->where('code', $request->employee)->first();
+        if(!$employee) {
+            return 1;
+        }
 
         $task_user = TaskUser::query()->where('task_id', $task->id)->get();
         foreach ($task_user as $mediator) {
@@ -189,7 +200,8 @@ class TasksController extends Controller
             $employees = User::query()->whereIn('code', $request->employees)->get();
 
             foreach ($employees as $employee) {
-                if(!TaskUser::query()->where('task_id', $task->id)->where('user_id', $employee->id)->first()) {
+                if(!TaskUser::query()->where('task_id', $task->id)->where('user_id', $employee->id)->first() and
+                $employee->company_id == $user->company_id) {
                     TaskUser::query()->insert([
                         'task_id' => $task->id,
                         'user_id' => $employee->id,

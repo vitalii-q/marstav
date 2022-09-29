@@ -64,32 +64,32 @@
                         <div class="row no-gutters text-center mb-5">
                             <div class="col-2 mb-5">
                                 <a onclick="changeTheme('default')" class="text-default" data-toggle="theme" data-theme="default" href="javascript:void(0)">
-                                    <i class="fa fa-2x fa-circle"></i>
+                                    <i class="si si-drop fa-2x"></i>
                                 </a>
                             </div>
                             <div class="col-2 mb-5">
                                 <a onclick="changeTheme('/css/themes/elegance.min.css')" class="text-elegance" data-toggle="theme" data-theme="/css/themes/elegance.min.css" href="javascript:void(0)">
-                                    <i class="fa fa-2x fa-circle"></i>
+                                    <i class="si si-drop fa-2x"></i>
                                 </a>
                             </div>
                             <div class="col-2 mb-5">
                                 <a onclick="changeTheme('/css/themes/pulse.min.css')" class="text-pulse" data-toggle="theme" data-theme="/css/themes/pulse.min.css" href="javascript:void(0)">
-                                    <i class="fa fa-2x fa-circle"></i>
+                                    <i class="si si-drop fa-2x"></i>
                                 </a>
                             </div>
                             <div class="col-2 mb-5">
                                 <a onclick="changeTheme('/css/themes/flat.min.css')" class="text-flat" data-toggle="theme" data-theme="/css/themes/flat.min.css" href="javascript:void(0)">
-                                    <i class="fa fa-2x fa-circle"></i>
+                                    <i class="si si-drop fa-2x"></i>
                                 </a>
                             </div>
                             <div class="col-2 mb-5">
                                 <a onclick="changeTheme('/css/themes/corporate.min.css')" class="text-corporate" data-toggle="theme" data-theme="/css/themes/corporate.min.css" href="javascript:void(0)">
-                                    <i class="fa fa-2x fa-circle"></i>
+                                    <i class="si si-drop fa-2x"></i>
                                 </a>
                             </div>
                             <div class="col-2 mb-5">
                                 <a onclick="changeTheme('/css/themes/earth.min.css')" class="text-earth" data-toggle="theme" data-theme="css/themes/earth.min.css" href="javascript:void(0)">
-                                    <i class="fa fa-2x fa-circle"></i>
+                                    <i class="si si-drop fa-2x"></i>
                                 </a>
                             </div>
                         </div>
@@ -148,6 +148,26 @@
                 </div>
             </div>
         @endif
+
+        <div class="block">
+
+            <div class="block-header block-header-default">
+                <h3 class="block-title">
+                    <i class="si si-docs mr-5 text-muted"></i> Файловое хранилище
+                </h3>
+            </div>
+
+            <div class="block-content">
+                <div class="row items-push">
+
+                    <div class="col-lg-3">
+                        fdhfg
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
 
     </div>
 

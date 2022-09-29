@@ -32,16 +32,16 @@
             <div class="dropdown float-right">
                 @if(!$task->deleted_at)
                     @if($user->id == $performer->id)
-                    <a id="task_work" href="{{ route('task.work', [$task->code]) }}" type="button" class="btn btn-success min-width-125">В работе</a>
-                    <a id="task_transmit" href="{{ $performer->code }}" type="button" class="btn btn-warning min-width-125" data-toggle="modal" data-target="#modal_task_transmit">Передать</a>
+                    <a id="task_work" href="{{ route('task.work', [$task->code]) }}" type="button" class="btn btn-square btn-primary min-width-125">В работе</a>
+                    <a id="task_transmit" href="{{ $performer->code }}" type="button" class="btn btn-square btn-primary min-width-125" data-toggle="modal" data-target="#modal_task_transmit">Передать</a>
                     @endif
 
                     @if($user->id == $performer->id or $user->id == $task->creator_id)
-                    <a id="task_members" href="{{ $performer->code }}" type="button" class="btn btn-primary min-width-125" data-toggle="modal" data-target="#modal_task_members">Участники</a>
+                    <a id="task_members" href="{{ $performer->code }}" type="button" class="btn btn-square btn-primary min-width-125" data-toggle="modal" data-target="#modal_task_members">Участники</a>
                     @endif
 
                     @if($user->id == $performer->id)
-                    <a id="task_complete" href="{{ route('task.finish', [$task->code]) }}" type="button" class="btn btn-danger min-width-125">Завершить</a>
+                    <a id="task_complete" href="{{ route('task.finish', [$task->code]) }}" type="button" class="btn btn-square btn-danger min-width-125">Завершить</a>
                     @endif
                 @endif
             </div>

@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Facades\File;
 use App\Models\Company;
 use App\Models\Dialog;
+use App\Models\Entities\Task;
+use App\Models\Mediators\TaskUser;
 use App\Models\Message;
 use App\Models\User;
+use App\Modules\Dispatcher\Entities;
+use App\Modules\Dispatcher\Remover;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -156,6 +160,7 @@ class ProfileController extends Controller
     public function leaveCompany(Request $request)
     {
         $user = User::query()->where('code', $request->code)->first();
+        $company = Company::query()->find($user->company_id);
         Message::query()->where('from_id', $user->id)->orWhere('to_id', $user->id)->delete();
         Dialog::query()->where('user1_id', $user->id)->orWhere('user2_id', $user->id)->delete();
 
@@ -163,6 +168,9 @@ class ProfileController extends Controller
             'company_id' => null,
             'company_added' => null
         ]);
+
+        Entities::userLeavesCompany($user, $company); // TODO: очередь
+
         return 1;
     }
 }

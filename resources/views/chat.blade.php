@@ -166,7 +166,7 @@
                     <div class="content content-full">
                         <div class="py-50 text-center">
                             <i class="si si-bubbles text-primary display-3"></i>
-                            <h1 class="h2 font-w700 mt-30 mb-10">Выберите диалог</h1>
+                            <h1 class="h2 font-w700 mt-30 mb-10">Диалоги</h1>
                             <h2 class="h3 font-w400 text-muted stub-text mb-50">Здесь вы можете обмениваться сообщениями</h2>
                         </div>
                     </div>
