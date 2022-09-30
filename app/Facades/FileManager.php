@@ -5,7 +5,7 @@ namespace App\Facades;
 use App\Modules\Storage\Storage;
 use Illuminate\Support\Facades\Auth;
 
-class File
+class FileManager
 {
     public static function save($file, $type, $redirect = null)
     {
@@ -20,7 +20,7 @@ class File
     {
         $file_ids = [];
         foreach ($files as $file) {
-            $path = File::save($file, 'file', true);
+            $path = FileManager::save($file, 'file', true);
             $file_id = \App\Models\File::query()->insertGetId([
                 $entity.'_id' => $id,
                 'name' => $file->getClientOriginalName(),

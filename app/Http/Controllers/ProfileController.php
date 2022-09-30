@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\File;
+use App\Facades\EntityManager;
+use App\Facades\FileManager;
 use App\Models\Company;
 use App\Models\Dialog;
-use App\Models\Entities\Task;
-use App\Models\Mediators\TaskUser;
 use App\Models\Message;
 use App\Models\User;
-use App\Modules\Dispatcher\Entities;
-use App\Modules\Dispatcher\Remover;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
@@ -112,11 +107,11 @@ class ProfileController extends Controller
         }
 
         if($request->delete_photo == 'yes') {
-            File::delete($user->photo);
+            FileManager::delete($user->photo);
             $user->update(["photo" => null]);
         } elseif (isset($request->photo)) {
-            File::delete($user->photo);
-            $path = File::save($request->photo, 'avatar', true);
+            FileManager::delete($user->photo);
+            $path = FileManager::save($request->photo, 'avatar', true);
             $user->update(["photo" => $path]);
         }
 
@@ -161,15 +156,13 @@ class ProfileController extends Controller
     {
         $user = User::query()->where('code', $request->code)->first();
         $company = Company::query()->find($user->company_id);
-        Message::query()->where('from_id', $user->id)->orWhere('to_id', $user->id)->delete();
-        Dialog::query()->where('user1_id', $user->id)->orWhere('user2_id', $user->id)->delete();
 
         $user->update([
             'company_id' => null,
             'company_added' => null
         ]);
 
-        Entities::userLeavesCompany($user, $company); // TODO: очередь
+        EntityManager::userLeavesCompany($user, $company);
 
         return 1;
     }

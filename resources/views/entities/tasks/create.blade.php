@@ -51,7 +51,7 @@
 
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <label for="description">Описание</label>
+                                    <label for="description">Описание *</label>
                                     <textarea class="form-control" id="description" name="description" rows="6" placeholder="Введите описание.."></textarea>
                                     @error('description')
                                     <div class="alert alert-danger mt-15 mb-0">{{ $message }}</div>

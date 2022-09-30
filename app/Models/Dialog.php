@@ -12,7 +12,7 @@ class Dialog extends Model
 
     protected $fillable = ['user1_id', 'user2_id', 'messages', 'updated_at'];
 
-    public function timeUpdate($user_id, $employee_id)
+    public function addOrUpdate($company_id, $user_id, $employee_id)
     {
         $dialog = Dialog::query()
             ->where('user1_id', $user_id)->where('user2_id', $employee_id)
@@ -25,6 +25,7 @@ class Dialog extends Model
             ]);
         } else {
             Dialog::query()->insert([
+                'company_id' => $company_id,
                 'user1_id' => $user_id,
                 'user2_id' => $employee_id,
                 'messages' => 1

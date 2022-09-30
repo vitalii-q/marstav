@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\File;
+use App\Facades\FileManager;
 use App\Models\Dialog;
 use App\Models\Message;
 use App\Models\User;
@@ -83,7 +83,7 @@ class ChatController
         $employee = User::employee($user->company_id, $code);
 
         // TODO: очередь
-        Dialog::timeUpdate($user->id, $employee->id);
+        Dialog::addOrUpdate($user->company_id, $user->id, $employee->id);
 
         $message_id = Message::query()->insertGetId([
             'company_id' => $user->company_id,
@@ -94,7 +94,7 @@ class ChatController
 
 
         if (isset($request->all()['files'])) {
-            $file_ids = File::loader($request->all()['files'], 'message', $message_id);
+            $file_ids = FileManager::loader($request->all()['files'], 'message', $message_id);
             $files = \App\Models\File::query()->select('message_id', 'name', 'src')->whereIn('id', $file_ids)->get();
         }
 

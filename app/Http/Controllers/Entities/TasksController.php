@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Entities;
 
-use App\Facades\File;
+use App\Facades\FileManager;
 use App\Helpers\Converter;
 use App\Helpers\Date;
 use App\Helpers\Regular;
@@ -99,7 +99,7 @@ class TasksController extends Controller
         ]);
 
         if (isset($request->all()['files'])) {
-            File::loader($request->all()['files'], 'task', $task_id);
+            FileManager::loader($request->all()['files'], 'task', $task_id);
         }
 
         $performer = User::query()->where('code', $request->performer)->first();
@@ -236,7 +236,7 @@ class TasksController extends Controller
         ]);
 
         if (isset($request->all()['files'])) {
-            File::loader($request->all()['files'], 'comment', $comment_id);
+            FileManager::loader($request->all()['files'], 'comment', $comment_id);
         }
 
         session()->flash('info', 'Комментарий добавлен');
@@ -299,7 +299,7 @@ class TasksController extends Controller
         }
         $files = \App\Models\File::query()->where('task_id', $task->id)->orWhereIn('comment_id', $comment_ids)->get();
         foreach ($files as $file) {
-            File::delete($file->src);
+            FileManager::delete($file->src);
         }
 
         session()->flash('info', 'Задача закрыта');

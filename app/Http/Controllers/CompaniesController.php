@@ -58,7 +58,7 @@ class CompaniesController extends Controller
         $company_id = Company::query()->insertGetId([
             'creator_id' => $user->id,
             'name' => $request->name,
-            'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->title))))
+            'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->name))))
                 .'_'.bin2hex(random_bytes(14)),
             'description' => $request->description,
         ]);
