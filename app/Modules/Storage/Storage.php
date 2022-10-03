@@ -55,6 +55,26 @@ class Storage
         return true;
     }
 
+    public static function getSizeDir($path)
+    {
+        $totalsize=0;
+        if ($dirstream = @opendir($path)) {
+            while (false !== ($filename = readdir($dirstream))) {
+                if ($filename!="." && $filename!="..")
+                {
+                    if (is_file($path."/".$filename))
+                        $totalsize += filesize($path."/".$filename);
+
+                    if (is_dir($path."/".$filename))
+                        $totalsize += Storage::getSizeDir($path."/".$filename);
+                }
+            }
+        }
+        closedir($dirstream);
+
+        return $totalsize;
+    }
+
     /**
      * Get the date of change
      *

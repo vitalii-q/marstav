@@ -104,17 +104,49 @@
 
             <div class="block-header block-header-default">
                 <h3 class="block-title">
-                    <i class="si si-settings mr-5 text-muted"></i> Настройки
+                    <i class="si si-badge mr-5 text-muted"></i> Тарифный план
                 </h3>
             </div>
 
             <div class="block-content">
-                <div class="row items-push">
 
+                @if($user->paid)
+                <div class="row items-push">
                     <div class="col-lg-3">
-                        fdhfg
+                        <p class="text-muted">
+                            Ваш тарифный план: <br><br>
+                            Оплачено до:
+                        </p>
                     </div>
 
+                    <div class="col-lg-7 offset-lg-1">
+
+                        <div class="form-group row">
+                            <div class="col-12">
+                                {{ $user->rate_name }} <br><br>
+                                {{ \App\Helpers\Date::getDay(date('d', strtotime($user->paid))).' '.\App\Helpers\Date::getMonth(date('m', strtotime($user->paid))).' '.date('Y', strtotime($user->paid)) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                <div class="row items-push">
+                    <div class="col-lg-3">
+                        <p class="text-muted">
+                            Тарифный план определяет определяет возможности которые вы можете использовать. <br>
+                            Обратите внимание, тарифный план закрепляется за компанией, если вы не состоите в компании, она будет создана автоматически.
+                        </p>
+                    </div>
+
+                    <div class="col-lg-7 offset-lg-1">
+
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <a href="{{ route('rates') }}" class="btn btn-alt-primary">Посмотреть тарифы</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

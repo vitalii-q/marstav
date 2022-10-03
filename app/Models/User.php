@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -41,5 +42,13 @@ class User extends Authenticatable
     public static function employee($company_id, $code)
     {
         return User::query()->where('company_id', $company_id)->where('code', $code)->first();
+    }
+
+    public static function getWithRate()
+    {
+        return User::query()->select('users.*', 'companies.code as company_code', 'rates.name as rate_name', 'companies.paid', 'rates.users', 'rates.space')->where('users.id', Auth::user()->id)
+            ->leftJoin('companies', 'companies.id', '=', 'users.company_id')
+            ->leftJoin('rates', 'rates.id', '=', 'companies.rate_id')
+            ->first();
     }
 }

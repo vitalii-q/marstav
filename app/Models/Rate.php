@@ -5,9 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Rate extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['creator_id', 'rate_id', 'paid', 'title', 'description', 'board'];
 }
