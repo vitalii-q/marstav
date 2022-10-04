@@ -344,6 +344,56 @@ $settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
             <main id="main-container">
                 <div id="app">
                     @yield('content')
+
+                    <button id="modal_storage_btn" class="d-none" type="button" data-toggle="modal" data-target="#modal_storage"></button>
+                    <div class="modal fade" id="modal_storage" tabindex="-1" role="dialog" aria-labelledby="modal-popin" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-popin" role="document">
+                            <div class="modal-content">
+                                <div class="block block-themed block-transparent mb-0">
+                                    <div class="block-header bg-primary-dark">
+                                        <h3 class="block-title">Не хватает места</h3>
+                                        <div class="block-options">
+                                            <button class="btn-block-option modal_close_btn" type="button" data-dismiss="modal" aria-label="Close">
+                                                <i class="si si-close"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="block-content">
+                                        <div class="col-md-12">
+                                            <div class="form-material pt-0">
+                                                <div class="block">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-sm-12 py-10">
+                                                            <h3 class="h5 font-w700 mb-15">
+                                                                Файловое хранилище заполнено<span class="text-muted"></span>
+                                                            </h3>
+                                                            <div class="progress mb-5" style="height: 8px;">
+                                                                <div id="modal_storage_percents" class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                            <p class="font-size-sm font-w600 mb-0">
+                                                                <span id="modal_storage_involved" class="font-w700"></span> из
+                                                                <span id="modal_storage_total" class="font-w700"></span> Занято
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="ws_add_note_title_error" class="alert alert-danger mt-15 mb-0 d-none"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-alt-secondary" data-dismiss="modal">Отменить</button>
+                                    <button onclick="addEmployee()" type="button" class="btn btn-alt-success">
+                                        <i class="si si-check"></i> Добавить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
 

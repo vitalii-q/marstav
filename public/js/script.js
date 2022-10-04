@@ -129,3 +129,24 @@ if (expel_an_employee) {
     }
     jQuery(() => { BeUIActivity.init(); });
 }
+
+/* check storage */
+function storageCheck() {
+    let response = false;
+
+    $.ajax({
+       url: '/storage/check',
+       type: 'post',
+       async: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: (data) => {
+           //console.log(data);
+
+            response = data;
+        }
+    });
+
+    return response;
+}

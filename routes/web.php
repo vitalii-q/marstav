@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('rate');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'rate'], function () {
@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/notification/company_invitation_success', [App\Http\Controllers\NotificationsController::class, 'companyInvitationSuccess']);
         Route::post('/notification/company_invitation_cancel', [App\Http\Controllers\NotificationsController::class, 'companyInvitationCancel']);
+
+        Route::post('/storage/check', [\App\Modules\Storage\Storage::class, 'checkStorage']);
 
         // Entities
         Route::resource('/tasks', App\Http\Controllers\Entities\TasksController::class);
@@ -74,6 +76,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/settings/change_header_style', [App\Http\Controllers\SettingsController::class, 'changeHeaderStyle']);
     Route::post('/settings/change_header_mode', [App\Http\Controllers\SettingsController::class, 'changeHeaderMode']);
     Route::post('/settings/change_sidebar_style', [App\Http\Controllers\SettingsController::class, 'changeSidebarStyle']);
+
+    // stubs
+    Route::get('/stub/rate', [App\Http\Controllers\ErrorsController::class, 'rateStub'])->name('rate_stub');
 });
 
 

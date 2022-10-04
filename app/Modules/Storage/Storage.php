@@ -3,6 +3,7 @@
 namespace App\Modules\Storage;
 
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class Storage
@@ -57,10 +58,10 @@ class Storage
 
     public static function getSizeDir($path)
     {
-        $totalsize=0;
+        $totalsize = 0;
         if ($dirstream = @opendir($path)) {
             while (false !== ($filename = readdir($dirstream))) {
-                if ($filename!="." && $filename!="..")
+                if ($filename != "." && $filename != "..")
                 {
                     if (is_file($path."/".$filename))
                         $totalsize += filesize($path."/".$filename);
@@ -96,6 +97,18 @@ class Storage
         /**
          * TODO: Проверка занятого простанства доступного пользователю / компании
          */
+
+        $user = User::getWithRate();
+        $space_involved = Storage::getSizeDir('storage/companies/'.$user->company_code);
+
+        $space_percent = $user->space / 100;
+        $space_percents = $space_involved / $space_percent;
+
+        if ($space_involved > $user->space) {
+            return ['bool' => false, 'space_involved' => Calculator::bToGb($space_involved), 'space_total' => Calculator::bToGb($user->space), 'space_parcents' => $space_percents];
+        }
+
+        return ['bool' => true, 'space_involved' => Calculator::bToGb($space_involved), 'space_total' => Calculator::bToGb($user->space), 'space_parcents' => $space_percents];
     }
 
     public function limitDeleteFiles() {

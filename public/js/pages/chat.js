@@ -295,33 +295,60 @@ function sendMessage(code) {
         error.innerHTML = '';
         error.classList.add('d-none');
 
-        let formData = new FormData(document.getElementById('message_form')); // передача файлов через ajax
-        $.ajax({
-            url: '/chat/'+code+'/message',
-            type: "post",
-            async: false,
-            data: formData,
-            processData: false,
-            contentType: false,
-            cache: false,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: (data) => {
-                //console.log(data);
+        if (files.files.length > 0) {
+            let storage_info = storageCheck();
 
-                error.classList.add('d-none');
-                notification.classList.add('d-none');
-                files.value = '';
+            if (storage_info.bool) {
+                console.log('check true');
+                //sendMessageAjaxRequest(code);
+            } else {
+                let modal_storage_percents = document.getElementById('modal_storage_percents');
+                let modal_storage_involved = document.getElementById('modal_storage_involved');
+                let modal_storage_total = document.getElementById('modal_storage_total');
 
-                let time = getTimeValue(data.server_time, data.message.time);
-                showMessage(data.photo, data.message.text, time, data.files, true);
+                modal_storage_percents.style.width = storage_info.space_parcents;
+                modal_storage_involved.innerText = storage_info.space_involved + 'GB';
+                modal_storage_total.innerText = storage_info.space_total + 'GB';
 
-                dialog_wrapper.scrollTop = dialog_wrapper.scrollHeight;
-                text.value = '';
+                document.getElementById('modal_storage_btn').click();
+
+                console.log(storage_info);
+                console.log('check false');
             }
-        })
+        } else {
+            sendMessageAjaxRequest(code);
+        }
     }
+}
+
+function sendMessageAjaxRequest(code) {
+    let formData = new FormData(document.getElementById('message_form')); // передача файлов через ajax
+
+    $.ajax({
+        url: '/chat/'+code+'/message',
+        type: "post",
+        async: false,
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: (data) => {
+            //console.log(data);
+
+            error.classList.add('d-none');
+            notification.classList.add('d-none');
+            files.value = '';
+
+            let time = getTimeValue(data.server_time, data.message.time);
+            showMessage(data.photo, data.message.text, time, data.files, true);
+
+            dialog_wrapper.scrollTop = dialog_wrapper.scrollHeight;
+            text.value = '';
+        }
+    })
 }
 
 dialog_wrapper.addEventListener('scroll', function () {
