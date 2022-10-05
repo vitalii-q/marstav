@@ -369,7 +369,7 @@ $settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
                                                                 Файловое хранилище заполнено<span class="text-muted"></span>
                                                             </h3>
                                                             <div class="progress mb-5" style="height: 8px;">
-                                                                <div id="modal_storage_percents" class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div id="modal_storage_percents" class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 0%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                                                             </div>
                                                             <p class="font-size-sm font-w600 mb-0">
                                                                 <span id="modal_storage_involved" class="font-w700"></span> из
@@ -386,10 +386,13 @@ $settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
                                 </div>
 
                                 <div class="modal-footer">
+                                    <a href="{{ route('rates') }}" type="button" class="btn btn-alt-primary">
+                                        <i class="si si-badge"></i> Тарифы
+                                    </a>
+                                    <a href="{{ route('settings') }}" type="button" class="btn btn-alt-primary">
+                                        <i class="si si-settings"></i> Настройки
+                                    </a>
                                     <button type="button" class="btn btn-alt-secondary" data-dismiss="modal">Отменить</button>
-                                    <button onclick="addEmployee()" type="button" class="btn btn-alt-success">
-                                        <i class="si si-check"></i> Добавить
-                                    </button>
                                 </div>
                             </div>
                         </div>

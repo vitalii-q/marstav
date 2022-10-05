@@ -4,6 +4,7 @@ namespace App\Modules\Storage;
 
 use App\Models\Company;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class Storage
@@ -58,22 +59,26 @@ class Storage
 
     public static function getSizeDir($path)
     {
-        $totalsize = 0;
-        if ($dirstream = @opendir($path)) {
-            while (false !== ($filename = readdir($dirstream))) {
-                if ($filename != "." && $filename != "..")
-                {
-                    if (is_file($path."/".$filename))
-                        $totalsize += filesize($path."/".$filename);
+        if(is_dir($path)) {
+            $totalsize = 0;
+            if ($dirstream = @opendir($path)) {
+                while (false !== ($filename = readdir($dirstream))) {
+                    if ($filename != "." && $filename != "..")
+                    {
+                        if (is_file($path."/".$filename))
+                            $totalsize += filesize($path."/".$filename);
 
-                    if (is_dir($path."/".$filename))
-                        $totalsize += Storage::getSizeDir($path."/".$filename);
+                        if (is_dir($path."/".$filename))
+                            $totalsize += Storage::getSizeDir($path."/".$filename);
+                    }
                 }
             }
-        }
-        closedir($dirstream);
+            closedir($dirstream);
 
-        return $totalsize;
+            return $totalsize;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -93,22 +98,15 @@ class Storage
      *
      * @return void
      */
-    public function checkStorage() {
-        /**
-         * TODO: Проверка занятого простанства доступного пользователю / компании
-         */
-
+    public function checkStorage(Request $request) {
         $user = User::getWithRate();
-        $space_involved = Storage::getSizeDir('storage/companies/'.$user->company_code);
+        list($space_involved, $space_percents, $style) = User::getStorageInfo($user);
 
-        $space_percent = $user->space / 100;
-        $space_percents = $space_involved / $space_percent;
-
-        if ($space_involved > $user->space) {
-            return ['bool' => false, 'space_involved' => Calculator::bToGb($space_involved), 'space_total' => Calculator::bToGb($user->space), 'space_parcents' => $space_percents];
+        if ($space_involved + $request->download_size > $user->space) {
+            return ['free_space' => false, 'space_involved' => Calculator::bToGb($space_involved), 'space_total' => Calculator::bToGb($user->space), 'space_parcents' => $space_percents, 'style' => $style];
         }
 
-        return ['bool' => true, 'space_involved' => Calculator::bToGb($space_involved), 'space_total' => Calculator::bToGb($user->space), 'space_parcents' => $space_percents];
+        return ['free_space' => true, 'space_involved' => Calculator::bToGb($space_involved), 'space_total' => Calculator::bToGb($user->space), 'space_parcents' => $space_percents, 'style' => $style];
     }
 
     public function limitDeleteFiles() {

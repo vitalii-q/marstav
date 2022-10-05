@@ -22,18 +22,12 @@ class CheckRate
     public function handle(Request $request, Closure $next)
     {
         $user = User::getWithRate();
-        if($user->paid != null and $user->paid < Carbon::now()) {
-            $rate = Rate::query()->where('name', 'Primary')->first();
-            $users = User::query()->where('company_id', $user->company_id)->get();
-            $space_involved = Storage::getSizeDir('storage/companies/'.$user->company_code);
+        //$space_involved = Storage::getSizeDir('storage/companies/'.$user->company_code); // TODO: cache
 
-            if ($user->rate_name != 'Primary') {
-                Company::query()->find($user->company_id)->update(['rate_id' => $rate->id]);
-            }
-
-            if (count($users) > $rate->users or $space_involved > $rate->space) {
-                return redirect()->route('rate_stub');
-            }
+        if($user and $user->paid != null and $user->paid < Carbon::now() OR
+            $user and $user->users < $user->users_in_company)
+        {
+            return redirect()->route('rate_stub');
         }
 
         return $next($request);

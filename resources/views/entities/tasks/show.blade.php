@@ -165,7 +165,7 @@
                             <small>{{ $user->surname.' '.$user->name }}</small>
                         </td>
                         <td>
-                            <form action="{{ route('task.comment', [$task->code]) }}" method="post" enctype="multipart/form-data">
+                            <form id="task_add_comment_form" action="{{ route('task.comment', [$task->code]) }}" method="post" onsubmit="return false;" enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="form-group row">
@@ -184,7 +184,7 @@
                                 @enderror
 
                                 <div class="form-group d-flex">
-                                    <button type="submit" class="btn btn-alt-primary">
+                                    <button onclick="taskCheckStorage()" class="btn btn-alt-primary">
                                         <i class="si si-paper-plane"></i> Отправить
                                     </button>
 

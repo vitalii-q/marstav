@@ -192,8 +192,18 @@
             <div class="block-content">
                 <div class="row items-push">
 
-                    <div class="col-lg-3">
-                        fdhfg
+                    <div class="col-sm-6 py-10">
+                        <h3 class="h5 font-w700 mb-15">
+                            Место в файловом хранилище<span class="text-muted"></span>
+                        </h3>
+                        <div class="progress mb-5" style="height: 8px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-{{ $storage_style }}" role="progressbar" style="width: {{ $space_percents }}%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p class="font-size-sm font-w600 mb-0">
+                            <span class="font-w700">{{ \App\Modules\Storage\Calculator::bToGb($space_involved) }}GB</span> из <span class="font-w700">{{ \App\Modules\Storage\Calculator::bToGb($user->space) }}GB</span> Занято
+                        </p>
+                    </div>
+                    <div class="col-sm-6 py-10 text-md-right">
                     </div>
 
                 </div>

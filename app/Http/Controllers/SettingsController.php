@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\Rate;
 use App\Models\Setting;
 use App\Models\User;
+use App\Modules\Storage\Storage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,9 @@ class SettingsController extends Controller
     public function index()
     {
         $user = User::getWithRate();
-        return view('settings', compact('user'));
+        list($space_involved, $space_percents, $storage_style) = User::getStorageInfo($user);
+
+        return view('settings', compact('user', 'space_involved', 'space_percents', 'storage_style'));
     }
 
     public function rates()

@@ -81,7 +81,7 @@ if (expel_an_employee) {
             jQuery('.js-swal-confirm').on('click', e => {
                 toast.fire({
                     title: 'Вы уверены?',
-                    text: 'Действие не обратимо!',
+                    text: 'Действие не обратимо! Вы утратите доступ к чату, задачам компании и загруженным файлам.',
                     icon: 'warning',
                     showCancelButton: true,
                     customClass: {
@@ -131,22 +131,47 @@ if (expel_an_employee) {
 }
 
 /* check storage */
-function storageCheck() {
+function storageIsFull(files) {
     let response = false;
+    let download_size = 0;
+
+    for (let i = 0; i < files.length; i++) {
+        download_size = download_size + files[i].size;
+    }
 
     $.ajax({
-       url: '/storage/check',
-       type: 'post',
-       async: false,
+        url: '/storage/check',
+        type: 'post',
+        async: false,
+        data: {
+            download_size: download_size
+        },
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: (data) => {
-           //console.log(data);
+            //console.log(data);
 
             response = data;
         }
     });
 
     return response;
+}
+function showStorageModal(storage_info) {
+    let modal_storage_percents = document.getElementById('modal_storage_percents');
+    let modal_storage_involved = document.getElementById('modal_storage_involved');
+    let modal_storage_total = document.getElementById('modal_storage_total');
+
+    modal_storage_percents.classList.remove('bg-danger');
+    modal_storage_percents.classList.remove('bg-warning');
+    modal_storage_percents.classList.remove('bg-success');
+
+    modal_storage_percents.classList.add('bg-'+storage_info.style);
+
+    modal_storage_percents.style.width = storage_info.space_parcents + '%';
+    modal_storage_involved.innerText = storage_info.space_involved + 'GB';
+    modal_storage_total.innerText = storage_info.space_total + 'GB';
+
+    document.getElementById('modal_storage_btn').click();
 }

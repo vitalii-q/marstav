@@ -119,3 +119,32 @@ function taskAddMembers() {
     }
 }
 
+// проверка хранилища при создании задачи
+let task_add_form = document.getElementById('task_add_form');
+if (task_add_form) {
+    function taskCheckStorage() {
+        let files = document.getElementById('files');
+        let storage_info = storageIsFull(files.files);
+
+        if (storage_info.free_space) {
+            task_add_form.submit();
+        } else {
+            showStorageModal(storage_info);
+        }
+    }
+}
+
+// проверка хранилища при добавлении комментария к задаче
+let task_add_comment_form = document.getElementById('task_add_comment_form');
+if (task_add_comment_form) {
+    function taskCheckStorage() {
+        let files = document.getElementById('files');
+        let storage_info = storageIsFull(files.files);
+
+        if (storage_info.free_space) {
+            task_add_comment_form.submit();
+        } else {
+            showStorageModal(storage_info);
+        }
+    }
+}

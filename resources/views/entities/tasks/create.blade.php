@@ -36,7 +36,7 @@
 
                     <div class="block-content">
 
-                        <form action="{{ route('tasks.store') }}" method="post" enctype="multipart/form-data">
+                        <form id="task_add_form" action="{{ route('tasks.store') }}" method="post" onsubmit="return false;" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -124,7 +124,7 @@
 
                             <div class="form-group row">
                                 <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-primary min-width-125 ml-auto d-block">Добавить</button>
+                                    <button onclick="taskCheckStorage()" class="btn btn-primary min-width-125 ml-auto d-block">Добавить</button>
                                 </div>
                             </div>
 

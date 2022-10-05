@@ -296,24 +296,12 @@ function sendMessage(code) {
         error.classList.add('d-none');
 
         if (files.files.length > 0) {
-            let storage_info = storageCheck();
+            let storage_info = storageIsFull(files.files);
 
-            if (storage_info.bool) {
-                console.log('check true');
-                //sendMessageAjaxRequest(code);
+            if (storage_info.free_space) {
+                sendMessageAjaxRequest(code);
             } else {
-                let modal_storage_percents = document.getElementById('modal_storage_percents');
-                let modal_storage_involved = document.getElementById('modal_storage_involved');
-                let modal_storage_total = document.getElementById('modal_storage_total');
-
-                modal_storage_percents.style.width = storage_info.space_parcents;
-                modal_storage_involved.innerText = storage_info.space_involved + 'GB';
-                modal_storage_total.innerText = storage_info.space_total + 'GB';
-
-                document.getElementById('modal_storage_btn').click();
-
-                console.log(storage_info);
-                console.log('check false');
+                showStorageModal(storage_info);
             }
         } else {
             sendMessageAjaxRequest(code);

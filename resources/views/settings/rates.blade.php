@@ -17,7 +17,7 @@
             <div class="content content-top text-center">
                 <div class="py-50">
                     <h1 class="font-w700 text-white mb-10">Тарифные планы</h1>
-                    <h2 class="h4 font-w400 text-white-op">Расширьте ваши возможности.</h2>
+                    <h2 class="h4 font-w400 text-white-op">Расширьте свои возможности.</h2>
                 </div>
             </div>
         </div>

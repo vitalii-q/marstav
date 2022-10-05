@@ -76,7 +76,7 @@ class BeUIActivity {
         jQuery('.js-swal-confirm').on('click', e => {
             toast.fire({
                 title: 'Вы уверены?',
-                text: 'Действие не обратимо!',
+                text: 'Действие не обратимо!2',
                 icon: 'warning',
                 showCancelButton: true,
                 customClass: {
