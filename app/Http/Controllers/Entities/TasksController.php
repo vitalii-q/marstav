@@ -109,8 +109,6 @@ class TasksController extends Controller
             'responsibility' => 'performer'
         ]);
 
-
-        // TODO: на один запрос
         foreach ($request->observers as $observer) {
             $employee = User::query()->where('code', $observer)->first();
             if($employee->id !== $performer->id) {
@@ -135,7 +133,7 @@ class TasksController extends Controller
     public function show($code)
     {
         $user = Auth::user();
-        $task = Task::get($user->id, $code); // TODO: открыть постановщику доступ к задаче
+        $task = Task::get($user->id, $code);
         if (!$task) {
             return view('oops');
         }

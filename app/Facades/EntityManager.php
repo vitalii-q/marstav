@@ -7,10 +7,10 @@ class EntityManager
     public static function userLeavesCompany($user, $company)
     {
         $users = new UserManager();
-        $users->replaceAvatar($user, $user); // TODO: очередь
+        $users->replaceAvatar($user, $user, 'user'); // TODO: очередь
 
         $tasks = new TaskManager();
-        $tasks->userLeavesCompany($user, $company); // TODO: очередь
+        $tasks->allocationUserTasks($user, $company); // TODO: очередь
 
         $messages = new MessageManager();
         $messages->userLeavesCompany($user); // TODO: очередь
@@ -22,13 +22,18 @@ class EntityManager
     public static function companyAddUser($user, $company)
     {
         $users = new UserManager();
-        $users->replaceAvatar($user, $company, 'company'); // TODO: очередь
-        $users->deleteTasks($user); // TODO: очередь
+        $users->replaceAvatar($user, $company); // TODO: очередь
+
+        $tasks = new TaskManager();
+        $tasks->deleteUserTasks($user); // TODO: очередь
     }
 
-    public static function userCreateCompany()
+    public static function userCreateCompany($user, $company)
     {
         $users = new UserManager();
-        //$users->userCreateCompany();
+        $users->replaceAvatar($user, $company);
+
+        $tasks = new TaskManager();
+        $tasks->relocationTaskFiles($user, $company);
     }
 }

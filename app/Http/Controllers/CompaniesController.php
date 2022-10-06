@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\EntityManager;
 use App\Helpers\Converter;
 use App\Helpers\Regular;
 use App\Models\Company;
@@ -66,6 +67,8 @@ class CompaniesController extends Controller
         $user->update([
             'company_id' => $company_id
         ]);
+
+        EntityManager::userCreateCompany($user, Company::query()->find($company_id));
 
         return redirect()->route('company.index');
     }
