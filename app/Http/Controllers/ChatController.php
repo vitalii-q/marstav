@@ -76,7 +76,7 @@ class ChatController
         $request->validate([
             'text' => 'required_without:files|max:4000',
             'files' => 'max:10',
-            'files.*' => 'max:20000'
+            'files.*' => 'max:10000'
         ]);
 
         $user = Auth::user();

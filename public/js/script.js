@@ -5,7 +5,7 @@ function companyInvitationSuccess(e) {
     $.ajax({
         url: '/notification/company_invitation_success',
         type: "post",
-        async: false,
+        async: true,
         data: {
             code: code
         },
@@ -18,7 +18,7 @@ function companyInvitationSuccess(e) {
     })
 
     closeNotification(code);
-    location.reload();
+    //location.reload();
 }
 
 function companyInvitationCancel(e) {
@@ -27,7 +27,7 @@ function companyInvitationCancel(e) {
     $.ajax({
         url: '/notification/company_invitation_cancel',
         type: "post",
-        async: false,
+        async: true,
         data: {
             code: code
         },
@@ -81,7 +81,7 @@ if (expel_an_employee) {
             jQuery('.js-swal-confirm').on('click', e => {
                 toast.fire({
                     title: 'Вы уверены?',
-                    text: 'Действие не обратимо! Вы утратите доступ к чату, задачам компании и загруженным файлам.',
+                    text: 'Аккаунт утратит доступ к чату, задачам компании и загруженным файлам.',
                     icon: 'warning',
                     showCancelButton: true,
                     customClass: {
@@ -104,7 +104,7 @@ if (expel_an_employee) {
                         $.ajax({
                             url: '/profile/leave_сompany',
                             type: "post",
-                            async: false,
+                            async: true,
                             data: {
                                 code: code
                             },

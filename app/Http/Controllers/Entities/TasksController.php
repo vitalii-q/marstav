@@ -80,7 +80,7 @@ class TasksController extends Controller
             'description' => 'required|max:4000',
             'deadline' => 'date_format:Y-m-d|after:'.date('Y-m-d', strtotime(Carbon::yesterday())).'|nullable',
             'files' => 'max:10',
-            'files.*' => 'max:20000'
+            'files.*' => 'max:10000'
         ]);
 
         $user = Auth::user();
@@ -135,7 +135,7 @@ class TasksController extends Controller
     public function show($code)
     {
         $user = Auth::user();
-        $task = Task::get($user->id, $code);
+        $task = Task::get($user->id, $code); // TODO: открыть постановщику доступ к задаче
         if (!$task) {
             return view('oops');
         }
@@ -219,7 +219,7 @@ class TasksController extends Controller
         $request->validate([
             'text' => 'required|max:2000',
             'files' => 'max:10',
-            'files.*' => 'max:20000'
+            'files.*' => 'max:10000'
         ]);
 
         $user = Auth::user();

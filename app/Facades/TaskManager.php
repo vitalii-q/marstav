@@ -20,11 +20,16 @@ class TaskManager
             } elseif ($mediator->responsibility == 'performer') {
                 $task = Task::query()->find($mediator->task_id);
 
-                if ($task->creator_id != $user->id) {
+                if ($task->creator_id == $user->id) {
+                    $mediator->delete();
+                    $this->transmitOrDelete($task);
+                } else {
                     $mediator->delete();
 
                     $creator = User::query()->find($task->creator_id);
                     if($creator->company_id == $company->id) {
+                        // передается создателю, можно сделать передачу на наблюдателя
+                        // потому что если создателя нет в наблюдателях, то у него не было доступа к задаче до перевода
                         TaskUser::query()->where('task_id', $task->id)->where('user_id', $creator->id)
                             ->where('responsibility', '=', 'observer')->delete();
 
@@ -48,6 +53,9 @@ class TaskManager
         if(count($observers)) {
             $observers[0]->update([
                 'responsibility' => 'performer'
+            ]);
+            $task->update([
+                'status' => 'transmitted'
             ]);
         } else {
             $this->removeTethered($task);

@@ -98,7 +98,7 @@ class ProfileController extends Controller
             'patronymic' => 'max:40',
             // проверка на уникальность всех email пользователей кроме своего
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
-            'photo' => 'nullable|max:20000000'
+            'photo' => 'nullable|max:3000'
         ]);
         if ($request->phone !== null) {
             $request->validate([
@@ -124,7 +124,7 @@ class ProfileController extends Controller
         ]);
 
         session()->flash('info', 'Профайл обновлен');
-        return view('profile.profile', compact('user'));
+        return redirect()->route('profile.show', $user->code);
     }
 
     public function changePassword(Request $request)
@@ -154,15 +154,18 @@ class ProfileController extends Controller
 
     public function leaveCompany(Request $request)
     {
-        $user = User::query()->where('code', $request->code)->first();
-        $company = Company::query()->find($user->company_id);
+        $user = Auth::user();
+        $employee = User::query()->where('code', $request->code)->first();
+        $company = Company::query()->find($employee->company_id);
 
-        $user->update([
-            'company_id' => null,
-            'company_added' => null
-        ]);
+        if($user->id == $employee->id OR $user->id == $company->creator_id) {
+            $employee->update([
+                'company_id' => null,
+                'company_added' => null
+            ]);
 
-        EntityManager::userLeavesCompany($user, $company);
+            EntityManager::userLeavesCompany($employee, $company);
+        }
 
         return 1;
     }

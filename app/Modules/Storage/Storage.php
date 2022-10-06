@@ -14,14 +14,14 @@ class Storage
      *
      * @var int
      */
-    protected $maxSize = 20000000;
+    protected $maxSize = 10000000;
 
     public function save($file, $type)
     {
         $user = Auth::user();
         $company = Company::query()->find($user->company_id);
 
-        $unique_code = bin2hex(random_bytes(4));
+        $unique_code = bin2hex(random_bytes(6));
         $file_name = explode('.', $file->getClientOriginalName())[0];
         $file_extension = $file->extension();
 
@@ -29,11 +29,34 @@ class Storage
             $path = 'companies/'.$company->code.'/'.$type.'s/'.$file_name.'_'.$unique_code.'.'.$file_extension;
             \Illuminate\Support\Facades\Storage::disk('public')->put($path, file_get_contents($file));
         } else {
-            $path = 'users/'.$type.'s/'.$user->code.'/'.$file_name.'_'.$unique_code.'.'.$file_extension;
+            $path = 'users/'.$user->code.'/'.$type.'s/'.$file_name.'_'.$unique_code.'.'.$file_extension;
             \Illuminate\Support\Facades\Storage::disk('public')->put($path, file_get_contents($file));
         }
 
         return '/storage/'.$path;
+    }
+
+    public function replace($path, $to)
+    {
+        $pathExp = explode('/', $path);
+        $file_name = end($pathExp); $file_path = '';
+        if ($pathExp[0] == '') {
+            unset($pathExp[0]);
+            if ($pathExp[1] == 'storage') {
+                unset($pathExp[1]);
+            }
+        } elseif ($pathExp[0] == 'storage') {
+            unset($pathExp[0]);
+        }
+        foreach ($pathExp as $pathExpPath) {
+            $file_path .= '/'.$pathExpPath;
+        }
+
+        if (file_exists('storage'.$file_path) and !file_exists('/storage/'.$to.$file_name)) {
+            \Illuminate\Support\Facades\Storage::disk('public')->move($file_path, $to . $file_name);
+        }
+
+        return '/storage/'.$to.$file_name;
     }
 
     public function delete($file)

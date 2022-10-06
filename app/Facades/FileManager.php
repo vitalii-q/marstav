@@ -31,6 +31,12 @@ class FileManager
         return $file_ids;
     }
 
+    public static function replace($path, $to)
+    {
+        $storage = new Storage();
+        return $storage->replace($path, $to);
+    }
+
     public static function delete($file)
     {
         $storage = new Storage();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\EntityManager;
 use App\Models\Company;
 use App\Models\Notification;
 use Carbon\Carbon;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationsController extends Controller
 {
-    // Company
     public function companyInvitationSuccess(Request $request)
     {
         $user = Auth::user();
@@ -23,6 +23,8 @@ class NotificationsController extends Controller
         ]);
 
         $notification->delete();
+
+        EntityManager::companyAddUser($user, $company);
 
         return 1;
     }
