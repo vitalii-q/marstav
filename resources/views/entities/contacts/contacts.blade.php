@@ -28,8 +28,8 @@
                     <div class="form-group mb-0">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <button type="submit" class="btn btn-light">
-                                    <i class="fa fa-search"></i>
+                                <button type="submit" class="btn btn-light contacts_search-btn">
+                                    <i class="si si-magnifier"></i>
                                 </button>
                             </div>
 

@@ -49,7 +49,7 @@
                             <a class="link-effect font-w700" href="/">
                                 <span class="font-size-xl text-primary-dark">MAR</span><span class="font-size-xl">STAV</span>
                             </a>
-                            <h1 class="h3 font-w700 mt-30 mb-10">Ваш корпоративный менеджер</h1>
+                            <h1 class="h3 font-w700 mt-30 mb-10">Ваш бизнес помощник</h1>
                             <h2 class="h5 font-w400 text-muted mb-0">Пожалуйста авторизуйтесь</h2>
                         </div>
 

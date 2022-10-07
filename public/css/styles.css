@@ -428,6 +428,10 @@ a.block {
     margin-bottom: 32px;
 }
 
+.contacts_search-btn {
+    height: 34px;
+}
+
 /* Deals */
 .stage_title {
     border: 1px solid transparent;

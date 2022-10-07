@@ -319,7 +319,7 @@ $settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
                                 <input type="text" class="form-control" placeholder="Search or hit ESC.." id="page-header-search-input" name="page-header-search-input">
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-secondary">
-                                        <i class="fa fa-search"></i>
+                                        <i class="si si-magnifier"></i>
                                     </button>
                                 </div>
                             </div>

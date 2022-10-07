@@ -61,22 +61,22 @@
                                 <?php
                                     $new_messages = \App\Models\Message::query()->where('from_id', $employee->id)->where('to_id', $user->id)->where('view', null)->get();
                                 ?>
-                                <li class="chat-list-item">
-                                    <div class="mr-10">
-                                        <a onclick="openDialog('{{ $employee->code }}')" class="img-link img-status" href="javascript:void(0)">
+                                <a onclick="openDialog('{{ $employee->code }}')" class="font-w600" href="javascript:void(0)">
+                                    <li class="chat-list-item">
+                                        <div class="mr-10">
                                             <div class="img-avatar avatar48" style="background-image: url({{ $employee->photo }})"></div>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <a onclick="openDialog('{{ $employee->code }}')" class="font-w600" href="javascript:void(0)">{{ $employee->surname.' '.$employee->name }}</a>
-                                        <!--<div class="font-size-xs text-muted">
-                                            Hello there!
-                                        </div>-->
-                                    </div>
-                                    <div class="ml-auto">
-                                        <span id="new_mess_count_{{$employee->code}}" class="badge badge-danger badge-pill @if(!count($new_messages)) d-none @endif">{{ count($new_messages) }}</span>
-                                    </div>
-                                </li>
+                                        </div>
+                                        <div>
+                                            <div class="font-w600">{{ $employee->surname.' '.$employee->name }}</div>
+                                            <!--<div class="font-size-xs text-muted">
+                                                Hello there!
+                                            </div>-->
+                                        </div>
+                                        <div class="ml-auto">
+                                            <span id="new_mess_count_{{$employee->code}}" class="badge badge-danger badge-pill @if(!count($new_messages)) d-none @endif">{{ count($new_messages) }}</span>
+                                        </div>
+                                    </li>
+                                </a>
                                 @endforeach
 
                             </ul>
