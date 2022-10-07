@@ -12,38 +12,26 @@ class TaskManager
 {
     public function relocationTaskFiles($user, $entity, $to = 'company')
     {
-        $tasks = Task::query()->select('tasks.*')->join('task_user', 'task_user.task_id', '=', 'tasks.id')
-            ->where('task_user.user_id', $user->id)->get();
-        $taskIds = [];
-        foreach ($tasks as $task) { array_push($taskIds, $task->id); }
-
-        $tasksComments = TaskComment::query()->whereIn('task_id', $taskIds)->get();
-        $commentIds = [];
-        foreach ($tasksComments as $comment) { array_push($commentIds, $comment->id); }
-
-        $files = File::query()->whereIn('task_id', $taskIds)->orWhereIn('comment_id', $commentIds)->get();
+        list($files) = $this->getFilesAndLinkedIds($user);
 
         foreach ($files as $file) {
             switch ($to) {
-                case 'company': $path = FileManager::replace($user->photo, 'companies/' . $entity->code . '/avatars/'); break;
-                case 'user':    $path = FileManager::replace($user->photo, 'users/' . $entity->code . '/avatars/'); break;
+                case 'company': $path = FileManager::replace($file->src, 'companies/' . $entity->code . '/'); break;
+                case 'user':    $path = FileManager::replace($file->src, 'users/' . $entity->code . '/'); break;
             }
             $file->update(["src" => $path]);
         }
     }
 
+    /**
+     * Delete all user tasks with all linked and all files
+     *
+     * @param $user
+     * @return int
+     */
     public function deleteUserTasks($user)
     {
-        $tasks = Task::query()->select('tasks.*')->join('task_user', 'task_user.task_id', '=', 'tasks.id')
-            ->where('task_user.user_id', $user->id)->get();
-        $taskIds = [];
-        foreach ($tasks as $task) { array_push($taskIds, $task->id); }
-
-        $tasksComments = TaskComment::query()->whereIn('task_id', $taskIds)->get();
-        $commentIds = [];
-        foreach ($tasksComments as $comment) { array_push($commentIds, $comment->id); }
-
-        $files = File::query()->whereIn('task_id', $taskIds)->orWhereIn('comment_id', $commentIds)->get();
+        list($files, $taskIds, $commentIds) = $this->getFilesAndLinkedIds($user);
 
         foreach ($files as $file) {
             FileManager::delete($file->src);
@@ -54,6 +42,21 @@ class TaskManager
         Task::query()->whereIn('id', $taskIds)->delete();
 
         return 1;
+    }
+
+    public function getFilesAndLinkedIds($user) {
+        $tasks = Task::query()->select('tasks.*')->join('task_user', 'task_user.task_id', '=', 'tasks.id')
+            ->where('task_user.user_id', $user->id)->get();
+        $taskIds = [];
+        foreach ($tasks as $task) { array_push($taskIds, $task->id); }
+
+        $tasksComments = TaskComment::query()->whereIn('task_id', $taskIds)->get();
+        $commentIds = [];
+        foreach ($tasksComments as $comment) { array_push($commentIds, $comment->id); }
+
+        $files = File::query()->whereIn('task_id', $taskIds)->orWhereIn('comment_id', $commentIds)->get();
+
+        return [$files, $taskIds, $commentIds];
     }
 
     public function allocationUserTasks($user, $company)
@@ -105,13 +108,35 @@ class TaskManager
                 'status' => 'transmitted'
             ]);
         } else {
-            $this->removeTethered($task);
-            $task->delete();
+            $this->removeLinked($task);
+            $this->removeTaskWithFiles($task);
         }
 
     }
 
-    private function removeTethered($task)
+    /**
+     * Remove task and task files
+     *
+     * @param $task
+     * @return void
+     */
+    private function removeTaskWithFiles($task)
+    {
+        $files = File::query()->where('task_id', $task->id)->get();
+        foreach ($files as $file) {
+            FileManager::delete($file->src);
+        }
+        File::query()->where('task_id', $task->id)->delete();
+        $task->delete();
+    }
+
+    /**
+     * Remove linked and linked files
+     *
+     * @param $task
+     * @return void
+     */
+    private function removeLinked($task)
     {
         $comments = TaskComment::query()->where('task_id', $task->id)->get();
         $comment_ids = [];

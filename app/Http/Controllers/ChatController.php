@@ -82,8 +82,7 @@ class ChatController
         $user = Auth::user();
         $employee = User::employee($user->company_id, $code);
 
-        // TODO: очередь
-        Dialog::addOrUpdate($user->company_id, $user->id, $employee->id);
+        Dialog::addOrUpdate($user->company_id, $user->id, $employee->id); // TODO: очередь
 
         $message_id = Message::query()->insertGetId([
             'company_id' => $user->company_id,
@@ -91,7 +90,6 @@ class ChatController
             'to_id' => $employee->id,
             'text' => $request->text
         ]);
-
 
         if (isset($request->all()['files'])) {
             $file_ids = FileManager::loader($request->all()['files'], 'message', $message_id);

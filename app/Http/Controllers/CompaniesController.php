@@ -7,6 +7,7 @@ use App\Helpers\Converter;
 use App\Helpers\Regular;
 use App\Models\Company;
 use App\Models\Notification;
+use App\Models\Rate;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,6 +59,7 @@ class CompaniesController extends Controller
 
         $company_id = Company::query()->insertGetId([
             'creator_id' => $user->id,
+            'rate_id' => Rate::query()->where('name', 'Primary')->first()->id,
             'name' => $request->name,
             'code' => str_replace(' ', '_', strtolower(Converter::transliteration(Regular::removeSymbols($request->name))))
                 .'_'.bin2hex(random_bytes(14)),

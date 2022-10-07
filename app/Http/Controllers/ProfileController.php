@@ -111,7 +111,7 @@ class ProfileController extends Controller
             $user->update(["photo" => null]);
         } elseif (isset($request->photo)) {
             FileManager::delete($user->photo);
-            $path = FileManager::save($request->photo, 'avatar', true);
+            $path = FileManager::save($request->photo, true);
             $user->update(["photo" => $path]);
         }
 

@@ -9,7 +9,7 @@ use App\Models\User;
 
 class CompanyManager
 {
-    public function userLeavesCompany($company)
+    public function checkEmployeesCompany($company)
     {
         $employees = User::query()->where('company_id', $company->id)->get();
         if(!count($employees)) {

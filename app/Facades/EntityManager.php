@@ -13,10 +13,10 @@ class EntityManager
         $tasks->allocationUserTasks($user, $company); // TODO: очередь
 
         $messages = new MessageManager();
-        $messages->userLeavesCompany($user); // TODO: очередь
+        $messages->deleteAllMessages($user); // TODO: очередь
 
         $companies = new CompanyManager();
-        $companies->userLeavesCompany($company); // TODO: очередь
+        $companies->checkEmployeesCompany($company); // TODO: очередь
     }
 
     public static function companyAddUser($user, $company)
@@ -31,9 +31,9 @@ class EntityManager
     public static function userCreateCompany($user, $company)
     {
         $users = new UserManager();
-        $users->replaceAvatar($user, $company);
+        $users->replaceAvatar($user, $company); // TODO: очередь
 
         $tasks = new TaskManager();
-        $tasks->relocationTaskFiles($user, $company);
+        $tasks->relocationTaskFiles($user, $company); // TODO: очередь
     }
 }

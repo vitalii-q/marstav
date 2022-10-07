@@ -16,7 +16,7 @@ class Storage
      */
     protected $maxSize = 10000000;
 
-    public function save($file, $type)
+    public function save($file)
     {
         $user = Auth::user();
         $company = Company::query()->find($user->company_id);
@@ -26,10 +26,10 @@ class Storage
         $file_extension = $file->extension();
 
         if ($company) {
-            $path = 'companies/'.$company->code.'/'.$type.'s/'.$file_name.'_'.$unique_code.'.'.$file_extension;
+            $path = 'companies/'.$company->code.'/'.$file_name.'_'.$unique_code.'.'.$file_extension;
             \Illuminate\Support\Facades\Storage::disk('public')->put($path, file_get_contents($file));
         } else {
-            $path = 'users/'.$user->code.'/'.$type.'s/'.$file_name.'_'.$unique_code.'.'.$file_extension;
+            $path = 'users/'.$user->code.'/'.$file_name.'_'.$unique_code.'.'.$file_extension;
             \Illuminate\Support\Facades\Storage::disk('public')->put($path, file_get_contents($file));
         }
 
@@ -52,7 +52,7 @@ class Storage
             $file_path .= '/'.$pathExpPath;
         }
 
-        if (file_exists('storage'.$file_path) and !file_exists('/storage/'.$to.$file_name)) {
+        if (file_exists('storage'.$file_path) and !file_exists('storage/'.$to.$file_name)) {
             \Illuminate\Support\Facades\Storage::disk('public')->move($file_path, $to . $file_name);
         }
 
@@ -107,13 +107,16 @@ class Storage
     /**
      * Get the date of change
      *
-     * @return void
+     * @param $file
+     * @return false|string|null
      */
     public function date($file)
     {
         if (file_exists($file)) {
             return date('F d Y h:i A', filectime($file));
         }
+
+        return null;
     }
 
     /**

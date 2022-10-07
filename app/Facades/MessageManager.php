@@ -8,7 +8,7 @@ use App\Models\Message;
 
 class MessageManager
 {
-    public function userLeavesCompany($user)
+    public function deleteAllMessages($user)
     {
         $messages = Message::query()->where('from_id', $user->id)->orWhere('to_id', $user->id)->get();
         MessageManager::deleteMessageFiles($messages);

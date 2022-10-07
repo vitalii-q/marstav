@@ -85,7 +85,7 @@
                         <div class="block-content block-content-full bg-body-light">
                             <div class="font-w600 mb-5">{{ $employee->surname }} {{ $employee->name }}</div>
                             <div class="font-size-sm text-muted text-position">
-                                {{ $employee->position }}
+                                {{ mb_strimwidth($employee->position, 0, 255, "..") }}
                             </div>
                         </div>
                     </a>

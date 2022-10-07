@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class FileManager
 {
-    public static function save($file, $type, $redirect = null)
+    public static function save($file, $redirect = null)
     {
         $storage = new Storage();
 
         if($storage->sizeСheck($file, $redirect)) {
-            return $storage->save($file, $type);
+            return $storage->save($file);
         }
     }
 
@@ -20,7 +20,7 @@ class FileManager
     {
         $file_ids = [];
         foreach ($files as $file) {
-            $path = FileManager::save($file, 'file', true);
+            $path = FileManager::save($file, true);
             $file_id = \App\Models\File::query()->insertGetId([
                 $entity.'_id' => $id,
                 'name' => $file->getClientOriginalName(),
