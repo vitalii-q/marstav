@@ -2,20 +2,17 @@
 
 namespace App\Facades;
 
-use App\Models\Entities\Task;
-use App\Models\Entities\TaskComment;
-use App\Models\File;
-use App\Models\Mediators\TaskUser;
-
 class UserManager
 {
     public function replaceAvatar($user, $entity, $to = 'company')
     {
-        switch ($to) {
-            case 'company': $path = FileManager::replace($user->photo, 'companies/' . $entity->code . '/'); break;
-            case 'user':    $path = FileManager::replace($user->photo, 'users/' . $entity->code . '/'); break;
-        }
+        if ($user->photo) {
+            switch ($to) {
+                case 'company': $path = FileManager::replace($user->photo, 'companies/' . $entity->code . '/'); break;
+                case 'user':    $path = FileManager::replace($user->photo, 'users/' . $entity->code . '/'); break;
+            }
 
-        $user->update(["photo" => $path]);
+            $user->update(["photo" => $path]);
+        }
     }
 }

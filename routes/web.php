@@ -69,16 +69,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     // settings
     Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
-    Route::get('/settings/rates', [App\Http\Controllers\SettingsController::class, 'rates'])->name('rates');
-
-    Route::get('/settings/rates/{rate}/change', [App\Http\Controllers\SettingsController::class, 'changeRates'])->name('rates.change');
     Route::post('/settings/change_theme', [App\Http\Controllers\SettingsController::class, 'changeTheme']);
     Route::post('/settings/change_header_style', [App\Http\Controllers\SettingsController::class, 'changeHeaderStyle']);
     Route::post('/settings/change_header_mode', [App\Http\Controllers\SettingsController::class, 'changeHeaderMode']);
     Route::post('/settings/change_sidebar_style', [App\Http\Controllers\SettingsController::class, 'changeSidebarStyle']);
 
-    // stubs
-    Route::get('/stub/rate', [App\Http\Controllers\ErrorsController::class, 'rateStub'])->name('rate_stub');
+    // rates
+    Route::get('/settings/rates', [App\Http\Controllers\RatesController::class, 'rates'])->name('rates');
+    Route::get('/settings/rates/{rate}/change', [App\Http\Controllers\RatesController::class, 'changeRates'])->name('rates.change');
+    Route::get('/stub/rate', [App\Http\Controllers\RatesController::class, 'rateStub'])->name('rate_stub');
 });
 
 

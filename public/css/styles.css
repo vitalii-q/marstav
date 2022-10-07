@@ -57,6 +57,10 @@ a.block {
 .ta-right {text-align: right}
 .c-pointer {cursor: pointer}
 
+.transform180 {
+    transform: rotate(180deg);
+}
+
 .folder-title {
     color: rgba(255,255,255)!important;
 }
