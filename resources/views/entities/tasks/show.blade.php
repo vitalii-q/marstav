@@ -173,6 +173,9 @@
                                         <textarea class="form-control"  name="text" rows="10" maxlength="2000"></textarea>
                                     </div>
                                 </div>
+                                @error('text')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
 
                                 <div id="files_info" class="alert alert-info d-none"></div>
                                 <div id="files_error" class="alert alert-danger d-none"></div>
@@ -190,7 +193,7 @@
 
                                     <div class="ml-auto">
                                         <div class="attach_file">
-                                            <input onchange="inputFilesCountNotification()" type="file" class="custom-file-input js-custom-file-input-enabled" id="files" name="files[]" value="" data-toggle="custom-file-input" accept="*" multiple>
+                                            <input onchange="inputFilesNotifications()" type="file" class="custom-file-input js-custom-file-input-enabled" id="files" name="files[]" value="" data-toggle="custom-file-input" accept="*" multiple>
                                             <label class="custom-file-label" for="files">Прикрепить файл</label>
                                         </div>
                                     </div>

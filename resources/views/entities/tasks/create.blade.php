@@ -94,7 +94,7 @@
                                 <div class="form-group col-6">
                                     <label>Файлы</label>
                                     <div class="custom-file mb-43 mb-15">
-                                        <input onchange="inputFilesCountNotification()" type="file" class="custom-file-input js-custom-file-input-enabled" id="files" name="files[]" value="" data-toggle="custom-file-input" accept="*" multiple>
+                                        <input onchange="inputFilesNotifications()" type="file" class="custom-file-input js-custom-file-input-enabled" id="files" name="files[]" value="" data-toggle="custom-file-input" accept="*" multiple>
                                         <label class="custom-file-label" for="files">Выбрать</label>
                                     </div>
                                     <div id="files_info" class="alert alert-info d-none"></div>

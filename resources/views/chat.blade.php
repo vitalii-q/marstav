@@ -150,7 +150,7 @@
                             <i class="fa fa-fw fa-paperclip font-size-lg"></i>
                         </button>
 
-                        <input id="files" onchange="inputFilesCountNotification()" type="file" class="d-none" name="files[]" value="" accept="*" multiple>
+                        <input id="files" onchange="inputFilesNotifications()" type="file" class="d-none" name="files[]" value="" accept="*" multiple>
 
                         <textarea id="text" type="text" class="form-control flex-grow mr-5" name="text" placeholder="Введите сообщение.."></textarea>
 

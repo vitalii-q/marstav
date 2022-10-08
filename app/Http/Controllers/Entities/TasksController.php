@@ -215,7 +215,7 @@ class TasksController extends Controller
     public function comment(Request $request, $code)
     {
         $request->validate([
-            'text' => 'required|max:2000',
+            'text' => 'required_without:files|max:2000',
             'files' => 'max:10',
             'files.*' => 'max:10000'
         ]);

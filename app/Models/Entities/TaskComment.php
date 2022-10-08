@@ -21,7 +21,7 @@ class TaskComment extends Model
     public function avatar()
     {
         $user = User::query()->where('id', $this->user_id)->first();
-        return $user->src;
+        return $user->photo;
     }
 
     public function files()
