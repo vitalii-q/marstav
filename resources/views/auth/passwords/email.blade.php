@@ -24,39 +24,45 @@
                             <span class="font-size-xl text-primary-dark">MAR</span><span class="font-size-xl">STAV</span>
                         </a>
                         <h1 class="h3 font-w700 mt-30 mb-10">Ваш бизнес помощник</h1>
-                        <h2 class="h5 font-w400 text-muted mb-0">Сбросить пароль</h2>
+                        <h2 class="h5 font-w400 text-muted mb-0">Сброс пароля</h2>
                     </div>
 
-                    <form class="js-validation-signin px-30" action="{{ route('password.email') }}" method="POST">
-                        @csrf
+                    @if(session()->has('status'))
+                        <div class="px-30 py-10">
+                            <p class="alert alert-info">{{ session()->get('status') }}</p>
+                        </div>
+                    @else
+                        <form class="js-validation-signin px-30" action="{{ route('password.email') }}" method="POST">
+                            @csrf
 
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <div class="form-material floating">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <div class="form-material floating">
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
 
-                                    <label for="email">{{ __('Email Address') }}</label>
+                                        <label for="email">{{ __('Email Address') }}</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-sm btn-hero btn-alt-primary">
-                                <i class="si si-login mr-10"></i> {{ __('Send Password Reset Link') }}
-                            </button>
-                            <div class="mt-30">
-                                <a class="link-effect text-muted mr-10 mb-5 d-inline-block" href="{{ route('login') }}">
-                                    <i class="si si-login mr-5"></i> Авторизоваться
-                                </a>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-hero btn-alt-primary">
+                                    <i class="si si-paper-plane mr-10"></i> {{ __('Send Password Reset Link') }}
+                                </button>
+                                <div class="mt-30">
+                                    <a class="link-effect text-muted mr-10 mb-5 d-inline-block" href="{{ route('login') }}">
+                                        <i class="si si-login mr-5"></i> Авторизоваться
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    @endif
 
                 </div>
             </div>
