@@ -20,7 +20,7 @@
             Задачи
 
             <div class="dropdown float-right">
-                <a id="add_task_btn" href="{{ route('tasks.create') }}" type="button" class="btn btn-square btn-success min-width-125">Добавить задачу</a>
+                <a id="add_task_btn" href="{{ route('tasks.create') }}" type="button" class="btn btn-square btn-primary min-width-125">Добавить задачу</a>
             </div>
         </div>
 
@@ -94,10 +94,10 @@
                 <div class="hero-inner">
                     <div class="content content-full">
                         <div class="py-50 text-center">
-                            <i class="si si-list text-success display-3"></i>
+                            <i class="si si-list text-primary display-3"></i>
                             <h1 class="h2 font-w700 mt-30 mb-10">Задачи</h1>
                             <h2 class="h3 font-w400 text-muted stub-text mb-50">Здесь вы можете управлять задачами</h2>
-                            <a class="btn btn-hero btn-noborder btn-rounded btn-success">
+                            <a class="btn btn-hero btn-noborder btn-rounded btn-primary text-white">
                                 <i class="si si-pencil mr-10"></i> Добавить задачу
                             </a>
                         </div>

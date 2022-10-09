@@ -417,6 +417,15 @@ a.block {
     z-index: 100;
 }
 
+.chat-list_item-wrapper {
+    position: relative;
+}
+.contacts_buttons {
+    position: absolute;
+    right: 0;
+    top: 15px;
+}
+
 .contact_info {
     padding-top: 16px;
     overflow-x: hidden;
@@ -678,4 +687,34 @@ a.block {
     height: 40px;
     background-color: #2e383c;
     opacity: 0.5;
+}
+
+/* Welcome */
+.welcome_content {
+    color: #fff;
+    padding-bottom: 0px;
+    align-items: center;
+    margin: auto;
+}
+.welcome_block {
+    display: flex;
+    margin-bottom: 20px;
+}
+.welcome_icon {
+    width: 100px;
+    height: 100px;
+    font-size: 76px;
+}
+.welcome_title {
+    color: #fff;
+    margin-bottom: 6px;
+}
+.welcome_text {
+    font-size: 18px;
+}
+.welcome_copyright {
+    position: absolute;
+    margin-top: 40px;
+    margin-bottom: 0px;
+    bottom: 0;
 }

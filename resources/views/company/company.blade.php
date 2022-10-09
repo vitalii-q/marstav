@@ -40,7 +40,7 @@
             <div class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="alert alert-info">{{ session()->get('info') }}</p>
+                        <p class="alert alert-info mb-0">{{ session()->get('info') }}</p>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
             <div class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="alert alert-danger">{{ session()->get('error') }}</p>
+                        <p class="alert alert-danger mb-0">{{ session()->get('error') }}</p>
                     </div>
                 </div>
             </div>
@@ -139,7 +139,7 @@
                                             <input type="text" class="form-control" id="modal_add_company_id" name="company_id" placeholder="Введите ID" maxlength="255" hidden>
                                         </div>
 
-                                        <div id="ws_add_note_title_error" class="alert alert-danger mt-15 mb-0 d-none"></div>
+                                        <div id="company_add_employee_error" class="alert alert-danger mt-15 mb-0 d-none"></div>
                                     </div>
                                 </div>
                             </div>

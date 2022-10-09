@@ -19,7 +19,7 @@
             @endif
 
             <div class="js-chat-logged-user m-15 d-flex align-items-center justify-content-between rounded">
-                <a href="{{ route('contacts.create') }}" type="button" class="btn btn-success w-100">Добавить контакт</a>
+                <a href="{{ route('contacts.create') }}" type="button" class="btn btn-primary w-100">Добавить контакт</a>
             </div>
 
             <!-- Search -->
@@ -58,19 +58,23 @@
                             <ul class="chat-list">
 
                                 @foreach($contacts as $contact_item)
-                                <li class="chat-list-item">
-                                    <div class="mr-10">
-                                        <a class="img-link img-status" href="javascript:void(0)">
-                                            <img class="img-avatar img-avatar48" src="{{ URL::asset('media/avatars/avatar16.jpg') }}" alt="">
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <a onclick="showContact('{{ $contact_item->code }}')" href="javascript:void(0)" class="font-w600 contact_name">{{ $contact_item->name .' '. $contact_item->surname }}</a>
-                                        <div class="font-size-xs text-muted contacts_position">
-                                            {{ $contact_item->position }}
-                                        </div>
-                                    </div>
-                                    <div class="ml-auto">
+                                <div class="chat-list_item-wrapper">
+                                    <a onclick="showContact('{{ $contact_item->code }}')" href="javascript:void(0)">
+                                        <li class="chat-list-item">
+                                            <div class="mr-10">
+                                                <div class="img-link img-status">
+                                                    <img class="img-avatar img-avatar48" src="{{ URL::asset('media/avatars/avatar16.jpg') }}" alt="">
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="font-w600 contact_name">{{ $contact_item->name .' '. $contact_item->surname }}</div>
+                                                <div class="font-size-xs text-muted contacts_position">
+                                                    {{ $contact_item->position }}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </a>
+                                    <div class="contacts_buttons ml-auto">
                                         <a class="btn btn-sm btn-circle btn-alt-warning my-5 mr-5" href="tel:{{ $contact_item->phone }}">
                                             <i class="si si-call-out"></i>
                                         </a>
@@ -81,7 +85,7 @@
                                             <i class="fa fa-comment"></i>
                                         </a>-->
                                     </div>
-                                </li>
+                                </div>
                                 @endforeach
 
                             </ul>
@@ -166,7 +170,7 @@
                     <div class="hero-inner">
                         <div class="content content-full">
                             <div class="py-50 text-center">
-                                <i class="si si-call-end text-success display-3"></i>
+                                <i class="si si-call-end text-primary display-3"></i>
                                 <h1 class="h2 font-w700 mt-30 mb-10">Контакты</h1>
                                 <h2 class="h3 font-w400 text-muted stub-text mb-50">Здесь вы можете управлять вашими контактами</h2>
                             </div>

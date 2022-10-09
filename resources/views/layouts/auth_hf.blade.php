@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,400i,600,700&display=swap">
     <link rel="stylesheet" id="css-main" href="{{ URL::asset('css/codebase.min.css') }}">
 
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/styles.css') }}">
 </head>
 <body>
 

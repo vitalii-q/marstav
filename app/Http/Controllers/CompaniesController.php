@@ -143,7 +143,7 @@ class CompaniesController extends Controller
         $employee = User::query()->where('code', $request->employee_id)->first();
 
         if (!$employee) {
-            session()->flash('error', 'Неверный ID');
+            session()->flash('error', 'Неверный ID пользователя');
             return false;
         }
 
@@ -169,5 +169,14 @@ class CompaniesController extends Controller
 
         session()->flash('info', 'Пользователю направлено уведомление с подтверждением.');
         return 1;
+    }
+
+    public function employeesCountCheck() {
+        $user = User::getWithRate();
+        if($user->users_in_company >= $user->users) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -12,25 +12,17 @@ $settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Icons -->
-        <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
         <link rel="shortcut icon" href="{{ URL::asset('media/favicons/m-circle.png') }}">
         <link rel="icon" type="image/png" sizes="192x192" href="{{ URL::asset('media/favicons/favicon-192x192.png') }}">
         <link rel="apple-touch-icon" sizes="180x180" href="{{ URL::asset('media/favicons/apple-touch-icon-180x180.png') }}">
-        <!-- END Icons -->
 
-        <!-- Stylesheets -->
-        <!-- Fonts and Codebase framework -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,400i,600,700&display=swap">
         <link rel="stylesheet" id="css-main" href="{{ URL::asset('css/codebase.min.css') }}">
 
-        <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
         @if($settings->theme != 'default')
         <link rel="stylesheet" id="css-theme" href="{{ $settings->theme }}">
         @endif
-        <!-- END Stylesheets -->
 
-        <!-- Styles custom -->
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/styles.css') }}">
 
         @yield('css')
@@ -43,43 +35,26 @@ $settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
         @if($settings->sidebar_style == 'dark') sidebar-inverse @endif
          enable-page-overlay side-scroll main-content-boxed ">
 
-            <!-- Sidebar -->
-            <!--
-                Helper classes
-
-                Adding .sidebar-mini-hide to an element will make it invisible (opacity: 0) when the sidebar is in mini mode
-                Adding .sidebar-mini-show to an element will make it visible (opacity: 1) when the sidebar is in mini mode
-                    If you would like to disable the transition, just add the .sidebar-mini-notrans along with one of the previous 2 classes
-
-                Adding .sidebar-mini-hidden to an element will hide it when the sidebar is in mini mode
-                Adding .sidebar-mini-visible to an element will show it only when the sidebar is in mini mode
-                    - use .sidebar-mini-visible-b if you would like to be a block when visible (display: block)
-            -->
             <nav id="sidebar">
-                <!-- Sidebar Content -->
-                <div class="sidebar-content">
-                    <!-- Side Header -->
-                    <div class="content-header content-header-fullrow px-15">
-                        <!-- Mini Mode -->
-                        <div class="content-header-section sidebar-mini-visible-b">
-                            <!-- Logo -->
-                            <span class="content-header-item font-w700 font-size-xl float-left animated fadeIn">
-                                                <span class="text-dual-primary-dark">c</span><span class="text-primary">b</span>
-                                            </span>
-                            <!-- END Logo -->
-                        </div>
-                        <!-- END Mini Mode -->
 
-                        <!-- Normal Mode -->
+                <div class="sidebar-content">
+
+                    <div class="content-header content-header-fullrow px-15">
+
+                        <div class="content-header-section sidebar-mini-visible-b">
+
+                            <span class="content-header-item font-w700 font-size-xl float-left animated fadeIn">
+                                <span class="text-dual-primary-dark">c</span><span class="text-primary">b</span>
+                            </span>
+
+                        </div>
+
                         <div class="content-header-section text-center align-parent sidebar-mini-hidden">
-                            <!-- Close Sidebar, Visible only on mobile screens -->
-                            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+
                             <button type="button" class="btn btn-circle btn-dual-secondary d-lg-none align-v-r" data-toggle="layout" data-action="sidebar_close">
                                 <i class="fa fa-times text-danger"></i>
                             </button>
-                            <!-- END Close Sidebar -->
 
-                            <!-- Logo -->
                             <div class="content-header-item">
                                 <a class="link-effect font-w700" href="" target="_blank">
                                     <i class="si si-note text-primary"></i>
@@ -87,13 +62,11 @@ $settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
                                     <span class="font-size-xl text-primary">stav</span>
                                 </a>
                             </div>
-                            <!-- END Logo -->
-                        </div>
-                        <!-- END Normal Mode -->
-                    </div>
-                    <!-- END Side Header -->
 
-                    <!-- Side User -->
+                        </div>
+
+                    </div>
+
                     <div class="content-side content-side-full content-side-user px-10 align-parent">
                         <!-- Visible only in mini mode -->
                         <div class="sidebar-mini-visible-b align-v animated fadeIn">
@@ -103,9 +76,7 @@ $settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
                                 <img class="img-avatar" src="{{ URL::asset('media/avatars/avatar2.jpg') }}" alt="">
                             @endif
                         </div>
-                        <!-- END Visible only in mini mode -->
 
-                        <!-- Visible only in normal mode -->
                         <div class="sidebar-mini-hidden-b text-center">
                             <a class="img-link" href="">
                                 @if($user->photo)
@@ -137,11 +108,9 @@ $settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
                                 </li>
                             </ul>
                         </div>
-                        <!-- END Visible only in normal mode -->
-                    </div>
-                    <!-- END Side User -->
 
-                    <!-- Side Navigation -->
+                    </div>
+
                     <div class="content-side content-side-full">
                         <ul class="nav-main">
                             <li>
@@ -160,54 +129,6 @@ $settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
                                     @endif
                                 </a>
                             </li>
-                            <!--<li>
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Page Kits</span></a>
-                                <ul>
-                                    <li class="open">
-                                        <a class="nav-submenu" data-toggle="nav-submenu" href="#"><span class="sidebar-mini-hide">Dashboards</span></a>
-                                        <ul>
-                                            <li>
-                                                <a class="active" href="be_pages_dashboard2.html"><span class="sidebar-mini-hide">Dashboard 2</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="be_pages_dashboard3.html"><span class="sidebar-mini-hide">Dashboard 3</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="be_pages_dashboard4.html"><span class="sidebar-mini-hide">Dashboard 4</span></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="nav-submenu" data-toggle="nav-submenu" href="#"><span class="sidebar-mini-hide">Alternative Dashboards</span></a>
-                                        <ul>
-                                            <li>
-                                                <a href="db_classic.html"><span class="sidebar-mini-hide">Classic</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="db_clean.html"><span class="sidebar-mini-hide">Clean</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="db_social.html"><span class="sidebar-mini-hide">Social</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="db_corporate.html"><span class="sidebar-mini-hide">Corporate</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="db_minimal.html"><span class="sidebar-mini-hide">Minimal</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="db_pop.html"><span class="sidebar-mini-hide">Pop</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="db_dark.html"><span class="sidebar-mini-hide">Dark</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="db_medical.html"><span class="sidebar-mini-hide">Medical</span></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>-->
                             <li>
                                 <a href="{{ route('note_folders.notes.index') }}"><i class="si si-book-open"></i><span class="sidebar-mini-hide">Заметки</span></a>
                             </li>

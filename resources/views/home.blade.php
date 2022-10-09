@@ -97,10 +97,10 @@
                             <div class="hero-inner">
                                 <div class="content content-full">
                                     <div class="py-60 text-center">
-                                        <i class="si si-note text-warning display-3"></i>
+                                        <i class="si si-note text-primary display-3"></i>
                                         <h1 class="h2 font-w700 mt-30 mb-10">Заметки</h1>
                                         <h2 class="h3 font-w400 text-muted stub-text mb-50">Здесь вы можете управлять заметками</h2>
-                                        <a class="btn btn-hero btn-noborder btn-rounded btn-warning">
+                                        <a class="btn btn-hero btn-noborder btn-rounded btn-primary text-white">
                                             <i class="si si-pencil mr-10"></i> Добавить заметку
                                         </a>
                                     </div>
@@ -236,10 +236,10 @@
                                 <div class="hero-inner">
                                     <div class="content content-full">
                                         <div class="py-30 text-center">
-                                            <i class="si si-note text-warning display-3"></i>
+                                            <i class="si si-note text-primary display-3"></i>
                                             <h1 class="h2 font-w700 mt-30 mb-10"></h1>
                                             <h2 class="h3 font-w400 text-muted mb-50">У вас еще нет заметок</h2>
-                                            <a class="btn btn-hero btn-noborder btn-rounded btn-warning" onclick="addFirstNoteBtn()">
+                                            <a class="btn btn-hero btn-noborder btn-rounded btn-primary text-white" onclick="addFirstNoteBtn()">
                                                 <i class="si si-pencil mr-10"></i> Добавить заметку
                                             </a>
                                         </div>

@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('/company', App\Http\Controllers\CompaniesController::class);
         Route::post('/company/add_employee', [App\Http\Controllers\CompaniesController::class, 'addEmployeeAjax'])->name('add_employee_ajax');
+        Route::post('/company/employees_check', [App\Http\Controllers\CompaniesController::class, 'employeesCountCheck']);
 
         Route::get('/chat', [\App\Http\Controllers\ChatController::class, 'index'])->name('chat');
         Route::post('/chat/{code}/message', [\App\Http\Controllers\ChatController::class, 'message'])->name('message');

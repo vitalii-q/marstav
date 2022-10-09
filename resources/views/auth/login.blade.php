@@ -5,16 +5,50 @@
 @section('content')
     <div class="bg-image" style="background-image: url('{{ URL::asset('media/photos/photo34@2x.jpg') }}')">
         <div class="row mx-0 bg-black-op">
-            <div class="hero-static col-md-6 col-xl-8 d-none d-md-flex align-items-md-end">
-                <div class="p-30 invisible" data-toggle="appear">
-                    <p class="font-size-h3 font-w600 text-white">
-                        Вдохновляйтесь и творите.
-                    </p>
-                    <p class="font-italic text-white-op">
-                        Copyright &copy; <span class="js-year-copy"></span>
-                    </p>
+            <div class="hero-static col-md-6 col-xl-8 d-none d-md-flex flex-wrap">
+
+                <div class="welcome_content p-30 col-12 invisible" data-toggle="appear">
+
+                    <div class="welcome_block">
+                        <i class="si si-note welcome_icon"></i>
+                        <div class="welcome_right">
+                            <h3 class="welcome_title">Заметки</h3>
+                            <div class="welcome_text font-italic">Заметки онлайн. Всегда под рукой где бы вы не были.</div>
+                        </div>
+                    </div>
+
+                    <div class="welcome_block">
+                        <i class="si si-like welcome_icon"></i>
+                        <div class="welcome_right">
+                            <h3 class="welcome_title">Сделки</h3>
+                            <div class="welcome_text font-italic">Поэтапное управление сделками. Удобное взаимодействие с календарем.</div>
+                        </div>
+                    </div>
+
+                    <div class="welcome_block">
+                        <i class="si si-puzzle welcome_icon"></i>
+                        <div class="welcome_right">
+                            <h3 class="welcome_title">Задачи</h3>
+                            <div class="welcome_text font-italic">Назначайте задачи сотрудникам и наблюдайте за ходом их выполнения.</div>
+                        </div>
+                    </div>
+
+                    <div class="welcome_block">
+                        <i class="si si-speech welcome_icon"></i>
+                        <div class="welcome_right">
+                            <h3 class="welcome_title">Чат</h3>
+                            <div class="welcome_text font-italic">Корпоративный чат для общения и обмена файлами.</div>
+                        </div>
+                    </div>
+
                 </div>
+
+                <p class="welcome_copyright p-30 font-italic text-white-op">
+                    Copyright &copy; <span class="js-year-copy"></span>
+                </p>
+
             </div>
+
             <div class="hero-static col-md-6 col-xl-4 d-flex align-items-center bg-white invisible" data-toggle="appear" data-class="animated fadeInRight">
                 <div class="content content-full">
 
