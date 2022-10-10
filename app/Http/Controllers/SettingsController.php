@@ -12,10 +12,9 @@ class SettingsController extends Controller
     public function index()
     {
         $user = User::getWithRate();
-        //dd($user);
         list($space_involved, $space_percents, $storage_style) = User::getStorageInfo($user);
 
-        return view('settings', compact('user', 'space_involved', 'space_percents', 'storage_style'));
+        return view('settings.settings', compact('user', 'space_involved', 'space_percents', 'storage_style'));
     }
 
     public function changeTheme(Request $request)

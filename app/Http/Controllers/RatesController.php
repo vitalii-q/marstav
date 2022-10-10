@@ -21,6 +21,8 @@ class RatesController extends Controller
 
     public function changeRates($rate_name)
     {
+        // TODO: сначала оплата
+
         $user = Auth::user();
         $rate = Rate::query()->where('name', strtolower($rate_name))->first();
         if (!$rate) {
