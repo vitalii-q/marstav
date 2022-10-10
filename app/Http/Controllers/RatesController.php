@@ -19,12 +19,17 @@ class RatesController extends Controller
         return view('settings.rates', compact('user', 'rates'));
     }
 
-    public function changeRates($rate_name)
+    public function changeRates(Request $request) // $rate_name
     {
+        // bill / version
+        //return $request->bill['status']['value'];
+
+
+
         // TODO: сначала оплата
 
-        $user = Auth::user();
-        $rate = Rate::query()->where('name', strtolower($rate_name))->first();
+        $user = User::query()->where('code', $request->bill['customer']['accounts'])->first();
+        $rate = Rate::query()->where('price', $request->bill['amount']['value'])->first();
         if (!$rate) {
             return view('oops');
         }
@@ -50,7 +55,7 @@ class RatesController extends Controller
 
 
         // TODO: session - тарифный план продлен
-        session()->flash('info', 'Поздравляем! Вы перешли на тарифный план: '.$rate->name);
+        //session()->flash('info', 'Поздравляем! Вы перешли на тарифный план: '.$rate->name);
         return redirect()->route('settings');
     }
 

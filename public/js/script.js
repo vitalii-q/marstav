@@ -220,3 +220,46 @@ function checkFilesSize(files) {
 
     return true;
 }
+
+/* test */
+function qiwiNotis() {
+    let bill = {
+            "siteId": "9hh4jb-00",
+            "billId": "cc961e8d-d4d6-4f02-b737-2297e51fb48e",
+            "amount": {
+                "value": "1.00",
+                "currency": "RUB"
+            },
+            "status": {
+                "value": "PAID",
+                "changedDateTime": "2021-01-18T15:25:18+03"
+            },
+            "customer": {
+                "phone": "78710009999",
+                "email": "test@example.com",
+                "account": "454678"
+            },
+            "customFields": {
+                "paySourcesFilter": "qw",
+                "themeCode": "Yvan-YKaSh",
+                "yourParam1": "64728940",
+                "yourParam2": "order 678"
+            },
+            "comment": "Text comment",
+            "creationDateTime": "2021-01-18T15:24:53+03",
+            "expirationDateTime": "2025-12-10T09:02:00+03"
+        };
+
+    $.ajax({
+        url: 'http://marstav.loc/settings/rates/change',
+        type: 'post',
+        async: false,
+        data: { bill: bill },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: (data) => {
+            console.log(data);
+        }
+    });
+}

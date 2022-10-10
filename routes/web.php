@@ -77,7 +77,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // rates
     Route::get('/settings/rates', [App\Http\Controllers\RatesController::class, 'rates'])->name('rates');
-    Route::get('/settings/rates/{rate}/change', [App\Http\Controllers\RatesController::class, 'changeRates'])->name('rates.change');
+    //Route::get('/settings/rates/{rate}/change', [App\Http\Controllers\RatesController::class, 'changeRates'])->name('rates.change');
+    Route::post('/settings/rates/change', [App\Http\Controllers\RatesController::class, 'changeRates']);
     Route::get('/stub/rate', [App\Http\Controllers\RatesController::class, 'rateStub'])->name('rate_stub');
 });
 
