@@ -57,7 +57,7 @@
                         <label class="col-12" for="color_{{ $stage->code }}">Цвет <span class="text-danger">*</span></label>
                         <div class="col-lg-12">
                             <div class="js-colorpicker input-group" data-format="hex">
-                                <input type="text" class="form-control" id="color_{{ $stage->code }}" name="color_{{ $stage->code }}" value="{{ $stage->color?$stage->color:'#42a5f5' }}">
+                                <input type="text" class="form-control" id="color_{{ $stage->code }}" name="color_{{ $stage->code }}" value="{{ $stage->color?$stage->color:'#78C0FC' }}">
                                 <div class="input-group-append">
                                     <span class="input-group-text colorpicker-input-addon">
                                         <i></i>

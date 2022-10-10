@@ -29,7 +29,7 @@ function contactTemplate(data) {
 
     template = template+full_name;
     if (data.born) {
-        template = template+'<small class="fs-14">'+data.born+'</small>';
+        template = template+'<small class="fs-14 d-block mb-14">'+data.born+'</small>';
     }
 
     if (data.phone != null || data.private_phone != null || data.email != null || data.private_email != null) {
@@ -73,10 +73,10 @@ function contactTemplate(data) {
     }
 
     if (data.note) {
-        template = template+'<hr>'+'<div class="form-group row mb-20">'+col_12+data.note+end+end;
+        template = template+'<hr>'+'<div class="form-group row">'+col_12+data.note+end+end;
     }
 
-    template = template+'<a href="contacts/'+data.code+'/edit" type="button" class="btn btn-primary w-100 mb-20">Редактировать</a>';
+    template = template+'<a href="/contacts/'+data.code+'/edit" type="button" class="btn btn-primary w-100 mb-20">Редактировать</a>';
 
     return template;
 }
@@ -85,7 +85,7 @@ function showContact(code) {
     let contacts_stub = document.getElementById('contacts_stub');
     let contact_info = document.getElementById('contact_info');
 
-    if (!contacts_stub.classList.contains('d-none')) {
+    if (contacts_stub && !contacts_stub.classList.contains('d-none')) {
         contacts_stub.classList.add('d-none');
     }
 
