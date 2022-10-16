@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\RateManager;
 use App\Models\Company;
 use App\Models\Rate;
 use App\Models\User;
@@ -19,8 +20,10 @@ class RatesController extends Controller
         return view('settings.rates', compact('user', 'rates'));
     }
 
-    public function changeRates(Request $request) // $rate_name
+    public function changeRates(Request $request)
     {
+        // уведомлений sec key eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX3VpZCI6Im02OW9jei0wMCIsInVzZXJfaWQiOiI3OTg1MDY1MjkwMyIsInNlY3JldCI6IjIyYTYzY2ViMzg0Yzc5MGZjZmNmODlmOTUyNTc4ODg5MmI4NzMzYmIwZDAyZWU1MTgyODRmOTQzMzlmNWIxOWMifX0=
+
         // bill / version
         //return $request->bill['status']['value'];
 
@@ -28,8 +31,8 @@ class RatesController extends Controller
 
         // TODO: сначала оплата
 
-        $user = User::query()->where('code', $request->bill['customer']['accounts'])->first();
-        $rate = Rate::query()->where('price', $request->bill['amount']['value'])->first();
+        $user = User::query()->where('code', $request->bill['customer']['account'])->first();
+        $rate = Rate::query()->where('price', $request->bill['amount']['value'])->first(); // TODO: улучшить получение
         if (!$rate) {
             return view('oops');
         }
@@ -38,7 +41,7 @@ class RatesController extends Controller
             $company_id = Company::query()->insertGetId([
                 'creator_id' => $user->id,
                 'rate_id' => $rate->id,
-                'paid' => Carbon::now()->addMonth(), // TODO: регулировать оплачеваемое время
+                'paid' => Carbon::now()->addMonths(1), // TODO: регулировать оплачеваемое время
                 'name' => 'Company',
                 'code' => 'company_'.bin2hex(random_bytes(16)),
             ]);
@@ -47,17 +50,19 @@ class RatesController extends Controller
                 'company_id' => $company_id
             ]);
         } else {
-            Company::query()->find($user->company_id)->update([
-                'rate_id' => $rate->id,
-                'paid' => Carbon::now()->addMonth()
-            ]);
+            $company = Company::query()->find($user->company_id);
+
+            if($company->rate_id == $rate->id) {
+                RateManager::renewal($user, $company, $rate);
+            } else {
+                RateManager::switch($user, $company, $rate);
+            }
         }
 
-
-        // TODO: session - тарифный план продлен
-        //session()->flash('info', 'Поздравляем! Вы перешли на тарифный план: '.$rate->name);
-        return redirect()->route('settings');
+        return 1;
     }
+
+
 
     public function rateStub()
     {
@@ -125,3 +130,5 @@ class RatesController extends Controller
         return view('stubs.rate', compact('user', 'page_title', 'page_text', 'rate', 'users_percents', 'users_style', 'space_involved', 'space_percents', 'storage_style'));
     }
 }
+
+

@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationsController extends Controller
 {
+    public function notificationDelete(Request $request)
+    {
+        $user = Auth::user();
+        Notification::query()->where('code', $request->code)->where('user_id', $user->id)->delete();
+        return 1;
+    }
+
     public function companyInvitationSuccess(Request $request)
     {
         $user = Auth::user();

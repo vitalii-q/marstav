@@ -11,6 +11,11 @@ class Date
         return date('Y-m-d H:i:s', strtotime(Carbon::now()));
     }
 
+    public static function humanDMY($timestamp)
+    {
+        return Date::getDay(date('d', strtotime($timestamp))).' '.Date::getMonth(date('m', strtotime($timestamp))).' '.date('Y', strtotime($timestamp));
+    }
+
     public static function getMonth($number)
     {
         switch ($number) {

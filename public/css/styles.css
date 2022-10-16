@@ -361,6 +361,13 @@ a.block {
     width: 150px;
 }
 
+.notification_bigtext {
+    font-size: 24px;
+    margin-bottom: 12px;
+    line-height: 34px;
+    font-weight: 900;
+}
+
 /* Tasks */
 .comment-left {
     max-width: 36px;

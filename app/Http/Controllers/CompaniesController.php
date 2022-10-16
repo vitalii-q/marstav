@@ -157,11 +157,11 @@ class CompaniesController extends Controller
             return 1;
         }
 
-        if(!Notification::query()->where('user_id', $employee->id)->where('type', 'info')->where('anchor', $company->code)->first()) {
+        if(!Notification::query()->where('user_id', $employee->id)->where('type', 'bool')->where('anchor', $company->code)->first()) {
             Notification::query()->insert([
                 'user_id' => $employee->id,
-                'type' => 'info',
-                'text' => 'Вас приглашают в компанию '.$company->name,
+                'type' => 'bool',
+                'text' => 'Вас приглашают в компанию <strong class="notification_bigtext">'.$company->name.'</strong>',
                 'anchor' => $company->code,
                 'code' => bin2hex(random_bytes(16))
             ]);

@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/notification/company_invitation_success', [App\Http\Controllers\NotificationsController::class, 'companyInvitationSuccess']);
         Route::post('/notification/company_invitation_cancel', [App\Http\Controllers\NotificationsController::class, 'companyInvitationCancel']);
+        Route::post('/notification/delete', [App\Http\Controllers\NotificationsController::class, 'notificationDelete']);
 
         Route::post('/storage/check', [\App\Modules\Storage\Storage::class, 'checkStorage']);
 

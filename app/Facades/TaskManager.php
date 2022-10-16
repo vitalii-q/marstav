@@ -69,10 +69,12 @@ class TaskManager
             } elseif ($mediator->responsibility == 'performer') {
                 $task = Task::query()->find($mediator->task_id);
 
-                if ($task->creator_id == $user->id) {
+                if(!$task) {
+                    $mediator->delete();
+                } elseif ($task and $task->creator_id == $user->id) {
                     $mediator->delete();
                     $this->transmitOrDelete($task);
-                } else {
+                } elseif($task and $task->creator_id != $user->id) {
                     $mediator->delete();
 
                     $creator = User::query()->find($task->creator_id);

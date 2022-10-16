@@ -1,6 +1,28 @@
 const maxfilesize = 10000000; // b
 
 /* Notifications */
+function notificationDelete(e) {
+    code = e.getAttribute('data-code');
+
+    $.ajax({
+        url: '/notification/delete',
+        type: "post",
+        async: true,
+        data: {
+            code: code
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: (data) => {
+            //console.log(data);
+        }
+    })
+
+    closeNotification(code);
+    //location.reload();
+}
+
 function companyInvitationSuccess(e) {
     code = e.getAttribute('data-code');
 
@@ -227,7 +249,7 @@ function qiwiNotis() {
             "siteId": "9hh4jb-00",
             "billId": "cc961e8d-d4d6-4f02-b737-2297e51fb48e",
             "amount": {
-                "value": "1.00",
+                "value": "699.00",
                 "currency": "RUB"
             },
             "status": {
@@ -237,7 +259,7 @@ function qiwiNotis() {
             "customer": {
                 "phone": "78710009999",
                 "email": "test@example.com",
-                "account": "454678"
+                "account": "95fe49e736ece7443a07763ff1ee60c7"
             },
             "customFields": {
                 "paySourcesFilter": "qw",

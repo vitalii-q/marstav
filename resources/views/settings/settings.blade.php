@@ -124,7 +124,7 @@
                         <div class="form-group row">
                             <div class="col-12">
                                 {{ $user->rate_name }} <br><br>
-                                {{ \App\Helpers\Date::getDay(date('d', strtotime($user->paid))).' '.\App\Helpers\Date::getMonth(date('m', strtotime($user->paid))).' '.date('Y', strtotime($user->paid)) }}
+                                {{ \App\Helpers\Date::humanDMY($user->paid) }}
                             </div>
                         </div>
                     </div>
