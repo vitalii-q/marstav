@@ -26,6 +26,7 @@ class RatesController extends Controller
 
         // bill / version
         //return $request->bill['status']['value'];
+        // git test
 
 
 
