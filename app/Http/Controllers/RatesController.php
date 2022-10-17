@@ -22,11 +22,13 @@ class RatesController extends Controller
 
     public function changeRates(Request $request)
     {
+        //
+        // -------------------------
+
         // уведомлений sec key eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX3VpZCI6Im02OW9jei0wMCIsInVzZXJfaWQiOiI3OTg1MDY1MjkwMyIsInNlY3JldCI6IjIyYTYzY2ViMzg0Yzc5MGZjZmNmODlmOTUyNTc4ODg5MmI4NzMzYmIwZDAyZWU1MTgyODRmOTQzMzlmNWIxOWMifX0=
 
         // bill / version
         //return $request->bill['status']['value'];
-        // git test
 
 
 

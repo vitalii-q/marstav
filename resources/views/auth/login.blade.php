@@ -43,10 +43,6 @@
 
                 </div>
 
-                <p class="welcome_copyright p-30 font-italic text-white-op">
-                    Copyright &copy; <span class="js-year-copy"></span>
-                </p>
-
             </div>
 
             <div class="hero-static col-md-6 col-xl-4 d-flex align-items-center bg-white invisible" data-toggle="appear" data-class="animated fadeInRight">

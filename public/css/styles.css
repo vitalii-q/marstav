@@ -703,10 +703,11 @@ a.block {
     padding-bottom: 0px;
     align-items: center;
     margin: auto;
+    padding-top: 40px !important;
 }
 .welcome_block {
     display: flex;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 .welcome_icon {
     width: 100px;
