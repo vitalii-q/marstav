@@ -30,7 +30,7 @@
             @php($better = false) @foreach($rates as $rate)
                 @if($user->rate_name == $rate->name) @php($better = true) @endif
                 <div class="col-md-6 col-xl-3">
-                    <a @if($rate->name == 'Primary') onclick="return false;" @else href="https://oplata.qiwi.com/create?publicKey=48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPuaMKZz3XQSn5VsmW8JXRz4UyXtJwafPZFq68cPvVG4DVsHf3beWddB5J8sFAHSpHadByg9Z5FgZMiGCJzXHFDH1dwwVhXEW7z5tgQddw2&billId={{ bin2hex(random_bytes(16)) }}&amount={{ $rate->price }}&account={{ $user->code }}&successUrl=http://marstav.loc/settings" @endif class="block block-link-pop block-rounded block-bordered text-center c-pointer" target="_blank">
+                    <a @if($rate->name == 'Primary') onclick="return false;" @else href="https://oplata.qiwi.com/create?publicKey=48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPuaMKZz3XQSn5VsmW8JXRz4UyXtJwafPZFq68cPvVG4DVsHf3beWddB5J8sFAHSpHadByg9Z5FgZMiGCJzXHFDH1dwwVhXEW7z5tgQddw2&billId={{ bin2hex(random_bytes(16)) }}&amount={{ $rate->price }}&account={{ $user->code }}&successUrl=http://marstav.loc/settings&customFields[themeCode]=Vytalyi-SiLyU5b65F" @endif class="block block-link-pop block-rounded block-bordered text-center c-pointer" target="_blank">
                         <div class="block-header">
                             <h3 class="block-title">
                                 @if($user->rate_name == $rate->name) <i class="fa fa-check"></i> @endif
