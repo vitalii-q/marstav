@@ -12,7 +12,7 @@
                     <div class="welcome_block">
                         <i class="si si-note welcome_icon"></i>
                         <div class="welcome_right">
-                            <h3 class="welcome_title">Заметки</h3>
+                            <h3 class="welcome_title">Заметки онлайн</h3>
                             <div class="welcome_text font-italic">Заметки онлайн. Всегда под рукой где бы вы не были.</div>
                         </div>
                     </div>
@@ -20,7 +20,7 @@
                     <div class="welcome_block">
                         <i class="si si-like welcome_icon"></i>
                         <div class="welcome_right">
-                            <h3 class="welcome_title">Сделки</h3>
+                            <h3 class="welcome_title">Сделки с клиентами</h3>
                             <div class="welcome_text font-italic">Поэтапное управление сделками. Удобное взаимодействие с календарем.</div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                     <div class="welcome_block">
                         <i class="si si-puzzle welcome_icon"></i>
                         <div class="welcome_right">
-                            <h3 class="welcome_title">Задачи</h3>
+                            <h3 class="welcome_title">Постановщик задач</h3>
                             <div class="welcome_text font-italic">Назначайте задачи сотрудникам и наблюдайте за ходом их выполнения.</div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                     <div class="welcome_block">
                         <i class="si si-speech welcome_icon"></i>
                         <div class="welcome_right">
-                            <h3 class="welcome_title">Чат</h3>
+                            <h3 class="welcome_title">Корпоративный чат</h3>
                             <div class="welcome_text font-italic">Корпоративный чат для общения и обмена файлами.</div>
                         </div>
                     </div>
