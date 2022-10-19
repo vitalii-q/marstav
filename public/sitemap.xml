@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+    <loc>https://marstav.ru/</loc>
+    <priority>1.0</priority>
+    <changefreq>always</changefreq>
+    <lastmod>2022-10-19</lastmod>
+</url>
+<url>
+    <loc>https://marstav.ru/register</loc>
+    <priority>0.1</priority>
+    <changefreq>always</changefreq>
+    <lastmod>2022-10-19</lastmod>
+</url>
+<url>
+    <loc>https://marstav.ru/password/reset</loc>
+    <priority>0.1</priority>
+    <changefreq>always</changefreq>
+    <lastmod>2022-10-19</lastmod>
+</url>
+<url>
+    <loc>https://marstav.ru/login</loc>
+    <priority>0.1</priority>
+    <changefreq>always</changefreq>
+    <lastmod>2022-10-19</lastmod>
+</url>
+</urlset>

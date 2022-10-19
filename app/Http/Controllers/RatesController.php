@@ -37,7 +37,7 @@ class RatesController extends Controller
         $user = User::query()->where('code', $request->bill['customer']['account'])->first();
         $rate = Rate::query()->where('price', $request->bill['amount']['value'])->first(); // TODO: улучшить получение
         if (!$rate) {
-            return view('oops');
+            return view('errors.oops');
         }
 
         if (!$user->company_id) {

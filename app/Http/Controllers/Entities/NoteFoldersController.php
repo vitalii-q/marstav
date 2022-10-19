@@ -83,7 +83,7 @@ class NoteFoldersController extends Controller
         $note_folder = NoteFolder::query()->where('user_id', $user->id)->where('code', $folder_code)->first();
 
         if (!$note_folder) {
-            return view('oops');
+            return view('errors.oops');
         }
 
         return view('entities.note_folders.edit', compact('note_folder'));

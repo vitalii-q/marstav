@@ -135,7 +135,7 @@ class TasksController extends Controller
         $user = Auth::user();
         $task = Task::get($user->id, $code);
         if (!$task) {
-            return view('oops');
+            return view('errors.oops');
         }
 
         $files = \App\Models\File::query()->where('task_id', $task->id)->get();
@@ -224,7 +224,7 @@ class TasksController extends Controller
         $task = Task::get($user->id, $code);
 
         if(!$task) {
-            return view('oops');
+            return view('errors.oops');
         }
 
         $comment_id = TaskComment::query()->insertGetId([

@@ -22,7 +22,7 @@ class NotesController extends Controller
         $user_id = Auth::user()->id;
         $folder = DB::table('note_folders')->where('user_id', $user_id)->where('code', $code)->first();
         if(!$folder and $code !== 'root') {
-            return view('oops');
+            return view('errors.oops');
         } elseif (!$folder and $code == 'root') {
             return redirect()->route('note_folders.notes.index');
         } else {
@@ -141,7 +141,7 @@ class NotesController extends Controller
         if(($folder or $folder_code === 'root') and $note) {
             return view('entities.notes.edit', compact('folder', 'note'));
         } else {
-            return view('oops');
+            return view('errors.oops');
         }
     }
 

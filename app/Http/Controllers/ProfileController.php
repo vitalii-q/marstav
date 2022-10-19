@@ -70,7 +70,7 @@ class ProfileController extends Controller
     public function edit($code)
     {
         if (Auth::user()->code !== $code) {
-            return view('oops');
+            return view('errors.oops');
         }
 
         $profile = User::query()->where('code', Auth::user()->code)->first();
@@ -89,7 +89,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         if ($user->code !== $code) {
-            return view('oops');
+            return view('errors.oops');
         }
 
         $request->validate([
