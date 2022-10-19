@@ -47,7 +47,7 @@
                         </div>
                         <div class="block-content block-content-full">
                             <span class="btn btn-hero btn-sm btn-rounded btn-noborder @if($user->rate_name == $rate->name) btn-alt-primary @else btn-primary @endif">
-                                <i class="fa fa-arrow-up mr-5 @if($better == false) transform180 @endif"></i>
+                                <i class="si  @if($better == false) si-arrow-down @else si-arrow-up @endif mr-5"></i>
                                 @if($user->rate_name == $rate->name and $rate->name != 'Primary') Продлить @else Обновить @endif
                             </span>
                         </div>

@@ -59,8 +59,14 @@ a.block {
 .ta-right {text-align: right}
 .c-pointer {cursor: pointer}
 
+.transform90 {
+    transform: rotate(90deg);
+}
 .transform180 {
     transform: rotate(180deg);
+}
+.transform270 {
+    transform: rotate(270deg);
 }
 
 .folder-title {
