@@ -1,6 +1,6 @@
 @extends('layouts.auth_hf')
 
-@section('title', 'Marstav: бизнес помощник')
+@section('title', 'Marstav - корпоративный помощник')
 
 @section('content')
     <div class="bg-image" style="background-image: url('{{ URL::asset('media/photos/photo34@2x.jpg') }}')">
@@ -60,7 +60,7 @@
                         <a class="link-effect font-w700" href="/">
                             <span class="font-size-xl text-primary-dark">MAR</span><span class="font-size-xl">STAV</span>
                         </a>
-                        <h1 class="h3 font-w700 mt-30 mb-10">Ваш бизнес помощник</h1>
+                        <h1 class="h3 font-w700 mt-30 mb-10">Корпоративный помощник</h1>
                         <h2 class="h5 font-w400 text-muted mb-0">Пожалуйста авторизуйтесь</h2>
                     </div>
 
