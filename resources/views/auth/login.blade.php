@@ -5,7 +5,15 @@
 @section('content')
     <div class="bg-image" style="background-image: url('{{ URL::asset('media/photos/photo34@2x.jpg') }}')">
         <div class="row mx-0 bg-black-op">
-            <div class="hero-static col-md-6 col-xl-8 d-none d-md-flex flex-wrap">
+            <div class="hero-static col-md-6 col-xl-8 d-md-flex flex-wrap">
+
+                <div class="login_title_block_wrapper content content-full">
+                    <div class="login_title_block px-30 py-10">
+                        <a class="link-effect font-w700" href="/">
+                            <span class="fs-40 text-white">MAR</span><span class="fs-40">STAV</span>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="welcome_content p-30 col-12 invisible" data-toggle="appear">
 
