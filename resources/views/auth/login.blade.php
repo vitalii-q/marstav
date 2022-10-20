@@ -1,6 +1,6 @@
 @extends('layouts.auth_hf')
 
-@section('title', 'Marstav - корпоративный онлайн помощник. Управление клиентами и бизнесом.')
+@section('title', 'MARSTAV - управление клиентами и бизнесом. Организация работы: чаты, сделки, задачи, заметки, напоминания.')
 
 @section('content')
     <div class="bg-image" style="background-image: url('{{ URL::asset('media/photos/photo34@2x.jpg') }}')">
