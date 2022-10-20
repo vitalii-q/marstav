@@ -23,6 +23,52 @@ class RatesController extends Controller
 
     public function changeRates(Request $request)
     {
+        if (!in_array($_SERVER['REMOTE_ADDR'], array('185.71.65.92', '185.71.65.189', '149.202.17.210'))) return;
+
+        if (isset($request['m_operation_id']) && isset($request['m_sign']))
+        {
+            $m_key = '1hEhtehPqiPrMhKZ';
+
+            $arHash = array(
+                $request['m_operation_id'],
+                $request['m_operation_ps'],
+                $request['m_operation_date'],
+                $request['m_operation_pay_date'],
+                $request['m_shop'],
+                $request['m_orderid'],
+                $request['m_amount'],
+                $request['m_curr'],
+                $request['m_desc'],
+                $request['m_status']
+            );
+
+            if (isset($request['m_params']))
+            {
+                $arHash[] = $request['m_params'];
+            }
+
+            $arHash[] = $m_key;
+
+            $sign_hash = strtoupper(hash('sha256', implode(':', $arHash)));
+
+            if ($request['m_sign'] == $sign_hash && $request['m_status'] == 'success') { // проверка платежа
+                ob_end_clean();
+                //exit($request['m_orderid'].'|success');
+
+                Notification::query()->insert([
+                    'user_id' => 1,
+                    'type' => 'confirm',
+                    'title' => 'Уведомление',
+                    'text' => 'test',
+                    'anchor' => 'qwerty',
+                    'code' => bin2hex(random_bytes(14))
+                ]);
+            }
+
+            ob_end_clean();
+            exit($request['m_orderid'].'|error');
+        }
+
         /*Notification::query()->insert([
             'user_id' => 1,
             'type' => 'confirm',
@@ -76,7 +122,8 @@ class RatesController extends Controller
         return 1;
     }
 
-
+    public function addPayment()
+    {}
 
     public function rateStub()
     {
