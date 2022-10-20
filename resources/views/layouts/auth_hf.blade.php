@@ -6,7 +6,7 @@
 
     <title>@yield('title')</title>
 
-    <meta name="description" content="MARSTAV - online CRM система. Управление клиентами и бизнесом. Организуйте работу в вашей компании: чаты, сделки, задачи, заметки, напоминания">
+    <meta name="description" content="MARSTAV - online CRM система. Управление клиентами и бизнесом. Организуйте работу в вашей компании: чаты, сделки, задачи, заметки, напоминания.">
 
     <meta name="keywords" content="задачи, таск, менеджер, бесплатный, российский, онлайн, 2022, топ, система, управления, дедлайн, заметки, сделки, календарь, напоминания, дат, чат, сообщения, мессенджер, корпоративный, CRM, ru, клиент, deal, бизнес, процесс">
 
@@ -14,12 +14,13 @@
 
     <meta property="og:title" content="Marstav - корпоративный онлайн помощник. Управление клиентами и бизнесом. CRM.">
     <meta property="og:site_name" content="marstav.ru">
-    <meta property="og:description" content="Сделками и напоминания по календарю, задачи сотрудникам компании,
-     дедлайн и наблюдение за выполнением задач, общение и обмен файлами в чате,
-     заметки онлайн с любого устройства с доступом к интернету">
+    <meta property="og:description" content="MARSTAV - online CRM система. Управление клиентами и бизнесом. Организуйте работу в вашей компании: чаты, сделки, задачи, заметки, напоминания.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://marstav.ru">
-    <meta property="og:image" content="">
+    <meta property="og:locale" content="ru">
+    <meta property="og:image" content="{{ URL::asset('media/favicons/m-circle.png') }}">
+
+    @yield('head')
 
     <link rel="shortcut icon" href="{{ URL::asset('media/favicons/m-circle.png') }}">
     <link rel="icon" type="image/png" sizes="192x192" href="{{ URL::asset('media/favicons/m-circle.png') }}">
