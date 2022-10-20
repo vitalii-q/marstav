@@ -11,7 +11,7 @@ class NotificationManager
         Notification::query()->insert([
             'user_id' => $user->id,
             'type' => 'confirm',
-            'title' => 'Уведмление',
+            'title' => 'Уведомление',
             'text' => $text,
             'anchor' => $user->code,
             'code' => bin2hex(random_bytes(14))

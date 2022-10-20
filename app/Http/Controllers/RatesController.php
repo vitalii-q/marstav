@@ -23,16 +23,16 @@ class RatesController extends Controller
 
     public function changeRates(Request $request)
     {
-        Notification::query()->insert([
+        /*Notification::query()->insert([
             'user_id' => 1,
             'type' => 'confirm',
-            'title' => 'Уведмление',
+            'title' => 'Уведомление',
             'text' => 'test',
             'anchor' => 'qwerty',
             'code' => bin2hex(random_bytes(14))
-        ]);
+        ]);*/
 
-        return $request;
+        //return $request;
         //
         // -------------------------
 
