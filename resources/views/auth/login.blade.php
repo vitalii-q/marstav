@@ -1,6 +1,6 @@
 @extends('layouts.auth_hf')
 
-@section('title', 'Marstav - корпоративный помощник')
+@section('title', 'Marstav - корпоративный онлайн помощник. Управление клиентами и бизнесом.')
 
 @section('content')
     <div class="bg-image" style="background-image: url('{{ URL::asset('media/photos/photo34@2x.jpg') }}')">
@@ -18,26 +18,26 @@
                 <div class="welcome_content p-30 col-12 invisible" data-toggle="appear">
 
                     <div class="welcome_block">
-                        <i class="si si-note welcome_icon"></i>
+                        <i class="si si-puzzle welcome_icon"></i>
                         <div class="welcome_right">
-                            <h3 class="welcome_title">Заметки онлайн</h3>
-                            <div class="welcome_text font-italic">Заметки онлайн. Всегда под рукой где бы вы не были.</div>
+                            <h3 class="welcome_title">Менеджер задач</h3>
+                            <div class="welcome_text font-italic">Назначайте задачи сотрудникам и наблюдайте за ходом их выполнения.</div>
                         </div>
                     </div>
 
                     <div class="welcome_block">
                         <i class="si si-like welcome_icon"></i>
                         <div class="welcome_right">
-                            <h3 class="welcome_title">Сделки с клиентами</h3>
+                            <h3 class="welcome_title">Сделки и напоминания</h3>
                             <div class="welcome_text font-italic">Поэтапное управление сделками. Удобное взаимодействие с календарем.</div>
                         </div>
                     </div>
 
                     <div class="welcome_block">
-                        <i class="si si-puzzle welcome_icon"></i>
+                        <i class="si si-note welcome_icon"></i>
                         <div class="welcome_right">
-                            <h3 class="welcome_title">Постановщик задач</h3>
-                            <div class="welcome_text font-italic">Назначайте задачи сотрудникам и наблюдайте за ходом их выполнения.</div>
+                            <h3 class="welcome_title">Заметки онлайн</h3>
+                            <div class="welcome_text font-italic">Заметки онлайн. Всегда под рукой где бы вы не были.</div>
                         </div>
                     </div>
 
@@ -60,7 +60,7 @@
                         <a class="link-effect font-w700" href="/">
                             <span class="font-size-xl text-primary-dark">MAR</span><span class="font-size-xl">STAV</span>
                         </a>
-                        <h1 class="h3 font-w700 mt-30 mb-10">Корпоративный помощник</h1>
+                        <h1 class="h3 font-w700 mt-30 mb-10">Управление бизнесом</h1>
                         <h2 class="h5 font-w400 text-muted mb-0">Пожалуйста авторизуйтесь</h2>
                     </div>
 

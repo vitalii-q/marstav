@@ -9,19 +9,19 @@
 <url>
     <loc>https://marstav.ru/register</loc>
     <priority>0.1</priority>
-    <changefreq>always</changefreq>
+    <changefreq>never</changefreq>
     <lastmod>2022-10-19</lastmod>
 </url>
 <url>
     <loc>https://marstav.ru/password/reset</loc>
     <priority>0.1</priority>
-    <changefreq>always</changefreq>
+    <changefreq>never</changefreq>
     <lastmod>2022-10-19</lastmod>
 </url>
 <url>
     <loc>https://marstav.ru/login</loc>
     <priority>0.1</priority>
-    <changefreq>always</changefreq>
+    <changefreq>never</changefreq>
     <lastmod>2022-10-19</lastmod>
 </url>
 </urlset>

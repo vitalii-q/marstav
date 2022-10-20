@@ -716,6 +716,7 @@ a.block {
 .welcome_content {
     color: #fff;
     padding-bottom: 0px;
+    padding-top: 40px!important;
     align-items: center;
     margin: auto;
 }
