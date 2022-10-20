@@ -23,7 +23,7 @@
                             <span class="font-size-xl text-primary-dark">MAR</span><span class="font-size-xl">STAV</span>
                         </a>
                         <h1 class="h3 font-w700 mt-30 mb-10">Корпоративный помощник</h1>
-                        <h2 class="h5 font-w400 text-muted mb-0">Регистрация</h2>
+                        <div class="h5 font-w400 text-muted mb-0">Регистрация</div>
                     </div>
 
                     <form class="js-validation-signin px-30" action="{{ route('register') }}" method="post">
