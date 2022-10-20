@@ -276,7 +276,7 @@ function qiwiNotis() {
         url: 'http://marstav.loc/settings/rates/change',
         type: 'post',
         async: false,
-        data: { bill: bill },
+        data: { bill },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\RateManager;
 use App\Models\Company;
+use App\Models\Notification;
 use App\Models\Rate;
 use App\Models\User;
 use App\Modules\Storage\Storage;
@@ -22,6 +23,16 @@ class RatesController extends Controller
 
     public function changeRates(Request $request)
     {
+        Notification::query()->insert([
+            'user_id' => 1,
+            'type' => 'confirm',
+            'title' => 'Уведмление',
+            'text' => 'test',
+            'anchor' => 'qwerty',
+            'code' => bin2hex(random_bytes(14))
+        ]);
+
+        return $request;
         //
         // -------------------------
 
