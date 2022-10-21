@@ -31,7 +31,6 @@ class RatesController extends Controller
             'anchor' => 'qwerty',
             'code' => bin2hex(random_bytes(14))
         ]);
-        return 333;
 
         //
         // -------------------------
