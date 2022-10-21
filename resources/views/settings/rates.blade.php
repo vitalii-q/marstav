@@ -18,7 +18,8 @@
                 <div class="py-50">
                     <h1 class="font-w700 text-white mb-10">Тарифные планы</h1>
                     <h2 class="h4 font-w400 text-white-op">Расширяйте возможности.</h2>
-{{--                    <div onclick="qiwiNotis()">12345</div>--}}
+                    <?//php $payment_code = bin2hex(random_bytes(16)); ?>
+                    <div onclick="qiwiNotis('123')">12345</div>
                 </div>
             </div>
         </div>
@@ -29,9 +30,10 @@
 
             @php($better = false) @foreach($rates as $rate)
                 @if($user->rate_name == $rate->name) @php($better = true) @endif
+                    <?php $payment_code = bin2hex(random_bytes(16)); ?>
 
                 <div class="col-md-6 col-xl-3">
-                    <a @if($rate->name == 'Primary') onclick="return false;" @else href="https://oplata.qiwi.com/create?publicKey=48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPuaMKZz3XQSn5VsmW8JXRz4UyXtJwafPZFq68cPvVG4DVsHf3beWcKQ8Qdg6xvPvhDKkbdhfXd97KCxf1DjFq1KRsFCAfxfrfQrnoef8iF&billId={{ bin2hex(random_bytes(16)) }}&amount={{ $rate->price }}&account={{ $user->code }}&successUrl=http://marstav.loc/settings&customFields[themeCode]=Vytalyi-SiLyU5b65F" @endif class="block block-link-pop block-rounded block-bordered text-center c-pointer" target="_blank">
+                    <a @if($rate->name == 'Primary') onclick="return false;" @else onclick="addPayment('{{$payment_code}}', '{{$rate->code}}')" href="https://oplata.qiwi.com/create?publicKey=48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPuaMKZz3XQSn5VsmW8JXRz4UyXtJwafPZFq68cPvVG4DVsHf3beWcKQ8Qdg6xvPvhDKkbdhfXd97KCxf1DjFq1KRsFCAfxfrfQrnoef8iF&billId={{ $payment_code }}&amount={{ $rate->price }}&account={{ $user->code }}&successUrl=http://marstav.loc/settings&customFields[themeCode]=Vytalyi-SiLyU5b65F" @endif class="block block-link-pop block-rounded block-bordered text-center c-pointer" target="_blank">
                         <div class="block-header">
                             <h3 class="block-title">
                                 @if($user->rate_name == $rate->name) <i class="fa fa-check"></i> @endif

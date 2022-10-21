@@ -243,13 +243,36 @@ function checkFilesSize(files) {
     return true;
 }
 
+/* payment */
+function addPayment(payment_code, rate_code) {
+    let count = document.getElementById('payment_'+payment_code);
+    if (!count) { count = 1; }
+
+    $.ajax({
+        url: '/payment/add',
+        type: 'post',
+        async: true,
+        data: {
+            payment_code: payment_code,
+            rate_code: rate_code,
+            count: count,
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: (data) => {
+            //console.log(data);
+        }
+    });
+}
+
 /* tests */
-/*function qiwiNotis() { // тест оплаты qiwi
+function qiwiNotis(payment_code) { // тест оплаты qiwi
     let bill = {
             "siteId": "9hh4jb-00",
-            "billId": "cc961e8d-d4d6-4f02-b737-2297e51fb48e",
+            "billId": payment_code,
             "amount": {
-                "value": "699.00",
+                "value": "1.00",
                 "currency": "RUB"
             },
             "status": {
@@ -273,16 +296,15 @@ function checkFilesSize(files) {
         };
 
     $.ajax({
-        url: 'http://marstav.loc/settings/rates/change',
+        url: '/settings/rates/change',
         type: 'post',
         async: false,
         data: { bill },
         headers: {
-            //'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             Accept: "application/json"
         },
         success: (data) => {
             console.log(data);
         }
     });
-}*/
+}

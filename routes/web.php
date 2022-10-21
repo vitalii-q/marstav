@@ -17,6 +17,7 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('rate');
 Route::post('/settings/rates/change', [App\Http\Controllers\RatesController::class, 'changeRates']);
+Route::post('/payment/add', [App\Facades\PaymentManager::class, 'addPayment']);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'rate'], function () {

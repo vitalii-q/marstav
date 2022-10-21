@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\PaymentManager;
 use App\Facades\RateManager;
 use App\Models\Company;
 use App\Models\Notification;
+use App\Models\Payment;
 use App\Models\Rate;
 use App\Models\User;
 use App\Modules\Storage\Storage;
@@ -25,39 +27,45 @@ class RatesController extends Controller
     {
         // Qiwi post request оплаты
 
-        $user = User::query()->where('code', $request->bill['customer']['account'])->first();
-        $rate = Rate::query()->where('price', $request->bill['amount']['value'])->first(); // TODO: улучшить получение
-        if (!$rate) {
-            return view('errors.oops');
-        }
+        $payment = Payment::query()->where('code', $request->bill['billId'])->orderBy('id', 'desc')->first();
 
-        if (!$user->company_id) {
-            $company_id = Company::query()->insertGetId([
-                'creator_id' => $user->id,
-                'rate_id' => $rate->id,
-                'paid' => Carbon::now()->addMonths(1), // TODO: регулировать оплачеваемое время
-                'name' => 'Company',
-                'code' => 'company_'.bin2hex(random_bytes(16)),
-            ]);
+        if ($payment) {
+            $rate = Rate::query()->find($payment->rate_id);
+            if (PaymentManager::checkPayment($payment, $request->bill['amount']['value'], $request->bill['amount']['currency']) == false) { // не хочет упрощатся
+                return PaymentManager::error($payment, 'Оплаченная сумма не равна стоимости товара.', 'amount error');
+            }
 
-            $user->update([
-                'company_id' => $company_id
-            ]);
-        } else {
-            $company = Company::query()->find($user->company_id);
+            $user = User::query()->find($payment->user_id);
 
-            if($company->rate_id == $rate->id) {
-                RateManager::renewal($user, $company, $rate);
+            if (!$rate) {
+                return PaymentManager::error($payment, 'Такого тарифа не существует.', 'no rate');
             } else {
-                RateManager::switch($user, $company, $rate);
+                if (!$user->company_id) {
+                    $company_id = Company::query()->insertGetId([
+                        'creator_id' => $user->id,
+                        'rate_id' => $rate->id,
+                        'paid' => Carbon::now()->addMonths($payment->count), // TODO: регулировать оплачеваемое время
+                        'name' => 'Company',
+                        'code' => 'company_' . bin2hex(random_bytes(16)),
+                    ]);
+
+                    $user->update(['company_id' => $company_id]);
+                } else {
+                    $company = Company::query()->find($user->company_id);
+
+                    if ($company->rate_id == $rate->id) {
+                        RateManager::renewal($user, $company, $rate);
+                    } else {
+                        RateManager::switch($user, $company, $rate);
+                    }
+                }
+
+                return 1;
             }
         }
 
-        return 1;
+        return false;
     }
-
-    public function addPayment()
-    {}
 
     public function rateStub()
     {
