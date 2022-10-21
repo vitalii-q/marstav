@@ -243,8 +243,8 @@ function checkFilesSize(files) {
     return true;
 }
 
-/* test */
-function qiwiNotis() {
+/* tests */
+/*function qiwiNotis() { // тест оплаты qiwi
     let bill = {
             "siteId": "9hh4jb-00",
             "billId": "cc961e8d-d4d6-4f02-b737-2297e51fb48e",
@@ -285,4 +285,4 @@ function qiwiNotis() {
             console.log(data);
         }
     });
-}
+}*/

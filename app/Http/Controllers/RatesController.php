@@ -23,26 +23,7 @@ class RatesController extends Controller
 
     public function changeRates(Request $request)
     {
-        Notification::query()->insert([
-            'user_id' => 1,
-            'type' => 'confirm',
-            'title' => 'Уведомление',
-            'text' => 'test',
-            'anchor' => 'qwerty',
-            'code' => bin2hex(random_bytes(14))
-        ]);
-
-        //
-        // -------------------------
-
-        // уведомлений sec key eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX3VpZCI6Im02OW9jei0wMCIsInVzZXJfaWQiOiI3OTg1MDY1MjkwMyIsInNlY3JldCI6ImIxMTAzMTZiZTIyYzkyMjM2N2RhNjVkNmZjYTVjMzQxZTdlODFmYjM1YjM0YzdkNmZiYzAzOTFmOTc5OTY0MTMifX0=
-
-        // bill / version
-        //return $request->bill['status']['value'];
-
-
-
-        // TODO: сначала оплата
+        // Qiwi post request оплаты
 
         $user = User::query()->where('code', $request->bill['customer']['account'])->first();
         $rate = Rate::query()->where('price', $request->bill['amount']['value'])->first(); // TODO: улучшить получение
