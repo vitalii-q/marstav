@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('rate');
+Route::post('/settings/rates/change', [App\Http\Controllers\RatesController::class, 'changeRates']);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'rate'], function () {
@@ -84,7 +85,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/notification/company_invitation_cancel', [App\Http\Controllers\NotificationsController::class, 'companyInvitationCancel']);
     Route::post('/notification/delete', [App\Http\Controllers\NotificationsController::class, 'notificationDelete']);
 });
-
-Route::post('/settings/rates/change', [App\Http\Controllers\RatesController::class, 'changeRates']);
 
 
