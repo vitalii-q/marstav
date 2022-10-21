@@ -278,7 +278,8 @@ function qiwiNotis() {
         async: false,
         data: { bill },
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            Accept: "application/json"
         },
         success: (data) => {
             console.log(data);

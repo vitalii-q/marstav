@@ -32,10 +32,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/chat/{code}/dialog', [\App\Http\Controllers\ChatController::class, 'getDialog'])->name('dialog');
         Route::post('/chat/{code}/more_messages', [\App\Http\Controllers\ChatController::class, 'moreMessages'])->name('more_messages');
 
-        Route::post('/notification/company_invitation_success', [App\Http\Controllers\NotificationsController::class, 'companyInvitationSuccess']);
-        Route::post('/notification/company_invitation_cancel', [App\Http\Controllers\NotificationsController::class, 'companyInvitationCancel']);
-        Route::post('/notification/delete', [App\Http\Controllers\NotificationsController::class, 'notificationDelete']);
-
         Route::post('/storage/check', [\App\Modules\Storage\Storage::class, 'checkStorage']);
 
         // Entities
@@ -83,6 +79,11 @@ Route::group(['middleware' => 'auth'], function () {
     //Route::post('/settings/rates/change/handle', [App\Http\Controllers\RatesController::class, 'changeRates']);
 
     Route::get('/stub/rate', [App\Http\Controllers\RatesController::class, 'rateStub'])->name('rate_stub');
+
+    // notifications
+    Route::post('/notification/company_invitation_success', [App\Http\Controllers\NotificationsController::class, 'companyInvitationSuccess']);
+    Route::post('/notification/company_invitation_cancel', [App\Http\Controllers\NotificationsController::class, 'companyInvitationCancel']);
+    Route::post('/notification/delete', [App\Http\Controllers\NotificationsController::class, 'notificationDelete']);
 });
 
 

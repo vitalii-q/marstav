@@ -32,7 +32,6 @@ class RatesController extends Controller
             'code' => bin2hex(random_bytes(14))
         ]);
 
-        //return $request;
         //
         // -------------------------
 
