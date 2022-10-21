@@ -74,7 +74,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     // rates
     Route::get('/settings/rates', [App\Http\Controllers\RatesController::class, 'rates'])->name('rates');
-    Route::post('/settings/rates/change', [App\Http\Controllers\RatesController::class, 'changeRates']);
     //Route::post('/settings/rates/change/error', [App\Http\Controllers\RatesController::class, 'changeRates']);
     //Route::post('/settings/rates/change/handle', [App\Http\Controllers\RatesController::class, 'changeRates']);
 
@@ -85,5 +84,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/notification/company_invitation_cancel', [App\Http\Controllers\NotificationsController::class, 'companyInvitationCancel']);
     Route::post('/notification/delete', [App\Http\Controllers\NotificationsController::class, 'notificationDelete']);
 });
+
+Route::post('/settings/rates/change', [App\Http\Controllers\RatesController::class, 'changeRates']);
 
 
