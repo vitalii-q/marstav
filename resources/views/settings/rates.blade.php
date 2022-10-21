@@ -61,7 +61,7 @@
                 </form>
 
                 <div class="col-md-6 col-xl-3">
-                    <a @if($rate->name == 'Primary') onclick="return false;" @else href="https://payeer.com/merchant/?m_shop={{$m_shop}}&m_orderid={{$m_orderid}}&m_amount={{$m_amount}}&m_curr={{$m_curr}}&m_desc={{$m_desc}}&m_sign={{$sign}}&lang=ru" @endif class="block block-link-pop block-rounded block-bordered text-center c-pointer" target="_blank">
+                    <a @if($rate->name == 'Primary') onclick="return false;" @else href="https://oplata.qiwi.com/create?publicKey=48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPuaMKZz3XQSn5VsmW8JXRz4UyXtJwafPZFq68cPvVG4DVsHf3beWdduzq1daJj63TAeAeFRwGe7YDY6W3Fj4v21yjDkui1pta8QY9gtqit&billId={{ bin2hex(random_bytes(16)) }}&amount={{ $rate->price }}&account={{ $user->code }}&successUrl=http://marstav.loc/settings&customFields[themeCode]=Vytalyi-SiLyU5b65F" @endif class="block block-link-pop block-rounded block-bordered text-center c-pointer" target="_blank">
                         <div class="block-header">
                             <h3 class="block-title">
                                 @if($user->rate_name == $rate->name) <i class="fa fa-check"></i> @endif

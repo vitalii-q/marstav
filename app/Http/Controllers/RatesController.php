@@ -23,66 +23,20 @@ class RatesController extends Controller
 
     public function changeRates(Request $request)
     {
-        if (!in_array($_SERVER['REMOTE_ADDR'], array('185.71.65.92', '185.71.65.189', '149.202.17.210'))) return;
-
-        if (isset($request['m_operation_id']) && isset($request['m_sign']))
-        {
-            $m_key = '1hEhtehPqiPrMhKZ';
-
-            $arHash = array(
-                $request['m_operation_id'],
-                $request['m_operation_ps'],
-                $request['m_operation_date'],
-                $request['m_operation_pay_date'],
-                $request['m_shop'],
-                $request['m_orderid'],
-                $request['m_amount'],
-                $request['m_curr'],
-                $request['m_desc'],
-                $request['m_status']
-            );
-
-            if (isset($request['m_params']))
-            {
-                $arHash[] = $request['m_params'];
-            }
-
-            $arHash[] = $m_key;
-
-            $sign_hash = strtoupper(hash('sha256', implode(':', $arHash)));
-
-            if ($request['m_sign'] == $sign_hash && $request['m_status'] == 'success') { // проверка платежа
-                ob_end_clean();
-                //exit($request['m_orderid'].'|success');
-
-                Notification::query()->insert([
-                    'user_id' => 1,
-                    'type' => 'confirm',
-                    'title' => 'Уведомление',
-                    'text' => 'test',
-                    'anchor' => 'qwerty',
-                    'code' => bin2hex(random_bytes(14))
-                ]);
-            }
-
-            ob_end_clean();
-            exit($request['m_orderid'].'|error');
-        }
-
-        /*Notification::query()->insert([
+        Notification::query()->insert([
             'user_id' => 1,
             'type' => 'confirm',
             'title' => 'Уведомление',
             'text' => 'test',
             'anchor' => 'qwerty',
             'code' => bin2hex(random_bytes(14))
-        ]);*/
+        ]);
 
         //return $request;
         //
         // -------------------------
 
-        // уведомлений sec key eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX3VpZCI6Im02OW9jei0wMCIsInVzZXJfaWQiOiI3OTg1MDY1MjkwMyIsInNlY3JldCI6IjIyYTYzY2ViMzg0Yzc5MGZjZmNmODlmOTUyNTc4ODg5MmI4NzMzYmIwZDAyZWU1MTgyODRmOTQzMzlmNWIxOWMifX0=
+        // уведомлений sec key eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX3VpZCI6Im02OW9jei0wMCIsInVzZXJfaWQiOiI3OTg1MDY1MjkwMyIsInNlY3JldCI6ImIxMTAzMTZiZTIyYzkyMjM2N2RhNjVkNmZjYTVjMzQxZTdlODFmYjM1YjM0YzdkNmZiYzAzOTFmOTc5OTY0MTMifX0=
 
         // bill / version
         //return $request->bill['status']['value'];
