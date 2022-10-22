@@ -19,7 +19,7 @@
                     <h1 class="font-w700 text-white mb-10">Тарифные планы</h1>
                     <h2 class="h4 font-w400 text-white-op">Расширяйте возможности.</h2>
                     <?php //$payment_code = bin2hex(random_bytes(16)); ?>
-                    <div onclick="qiwiNotis('{{$payment_code}}', '{{$user->code}}')">12345</div>
+{{--                    <div onclick="qiwiNotis('{{$payment_code}}', '{{$user->code}}')">12345</div>--}}
                 </div>
             </div>
         </div>
