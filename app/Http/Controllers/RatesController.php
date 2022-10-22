@@ -50,7 +50,6 @@ class RatesController extends Controller
                 $user->update(['company_id' => $company_id]);
             } else {
                 $company = Company::query()->find($user->company_id);
-
                 if ($company->rate_id == $rate->id) {
                     RateManager::renewal($user, $company, $rate);
                 } else {

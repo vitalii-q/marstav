@@ -32,7 +32,6 @@ class PaymentManager
                 'status' => 'error',
                 'note' => 'Такого продукта не существует.'
             ]);
-
             return false;
         }
 
@@ -41,7 +40,7 @@ class PaymentManager
 
     public static function checkPayment($payment, $paid, $currency)
     {
-        if ($payment->price * $payment->count != $paid or $currency != $payment->currency) {
+        if (($payment->price * $payment->count) != $paid OR $currency != $payment->currency) {
             return false;
         }
 

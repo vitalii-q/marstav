@@ -261,18 +261,18 @@ function addPayment(payment_code, rate_code) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: (data) => {
-            //console.log(data);
+            console.log(data);
         }
     });
 }
 
 /* tests */
-/*function qiwiNotis(payment_code, user_code) { // тест оплаты qiwi
+function qiwiNotis(payment_code, user_code) { // тест оплаты qiwi
     let bill = {
             "siteId": "9hh4jb-00",
             "billId": payment_code,
             "amount": {
-                "value": "1.00",
+                "value": "2.00",
                 "currency": "RUB"
             },
             "status": {
@@ -307,4 +307,4 @@ function addPayment(payment_code, rate_code) {
             console.log(data);
         }
     });
-}*/
+}
