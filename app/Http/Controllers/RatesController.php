@@ -60,6 +60,9 @@ class RatesController extends Controller
                 ]);
 
                 $user->update(['company_id' => $company_id]);
+                $company = Company::query()->find($company_id);
+                NotificationManager::confirm($user,
+                    'Подключен тарифный план: <strong class="notification_bigtext">'.$rate->name.'</strong>.<br> <small>Действует до: <br><strong>'.Date::humanDMY($company->paid).'.</strong></small>');
             } else {
                 $company = Company::query()->find($user->company_id);
                 if ($company->rate_id == $rate->id) {
