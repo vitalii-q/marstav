@@ -46,5 +46,26 @@ $notifications = App\Models\Notification::query()->where('user_id', Illuminate\S
             </div>
         </div>
     @endif
+
+    @if($notification->type == 'error')
+        <div id="notification_{{ $notification->code }}" class="notification">
+            <div class="notification_top">
+                <div class="notification_icon_wrapper">
+                    <div class="notification_icon_circle notification_icon_circle_error">
+                        <div class="notification_icon_inner notification_icon_inner_error">i</div>
+                    </div>
+                </div>
+
+                <div class="notification_content">
+                    <p class="notification_title">{{ $notification->title }}</p>
+                    <p class="notification_text">{!! $notification->text !!}</p>
+                </div>
+            </div>
+
+            <div class="notification_bottom">
+                <button onclick="notificationDelete(this)" data-code="{{ $notification->code }}" type="button" class="btn btn-alt-danger notification_success">OK</button>
+            </div>
+        </div>
+    @endif
 @endforeach
 </div>

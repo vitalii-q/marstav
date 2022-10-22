@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\NotificationManager;
 use App\Facades\PaymentManager;
 use App\Facades\RateManager;
+use App\Helpers\Date;
 use App\Models\Company;
 use App\Models\Notification;
 use App\Models\Payment;
@@ -27,25 +29,26 @@ class RatesController extends Controller
     {
         // Qiwi post request оплаты
 
-        Notification::query()->insert([
+        /*Notification::query()->insert([
             'user_id' => 9,
             'type' => 'confirm',
             'title' => 'Уведомление',
             'text' => json_encode($request->bill),
             'anchor' => '12312',
             'code' => bin2hex(random_bytes(14))
-        ]);
+        ]);*/
 
         $payment = Payment::query()->where('code', $request->bill['billId'])->where('status', '=', 'new')
             ->orderBy('id', 'desc')->first();
 
         if ($payment and $request->bill['status']['value'] == 'PAID') {
+            $user = User::query()->where('code', $request->bill['customer']['account'])->first();
             $rate = Rate::query()->find($payment->rate_id);
+
             if (!PaymentManager::checkPayment($payment, $request->bill['amount']['value'], $request->bill['amount']['currency'])) {
+                NotificationManager::error($user, 'Ошибка платежа. <br>Обратитесь в тех. поддержку.');
                 return PaymentManager::error($payment, 'Оплаченная сумма не равна стоимости товара или оплата не верной валютой.', 'amount error');
             }
-
-            $user = User::query()->where('code', $request->bill['customer']['account'])->first();
 
             if (!$user->company_id) {
                 $company_id = Company::query()->insertGetId([
@@ -70,8 +73,6 @@ class RatesController extends Controller
         } else {
             return PaymentManager::error($payment, 'Ошибка платежа.', 'payment error');
         }
-
-        return false;
     }
 
     public function rateStub()

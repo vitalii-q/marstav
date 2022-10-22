@@ -28,7 +28,7 @@ class PaymentManager
                 'user_id' => Auth::user()->id,
                 'rate_id' => $rate->id,
                 'price' => 0,
-                'count' => 0,
+                'count' => 1,
                 'status' => 'error',
                 'note' => 'Такого продукта не существует.'
             ]);

@@ -344,6 +344,12 @@ a.block {
     width: 62px;
     height: 62px;
 }
+.notification_icon_circle_error {
+    border: 0.25em solid #e74c3c;
+}
+.notification_icon_inner_error {
+    color: #e74c3c;
+}
 .notification_content {
     width: 100%;
     text-align: center;

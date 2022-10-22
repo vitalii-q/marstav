@@ -15,7 +15,7 @@ class RateManager
             'paid' => Carbon::now()->addMonths($months)
         ]);
 
-        NotificationManager::rate($user,
+        NotificationManager::confirm($user,
             'Подключен тарифный план: <strong class="notification_bigtext">'.$rate->name.'</strong>.<br> <small>Действует до: <br><strong>'.Date::humanDMY($company->paid).'.</strong></small>');
     }
 
@@ -26,7 +26,7 @@ class RateManager
             'paid' => Carbon::parse($company->paid)->addMonths($months)
         ]);
 
-        NotificationManager::rate($user,
+        NotificationManager::confirm($user,
             'Продлен тарифный план: <strong class="notification_bigtext">'.$rate->name.'</strong>.<br> <small>Действует до: <br><strong>'.Date::humanDMY($company->paid).'.</strong></small>');
     }
 }
