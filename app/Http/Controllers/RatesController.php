@@ -29,14 +29,14 @@ class RatesController extends Controller
     {
         // Qiwi post request оплаты
 
-        /*Notification::query()->insert([
+        Notification::query()->insert([
             'user_id' => 9,
             'type' => 'confirm',
             'title' => 'Уведомление',
             'text' => json_encode($request->bill),
             'anchor' => '12312',
             'code' => bin2hex(random_bytes(14))
-        ]);*/
+        ]);
 
         $payment = Payment::query()->where('code', $request->bill['billId'])->where('status', '=', 'new')
             ->orderBy('id', 'desc')->first();
