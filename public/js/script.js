@@ -267,7 +267,7 @@ function addPayment(payment_code, rate_code) {
 }
 
 /* tests */
-function qiwiNotis(payment_code) { // тест оплаты qiwi
+/*function qiwiNotis(payment_code, user_code) { // тест оплаты qiwi
     let bill = {
             "siteId": "9hh4jb-00",
             "billId": payment_code,
@@ -282,7 +282,7 @@ function qiwiNotis(payment_code) { // тест оплаты qiwi
             "customer": {
                 "phone": "78710009999",
                 "email": "test@example.com",
-                "account": "95fe49e736ece7443a07763ff1ee60c7"
+                "account": user_code
             },
             "customFields": {
                 "paySourcesFilter": "qw",
@@ -307,4 +307,4 @@ function qiwiNotis(payment_code) { // тест оплаты qiwi
             console.log(data);
         }
     });
-}
+}*/

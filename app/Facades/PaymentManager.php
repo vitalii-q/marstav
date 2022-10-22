@@ -32,6 +32,8 @@ class PaymentManager
                 'status' => 'error',
                 'note' => 'Такого продукта не существует.'
             ]);
+
+            return false;
         }
 
         return 1;
@@ -50,6 +52,16 @@ class PaymentManager
     {
         $payment->update([
             'status' => 'error',
+            'note' => $text
+        ]);
+
+        return $return;
+    }
+
+    public static function success($payment, $text, $return = true)
+    {
+        $payment->update([
+            'status' => 'success',
             'note' => $text
         ]);
 

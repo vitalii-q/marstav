@@ -27,41 +27,38 @@ class RatesController extends Controller
     {
         // Qiwi post request оплаты
 
-        $payment = Payment::query()->where('code', $request->bill['billId'])->orderBy('id', 'desc')->first();
+        $payment = Payment::query()->where('code', $request->bill['billId'])->where('status', '=', 'new')
+            ->orderBy('id', 'desc')->first();
 
         if ($payment) {
             $rate = Rate::query()->find($payment->rate_id);
-            if (PaymentManager::checkPayment($payment, $request->bill['amount']['value'], $request->bill['amount']['currency']) == false) { // не хочет упрощатся
-                return PaymentManager::error($payment, 'Оплаченная сумма не равна стоимости товара.', 'amount error');
+            if (!PaymentManager::checkPayment($payment, $request->bill['amount']['value'], $request->bill['amount']['currency'])) {
+                return PaymentManager::error($payment, 'Оплаченная сумма не равна стоимости товара или оплата не верной валютой.', 'amount error');
             }
 
-            $user = User::query()->find($payment->user_id);
+            $user = User::query()->where('code', $request->bill['customer']['account'])->first();
 
-            if (!$rate) {
-                return PaymentManager::error($payment, 'Такого тарифа не существует.', 'no rate');
+            if (!$user->company_id) {
+                $company_id = Company::query()->insertGetId([
+                    'creator_id' => $user->id,
+                    'rate_id' => $rate->id,
+                    'paid' => Carbon::now()->addMonths($payment->count),
+                    'name' => 'Company',
+                    'code' => 'company_' . bin2hex(random_bytes(16)),
+                ]);
+
+                $user->update(['company_id' => $company_id]);
             } else {
-                if (!$user->company_id) {
-                    $company_id = Company::query()->insertGetId([
-                        'creator_id' => $user->id,
-                        'rate_id' => $rate->id,
-                        'paid' => Carbon::now()->addMonths($payment->count), // TODO: регулировать оплачеваемое время
-                        'name' => 'Company',
-                        'code' => 'company_' . bin2hex(random_bytes(16)),
-                    ]);
+                $company = Company::query()->find($user->company_id);
 
-                    $user->update(['company_id' => $company_id]);
+                if ($company->rate_id == $rate->id) {
+                    RateManager::renewal($user, $company, $rate);
                 } else {
-                    $company = Company::query()->find($user->company_id);
-
-                    if ($company->rate_id == $rate->id) {
-                        RateManager::renewal($user, $company, $rate);
-                    } else {
-                        RateManager::switch($user, $company, $rate);
-                    }
+                    RateManager::switch($user, $company, $rate);
                 }
-
-                return 1;
             }
+
+            return PaymentManager::success($payment, 'Оплата выполнена успешно.', 'payment success.');
         }
 
         return false;
