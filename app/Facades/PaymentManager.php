@@ -38,9 +38,9 @@ class PaymentManager
         return 1;
     }
 
-    public static function checkPayment($payment, $paid, $currency)
+    public static function checkPayment($payment, $product, $paid, $currency)
     {
-        if (($payment->price * $payment->count) != $paid OR $currency != $payment->currency) {
+        if (($product->price * $payment->count) != $paid OR $currency != $payment->currency) {
             return false;
         }
 

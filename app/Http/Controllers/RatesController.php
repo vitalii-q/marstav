@@ -45,7 +45,7 @@ class RatesController extends Controller
             $user = User::query()->where('code', $request->bill['customer']['account'])->first();
             $rate = Rate::query()->find($payment->rate_id);
 
-            if (!PaymentManager::checkPayment($payment, $request->bill['amount']['value'], $request->bill['amount']['currency'])) {
+            if (!PaymentManager::checkPayment($payment, $rate, $request->bill['amount']['value'], $request->bill['amount']['currency'])) {
                 NotificationManager::error($user, 'Ошибка платежа. <br>Обратитесь в тех. поддержку.');
                 return PaymentManager::error($payment, 'Оплаченная сумма не равна стоимости товара или оплата не верной валютой.', 'amount error');
             }
