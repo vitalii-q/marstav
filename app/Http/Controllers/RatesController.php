@@ -30,7 +30,7 @@ class RatesController extends Controller
         $payment = Payment::query()->where('code', $request->bill['billId'])->where('status', '=', 'new')
             ->orderBy('id', 'desc')->first();
 
-        if ($payment) {
+        if ($payment and $request->bill['status']['value'] == 'PAID') {
             $rate = Rate::query()->find($payment->rate_id);
             if (!PaymentManager::checkPayment($payment, $request->bill['amount']['value'], $request->bill['amount']['currency'])) {
                 return PaymentManager::error($payment, 'Оплаченная сумма не равна стоимости товара или оплата не верной валютой.', 'amount error');
@@ -58,6 +58,8 @@ class RatesController extends Controller
             }
 
             return PaymentManager::success($payment, 'Оплата выполнена успешно.', 'payment success.');
+        } else {
+            return PaymentManager::error($payment, 'Ошибка платежа.', 'payment error');
         }
 
         return false;

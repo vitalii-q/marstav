@@ -267,7 +267,7 @@ function addPayment(payment_code, rate_code) {
 }
 
 /* tests */
-function qiwiNotis(payment_code, user_code) { // тест оплаты qiwi
+/*function qiwiNotis(payment_code, user_code) { // тест оплаты qiwi
     let bill = {
             "siteId": "9hh4jb-00",
             "billId": payment_code,
@@ -307,4 +307,4 @@ function qiwiNotis(payment_code, user_code) { // тест оплаты qiwi
             console.log(data);
         }
     });
-}
+}*/
