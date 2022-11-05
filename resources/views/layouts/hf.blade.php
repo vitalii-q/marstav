@@ -185,9 +185,9 @@ $settings = \App\Models\Setting::query()->where('user_id', $user->id)->first();
                     <div class="content-header-section">
                         <!-- Toggle Sidebar -->
                         <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                        <!--<button type="button" class="btn btn-circle btn-dual-secondary" data-toggle="layout" data-action="sidebar_toggle">
+                        <button id="sidebar_toggle" type="button" class="btn btn-circle btn-dual-secondary" data-toggle="layout" data-action="sidebar_toggle">
                             <i class="fa fa-navicon"></i>
-                        </button>-->
+                        </button>
                         <!-- END Toggle Sidebar -->
 
                         <!-- Open Search Section -->

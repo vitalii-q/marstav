@@ -134,6 +134,12 @@ a.block {
     background-size: cover;
 }
 
+@media screen and (min-width: 992px) {
+    #sidebar_toggle {
+        display: none;
+    }
+}
+
 
 /* Work space */
 .workspace .nav-item {
