@@ -425,7 +425,7 @@ a.block {
     margin-right: 2px;
 }
 .messages_item {
-    width: min-content;
+    width: max-content;
 }
 
 /* Contacts */
