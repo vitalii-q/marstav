@@ -10,3 +10,11 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+/.idea
+/.vscode
+.DS_Store
+
+/_docker
+/_docker/db/pgdata
+docker-compose.yml
